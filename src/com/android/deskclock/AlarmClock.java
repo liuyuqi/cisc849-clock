@@ -336,7 +336,8 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
      * @param alarmId The alarm id to scroll to.
      */
     private void scrollToAlarm(int alarmId) {
-        for (int i = 0; i < mAdapter.getCount(); i++) {
+        int mAdapterCount = mAdapter.getCount(); /*Yuqi's Change!*/
+        for (int i = 0; i < mAdapterCount; i++) { /*Yuqi's Change!*/
             long id = mAdapter.getItemId(i);
             if (id == alarmId) {
                 mAdapter.setNewAlarm(alarmId);
@@ -1058,7 +1059,8 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
         }
 
         private View getViewById(int id) {
-            for (int i = 0; i < mList.getCount(); i++) {
+            int mListCount = mList.getCount(); /*Yuqi's Change*/
+            for (int i = 0; i < mListCount; i++) { /*Yuqi's Change*/
                 View v = mList.getChildAt(i);
                 if (v != null) {
                     ItemHolder h = (ItemHolder)(v.getTag());

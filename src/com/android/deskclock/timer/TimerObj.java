@@ -245,7 +245,8 @@ public class TimerObj implements Parcelable {
     public static void putTimersInSharedPrefs(
             SharedPreferences prefs, ArrayList<TimerObj> timers) {
         if (timers.size() > 0) {
-            for (int i = 0; i < timers.size(); i++) {
+            int timersSize = timers.size(); /*Yuqi's Change*/
+            for (int i = 0; i < timersSize; i++) { /*Yuqi's Change*/
                 TimerObj t = timers.get(i);
                 timers.get(i).writeToSharedPref(prefs);
             }

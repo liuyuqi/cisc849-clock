@@ -469,7 +469,8 @@ public class StopwatchFragment extends DeskClockFragment
         ArrayList<String> shareOptionPackageNames = new ArrayList<String>();
         ArrayList<String> shareOptionClassNames = new ArrayList<String>();
 
-        for (int option_i = 0; option_i < shareOptions.size(); option_i++) {
+        int shareOptionsSize = shareOptions.size(); /*Yuqi's Change*/
+        for (int option_i = 0; option_i < shareOptionsSize; option_i++) { /*Yuqi's Change*/
             ResolveInfo option = shareOptions.get(option_i);
             CharSequence label = option.loadLabel(packageManager);
             Drawable icon = option.loadIcon(packageManager);

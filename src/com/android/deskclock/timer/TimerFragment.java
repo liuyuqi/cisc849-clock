@@ -142,7 +142,8 @@ public class TimerFragment extends DeskClockFragment
         }
 
         public void deleteTimer(int id) {
-            for (int i = 0; i < mTimers.size(); i++) {
+            int mTimersSize = mTimers.size(); /*Yuqi's Change*/
+            for (int i = 0; i < mTimersSize; i++) { /*Yuqi's Change*/
                 TimerObj t = mTimers.get(i);
 
                 if (t.mTimerId == id) {

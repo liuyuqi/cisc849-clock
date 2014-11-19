@@ -478,7 +478,8 @@ public class GlowPadView extends View {
     }
 
     private void hideUnselected(int active) {
-        for (int i = 0; i < mTargetDrawables.size(); i++) {
+        int mTargetDrawablesSize = mTargetDrawables.size(); /*Yuqi's Change*/
+        for (int i = 0; i < mTargetDrawablesSize; i++) { /*Yuqi's Change*/
             if (i != active) {
                 mTargetDrawables.get(i).setAlpha(0.0f);
             }

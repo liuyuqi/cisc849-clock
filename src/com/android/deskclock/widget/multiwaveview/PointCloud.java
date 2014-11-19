@@ -205,7 +205,8 @@ public class PointCloud {
         ArrayList<Point> points = mPointCloud;
         canvas.save(Canvas.MATRIX_SAVE_FLAG);
         canvas.scale(mScale, mScale, mCenterX, mCenterY);
-        for (int i = 0; i < points.size(); i++) {
+        int pointsSize = points.size(); /*Yuqi's Change*/
+        for (int i = 0; i < pointsSize; i++) { /*Yuqi's Change*/
             Point point = points.get(i);
             final float pointSize = interp(MAX_POINT_SIZE, MIN_POINT_SIZE,
                     point.radius / mOuterRadius);

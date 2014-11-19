@@ -1,0 +1,25 @@
+#####################################
+Changes of branch 9
+Editor: Yuqi Liu
+#####################################
+
+DeskClock/AlarmClock.java:339:
+    eliminates function call mAdapter.getCount() within each iteration of loop.
+   
+DeskClock/AlarmClock.java:1062:
+    eliminates function call mList.getCount() within each iteration of loop.
+    
+DeskClock/stopwatch/StopwatchFragment.java:472:
+    eliminates function call shareOptions.size() within each iteration of loop.
+    
+DeskClock/timer/TimerFragment.java:145:
+    eliminates function call mTimers.size() within each iteration of loop.
+    
+DeskClock/timer/TimerObj.java:247:
+    eliminates function call timers.size() within each iteration of loop.
+    
+DeskClock/widget/multiwaveview/PointCloud.java:208:
+    eliminates function call points.size() within each iteration of loop.
+    
+DeskClock/widget/multiwaveview/GlowPadView.java:481:
+    eliminates function call mTargetDrawables.size() within each iteration of loop.
