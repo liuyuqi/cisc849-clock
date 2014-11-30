@@ -18,10 +18,7 @@ package com.android.deskclock.widget.swipeablelistview;
 
 public class LogTag {
 
-    //original code:
-    //private static String LOG_TAG = "AlarmClock";
-
-    private static final string LOG_TAG = "AlarmClock"; // Yuqi's Change
+    private static String LOG_TAG = "AlarmClock";
 
     /**
      * Get the log tag to apply to logging.
