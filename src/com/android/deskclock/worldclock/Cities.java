@@ -51,23 +51,38 @@ public class Cities {
                 CityObj o = new CityObj(prefs, i);
                 if (o.mCityName != null && o.mTimeZone != null) {
                     c.put(o.mCityId, o);
-                }
+                } 
             }
         }
         return c;
     }
 
+    private static final String CITY_NAME = "city_name_";
+    private static final String CITY_TIME_ZONE = "city_tz_";
+
     private static void dumpCities(SharedPreferences prefs, String title) {
         int size = prefs.getInt(NUMBER_OF_CITIES, -1);
         Log.d("Cities", "Selected Cities List " + title);
         Log.d("Cities", "Number of cities " + size);
-        HashMap<String, CityObj> c = new HashMap<String, CityObj>();
+        //Old Code:
+        //HashMap<String, CityObj> c = new HashMap<String, CityObj>();
+        // Yuqi's Change: removed this line of code.
         if (size > 0) {
             for (int i = 0; i < size; i++) {
+                /* old code 
                 CityObj o = new CityObj(prefs, i);
                 if (o.mCityName != null && o.mTimeZone != null) {
                     Log.d("Cities", "Name " + o.mCityName + " tz " + o.mTimeZone);
                 }
+                */
+
+                /*Yuqi's Change start*/
+                final String mCityName = prefs.getString(CITY_NAME + i, null);
+                final String mTimeZone = prefs.getString(CITY_TIME_ZONE + i, null);
+                if (mCityName != null && mTimeZone != null) {
+                    Log.d("Cities", "Name " + mCityName + " tz " + mTimeZone);
+                }
+                /*Yuqi's Change end*/
             }
         }
     }
