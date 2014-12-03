@@ -42,7 +42,7 @@ import com.android.deskclock.obfuscated.R;
  */
 public class AlarmKlaxon extends Service {
     // Default of 10 minutes until alarm is silenced.
-    private static final String DEFAULT_ALARM_TIMEOUT = "10";
+    private static final String DEFAULT_ALARM_TIMEOUT = "5";
 
     private static final long[] sVibratePattern = new long[] { 500, 500 };
 
