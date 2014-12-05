@@ -28,7 +28,7 @@ import com.android.deskclock.timer.TimerObj;
 public class AlarmInitReceiver extends BroadcastReceiver {
 
     // A flag that indicates that switching the volume button default was done
-    private static final String PREF_VOLUME_DEF_DONE = "vol_def_done";
+    public static final String PREF_VOLUME_DEF_DONE = "vol_def_done";
 
     /**
      * Sets alarm on ACTION_BOOT_COMPLETED.  Resets alarm on
@@ -70,8 +70,10 @@ public class AlarmInitReceiver extends BroadcastReceiver {
         });
     }
 
-    private void switchVolumeButtonDefault(SharedPreferences prefs) {
+
+    public void switchVolumeButtonDefault(SharedPreferences prefs) {
     	final SharedPreferences.Editor editor = prefs.edit();
+
 
         editor.putString(SettingsActivity.KEY_VOLUME_BEHAVIOR,
             SettingsActivity.DEFAULT_VOLUME_BEHAVIOR);

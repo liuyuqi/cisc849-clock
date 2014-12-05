@@ -59,25 +59,25 @@ public class CitiesActivity extends Activity implements OnCheckedChangeListener,
     static final boolean DEBUG = false;
     static final String TAG = "CitiesActivity";
 
-    private LayoutInflater mFactory;
-    private ListView mCitiesList;
-    private CityAdapter mAdapter;
-    private HashMap<String, CityObj> mUserSelectedCities;
-    private Calendar mCalendar;
+    public LayoutInflater mFactory;
+    public ListView mCitiesList;
+    public CityAdapter mAdapter;
+    public HashMap<String, CityObj> mUserSelectedCities;
+    public Calendar mCalendar;
 
 /***
 * Adapter for a list of cities with the respected time zone.
 * The Adapter sorts the list alphabetically and create an indexer.
 ***/
 
-    private class CityAdapter extends BaseAdapter implements SectionIndexer {
-        private static final String DELETED_ENTRY = "C0";
-        private Object [] mAllTheCitiesList;                      // full list of the cities
-        private final HashMap<String, CityObj> mSelectedCitiesList; // Selected cities by the use
-        private final LayoutInflater mInflater;
-        private boolean mIs24HoursMode;                            // AM/PM or 24 hours mode
-        private Object [] mSectionHeaders;
-        private Object [] mSectionPositions;
+    public class CityAdapter extends BaseAdapter implements SectionIndexer {
+        public static final String DELETED_ENTRY = "C0";
+        public Object [] mAllTheCitiesList;                      // full list of the cities
+        public final HashMap<String, CityObj> mSelectedCitiesList; // Selected cities by the use
+        public final LayoutInflater mInflater;
+        public boolean mIs24HoursMode;                            // AM/PM or 24 hours mode
+        public Object [] mSectionHeaders;
+        public Object [] mSectionPositions;
 
         public CityAdapter(
                 final Context context,  HashMap<String, CityObj> selectedList, LayoutInflater factory) {
@@ -150,8 +150,10 @@ public class CitiesActivity extends Activity implements OnCheckedChangeListener,
             notifyDataSetChanged();
         }
 
-        private void loadCitiesDataBase(final Context c) {
+
+        public void loadCitiesDataBase(final Context c) {
             final CityObj[] tempList = Utils.loadCitiesDataBase(c);
+
             if (tempList == null) {
                 return;
             }
@@ -217,7 +219,7 @@ public class CitiesActivity extends Activity implements OnCheckedChangeListener,
         updateLayout();
     }
 
-    private void updateLayout() {
+    public void updateLayout() {
         setContentView(R.layout.cities_activity);
         mCitiesList = (ListView) findViewById(R.id.cities_list);
         mCitiesList.setFastScrollAlwaysVisible(true);

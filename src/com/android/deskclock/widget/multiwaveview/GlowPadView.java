@@ -47,26 +47,26 @@ import java.util.ArrayList;
 
 /**
  * This is a copy of com.android.internal.widget.multiwaveview.GlowPadView with minor changes
- * to remove dependencies on private api's.
+ * to remove dependencies on public api's.
  *
  * Contains changes up to If296b60af2421bfa1a9a082e608ba77b2392a218
  *
  * A re-usable widget containing a center, outer ring and wave animation.
  */
 public class GlowPadView extends View {
-    private static final String TAG = "GlowPadView";
-    private static final boolean DEBUG = false;
+    public static final String TAG = "GlowPadView";
+    public static final boolean DEBUG = false;
 
     // Wave state machine
-    private static final int STATE_IDLE = 0;
-    private static final int STATE_START = 1;
-    private static final int STATE_FIRST_TOUCH = 2;
-    private static final int STATE_TRACKING = 3;
-    private static final int STATE_SNAP = 4;
-    private static final int STATE_FINISH = 5;
+    public static final int STATE_IDLE = 0;
+    public static final int STATE_START = 1;
+    public static final int STATE_FIRST_TOUCH = 2;
+    public static final int STATE_TRACKING = 3;
+    public static final int STATE_SNAP = 4;
+    public static final int STATE_FINISH = 5;
 
     // Animation properties.
-    private static final float SNAP_MARGIN_DEFAULT = 20.0f; // distance to ring before we snap to it
+    public static final float SNAP_MARGIN_DEFAULT = 20.0f; // distance to ring before we snap to it
 
     public interface OnTriggerListener {
         int NO_HANDLE = 0;
@@ -79,52 +79,52 @@ public class GlowPadView extends View {
     }
 
     // Tuneable parameters for animation
-    private static final int WAVE_ANIMATION_DURATION = 1350;
-    private static final int RETURN_TO_HOME_DELAY = 1200;
-    private static final int RETURN_TO_HOME_DURATION = 200;
-    private static final int HIDE_ANIMATION_DELAY = 200;
-    private static final int HIDE_ANIMATION_DURATION = 200;
-    private static final int SHOW_ANIMATION_DURATION = 200;
-    private static final int SHOW_ANIMATION_DELAY = 50;
-    private static final int INITIAL_SHOW_HANDLE_DURATION = 200;
-    private static final int REVEAL_GLOW_DELAY = 0;
-    private static final int REVEAL_GLOW_DURATION = 0;
+    public static final int WAVE_ANIMATION_DURATION = 1350;
+    public static final int RETURN_TO_HOME_DELAY = 1200;
+    public static final int RETURN_TO_HOME_DURATION = 200;
+    public static final int HIDE_ANIMATION_DELAY = 200;
+    public static final int HIDE_ANIMATION_DURATION = 200;
+    public static final int SHOW_ANIMATION_DURATION = 200;
+    public static final int SHOW_ANIMATION_DELAY = 50;
+    public static final int INITIAL_SHOW_HANDLE_DURATION = 200;
+    public static final int REVEAL_GLOW_DELAY = 0;
+    public static final int REVEAL_GLOW_DURATION = 0;
 
-    private static final float TAP_RADIUS_SCALE_ACCESSIBILITY_ENABLED = 1.3f;
-    private static final float TARGET_SCALE_EXPANDED = 1.0f;
-    private static final float TARGET_SCALE_COLLAPSED = 0.8f;
-    private static final float RING_SCALE_EXPANDED = 1.0f;
-    private static final float RING_SCALE_COLLAPSED = 0.5f;
+    public static final float TAP_RADIUS_SCALE_ACCESSIBILITY_ENABLED = 1.3f;
+    public static final float TARGET_SCALE_EXPANDED = 1.0f;
+    public static final float TARGET_SCALE_COLLAPSED = 0.8f;
+    public static final float RING_SCALE_EXPANDED = 1.0f;
+    public static final float RING_SCALE_COLLAPSED = 0.5f;
 
-    private ArrayList<TargetDrawable> mTargetDrawables = new ArrayList<TargetDrawable>();
-    private AnimationBundle mWaveAnimations = new AnimationBundle();
-    private AnimationBundle mTargetAnimations = new AnimationBundle();
-    private AnimationBundle mGlowAnimations = new AnimationBundle();
-    private ArrayList<String> mTargetDescriptions;
-    private ArrayList<String> mDirectionDescriptions;
-    private OnTriggerListener mOnTriggerListener;
-    private TargetDrawable mHandleDrawable;
-    private TargetDrawable mOuterRing;
-    private Vibrator mVibrator;
+    public ArrayList<TargetDrawable> mTargetDrawables = new ArrayList<TargetDrawable>();
+    public AnimationBundle mWaveAnimations = new AnimationBundle();
+    public AnimationBundle mTargetAnimations = new AnimationBundle();
+    public AnimationBundle mGlowAnimations = new AnimationBundle();
+    public ArrayList<String> mTargetDescriptions;
+    public ArrayList<String> mDirectionDescriptions;
+    public OnTriggerListener mOnTriggerListener;
+    public TargetDrawable mHandleDrawable;
+    public TargetDrawable mOuterRing;
+    public Vibrator mVibrator;
 
-    private int mFeedbackCount = 3;
-    private int mVibrationDuration = 0;
-    private int mGrabbedState;
-    private int mActiveTarget = -1;
-    private float mGlowRadius;
-    private float mWaveCenterX;
-    private float mWaveCenterY;
-    private int mMaxTargetHeight;
-    private int mMaxTargetWidth;
+    public int mFeedbackCount = 3;
+    public int mVibrationDuration = 0;
+    public int mGrabbedState;
+    public int mActiveTarget = -1;
+    public float mGlowRadius;
+    public float mWaveCenterX;
+    public float mWaveCenterY;
+    public int mMaxTargetHeight;
+    public int mMaxTargetWidth;
 
-    private float mOuterRadius = 0.0f;
-    private float mSnapMargin = 0.0f;
-    private boolean mDragging;
-    private int mNewTargetResources;
+    public float mOuterRadius = 0.0f;
+    public float mSnapMargin = 0.0f;
+    public boolean mDragging;
+    public int mNewTargetResources;
 
-    private class AnimationBundle extends ArrayList<Tweener> {
-        private static final long serialVersionUID = 0xA84D78726F127468L;
-        private boolean mSuspended;
+    public class AnimationBundle extends ArrayList<Tweener> {
+        public static final long serialVersionUID = 0xA84D78726F127468L;
+        public boolean mSuspended;
 
         public void start() {
             if (mSuspended) return; // ignore attempts to start animations
@@ -158,14 +158,14 @@ public class GlowPadView extends View {
         }
     };
 
-    private AnimatorListener mResetListener = new AnimatorListenerAdapter() {
+    public AnimatorListener mResetListener = new AnimatorListenerAdapter() {
         public void onAnimationEnd(Animator animator) {
             switchToState(STATE_IDLE, mWaveCenterX, mWaveCenterY);
             dispatchOnFinishFinalAnimation();
         }
     };
 
-    private AnimatorListener mResetListenerWithPing = new AnimatorListenerAdapter() {
+    public AnimatorListener mResetListenerWithPing = new AnimatorListenerAdapter() {
         public void onAnimationEnd(Animator animator) {
             ping();
             switchToState(STATE_IDLE, mWaveCenterX, mWaveCenterY);
@@ -173,14 +173,14 @@ public class GlowPadView extends View {
         }
     };
 
-    private AnimatorUpdateListener mUpdateListener = new AnimatorUpdateListener() {
+    public AnimatorUpdateListener mUpdateListener = new AnimatorUpdateListener() {
         public void onAnimationUpdate(ValueAnimator animation) {
             invalidate();
         }
     };
 
-    private boolean mAnimatingTargets;
-    private AnimatorListener mTargetUpdateListener = new AnimatorListenerAdapter() {
+    public boolean mAnimatingTargets;
+    public AnimatorListener mTargetUpdateListener = new AnimatorListenerAdapter() {
         public void onAnimationEnd(Animator animator) {
             if (mNewTargetResources != 0) {
                 internalSetTargetResources(mNewTargetResources);
@@ -190,18 +190,18 @@ public class GlowPadView extends View {
             mAnimatingTargets = false;
         }
     };
-    private int mTargetResourceId;
-    private int mTargetDescriptionsResourceId;
-    private int mDirectionDescriptionsResourceId;
-    private boolean mAlwaysTrackFinger;
-    private int mHorizontalInset;
-    private int mVerticalInset;
-    private int mGravity = Gravity.TOP;
-    private boolean mInitialLayout = true;
-    private Tweener mBackgroundAnimator;
-    private PointCloud mPointCloud;
-    private float mInnerRadius;
-    private int mPointerId;
+    public int mTargetResourceId;
+    public int mTargetDescriptionsResourceId;
+    public int mDirectionDescriptionsResourceId;
+    public boolean mAlwaysTrackFinger;
+    public int mHorizontalInset;
+    public int mVerticalInset;
+    public int mGravity = Gravity.TOP;
+    public boolean mInitialLayout = true;
+    public Tweener mBackgroundAnimator;
+    public PointCloud mPointCloud;
+    public float mInnerRadius;
+    public int mPointerId;
 
     public GlowPadView(Context context) {
         this(context, null);
@@ -276,12 +276,12 @@ public class GlowPadView extends View {
         mPointCloud.glowManager.setRadius(mGlowRadius);
     }
 
-    private int getResourceId(TypedArray a, int id) {
+    public int getResourceId(TypedArray a, int id) {
         TypedValue tv = a.peekValue(id);
         return tv == null ? 0 : tv.resourceId;
     }
 
-    private void dump() {
+    public void dump() {
         Log.v(TAG, "Outer Radius = " + mOuterRadius);
         Log.v(TAG, "SnapMargin = " + mSnapMargin);
         Log.v(TAG, "FeedbackCount = " + mFeedbackCount);
@@ -320,7 +320,7 @@ public class GlowPadView extends View {
         return (int) (Math.max(mOuterRing.getHeight(), 2 * mOuterRadius) + mMaxTargetHeight);
     }
 
-    private int resolveMeasured(int measureSpec, int desired)
+    public int resolveMeasured(int measureSpec, int desired)
     {
         int result = 0;
         int specSize = MeasureSpec.getSize(measureSpec);
@@ -348,7 +348,7 @@ public class GlowPadView extends View {
         setMeasuredDimension(computedWidth, computedHeight);
     }
 
-    private void switchToState(int state, float x, float y) {
+    public void switchToState(int state, float x, float y) {
         switch (state) {
             case STATE_IDLE:
                 deactivateTargets();
@@ -394,7 +394,7 @@ public class GlowPadView extends View {
         }
     }
 
-    private void showGlow(int duration, int delay, float finalAlpha,
+    public void showGlow(int duration, int delay, float finalAlpha,
             AnimatorListener finishListener) {
         mGlowAnimations.cancel();
         mGlowAnimations.add(Tweener.to(mPointCloud.glowManager, duration,
@@ -406,7 +406,7 @@ public class GlowPadView extends View {
         mGlowAnimations.start();
     }
 
-    private void hideGlow(int duration, int delay, float finalAlpha,
+    public void hideGlow(int duration, int delay, float finalAlpha,
             AnimatorListener finishListener) {
         mGlowAnimations.cancel();
         mGlowAnimations.add(Tweener.to(mPointCloud.glowManager, duration,
@@ -420,7 +420,7 @@ public class GlowPadView extends View {
         mGlowAnimations.start();
     }
 
-    private void deactivateTargets() {
+    public void deactivateTargets() {
         final int count = mTargetDrawables.size();
         for (int i = 0; i < count; i++) {
             TargetDrawable target = mTargetDrawables.get(i);
@@ -433,20 +433,20 @@ public class GlowPadView extends View {
      * Dispatches a trigger event to listener. Ignored if a listener is not set.
      * @param whichTarget the target that was triggered.
      */
-    private void dispatchTriggerEvent(int whichTarget) {
+    public void dispatchTriggerEvent(int whichTarget) {
         vibrate();
         if (mOnTriggerListener != null) {
             mOnTriggerListener.onTrigger(this, whichTarget);
         }
     }
 
-    private void dispatchOnFinishFinalAnimation() {
+    public void dispatchOnFinishFinalAnimation() {
         if (mOnTriggerListener != null) {
             mOnTriggerListener.onFinishFinalAnimation();
         }
     }
 
-    private void doFinish() {
+    public void doFinish() {
         final int activeTarget = mActiveTarget;
         final boolean targetHit =  activeTarget != -1;
 
@@ -471,22 +471,24 @@ public class GlowPadView extends View {
         setGrabbedState(OnTriggerListener.NO_HANDLE);
     }
 
-    private void highlightSelected(int activeTarget) {
+    public void highlightSelected(int activeTarget) {
         // Highlight the given target and fade others
         mTargetDrawables.get(activeTarget).setState(TargetDrawable.STATE_ACTIVE);
         hideUnselected(activeTarget);
     }
 
-    private void hideUnselected(int active) {
+
+    public void hideUnselected(int active) {
         int mTargetDrawablesSize = mTargetDrawables.size(); /*Yuqi's Change*/
         for (int i = 0; i < mTargetDrawablesSize; i++) { /*Yuqi's Change*/
+
             if (i != active) {
                 mTargetDrawables.get(i).setAlpha(0.0f);
             }
         }
     }
 
-    private void hideTargets(boolean animate, boolean expanded) {
+    public void hideTargets(boolean animate, boolean expanded) {
         mTargetAnimations.cancel();
         // Note: these animations should complete at the same time so that we can swap out
         // the target assets asynchronously from the setTargetResources() call.
@@ -524,7 +526,7 @@ public class GlowPadView extends View {
         mTargetAnimations.start();
     }
 
-    private void showTargets(boolean animate) {
+    public void showTargets(boolean animate) {
         mTargetAnimations.stop();
         mAnimatingTargets = animate;
         final int delay = animate ? SHOW_ANIMATION_DELAY : 0;
@@ -553,13 +555,13 @@ public class GlowPadView extends View {
         mTargetAnimations.start();
     }
 
-    private void vibrate() {
+    public void vibrate() {
         if (mVibrator != null) {
             mVibrator.vibrate(mVibrationDuration);
         }
     }
 
-    private ArrayList<TargetDrawable> loadDrawableArray(int resourceId) {
+    public ArrayList<TargetDrawable> loadDrawableArray(int resourceId) {
         Resources res = getContext().getResources();
         TypedArray array = res.obtainTypedArray(resourceId);
         final int count = array.length();
@@ -573,7 +575,7 @@ public class GlowPadView extends View {
         return drawables;
     }
 
-    private void internalSetTargetResources(int resourceId) {
+    public void internalSetTargetResources(int resourceId) {
         final ArrayList<TargetDrawable> targets = loadDrawableArray(resourceId);
         mTargetDrawables = targets;
         mTargetResourceId = resourceId;
@@ -692,12 +694,12 @@ public class GlowPadView extends View {
         }
     }
 
-    private void stopAndHideWaveAnimation() {
+    public void stopAndHideWaveAnimation() {
         mWaveAnimations.cancel();
         mPointCloud.waveManager.setAlpha(0.0f);
     }
 
-    private void startWaveAnimation() {
+    public void startWaveAnimation() {
         mWaveAnimations.cancel();
         mPointCloud.waveManager.setAlpha(1.0f);
         mPointCloud.waveManager.setRadius(mHandleDrawable.getWidth()/2.0f);
@@ -732,7 +734,7 @@ public class GlowPadView extends View {
         Tweener.reset();
     }
 
-    private void startBackgroundAnimation(int duration, float alpha) {
+    public void startBackgroundAnimation(int duration, float alpha) {
         final Drawable background = getBackground();
         if (mAlwaysTrackFinger && background != null) {
             if (mBackgroundAnimator != null) {
@@ -784,12 +786,12 @@ public class GlowPadView extends View {
         return handled ? true : super.onTouchEvent(event);
     }
 
-    private void updateGlowPosition(float x, float y) {
+    public void updateGlowPosition(float x, float y) {
         mPointCloud.glowManager.setX(x);
         mPointCloud.glowManager.setY(y);
     }
 
-    private void handleDown(MotionEvent event) {
+    public void handleDown(MotionEvent event) {
         int actionIndex = event.getActionIndex();
         float eventX = event.getX(actionIndex);
         float eventY = event.getY(actionIndex);
@@ -802,7 +804,7 @@ public class GlowPadView extends View {
         }
     }
 
-    private void handleUp(MotionEvent event) {
+    public void handleUp(MotionEvent event) {
         if (DEBUG && mDragging) Log.v(TAG, "** Handle RELEASE");
         int actionIndex = event.getActionIndex();
         if (event.getPointerId(actionIndex) == mPointerId) {
@@ -810,7 +812,7 @@ public class GlowPadView extends View {
         }
     }
 
-    private void handleCancel(MotionEvent event) {
+    public void handleCancel(MotionEvent event) {
         if (DEBUG && mDragging) Log.v(TAG, "** Handle CANCEL");
 
         // We should drop the active target here but it interferes with
@@ -825,7 +827,7 @@ public class GlowPadView extends View {
         switchToState(STATE_FINISH, event.getX(actionIndex), event.getY(actionIndex));
     }
 
-    private void handleMove(MotionEvent event) {
+    public void handleMove(MotionEvent event) {
         int activeTarget = -1;
         final int historySize = event.getHistorySize();
         ArrayList<TargetDrawable> targets = mTargetDrawables;
@@ -944,7 +946,7 @@ public class GlowPadView extends View {
      * Sets the current grabbed state, and dispatches a grabbed state change
      * event to our listener.
      */
-    private void setGrabbedState(int newState) {
+    public void setGrabbedState(int newState) {
         if (newState != mGrabbedState) {
             if (newState != OnTriggerListener.NO_HANDLE) {
                 vibrate();
@@ -961,7 +963,7 @@ public class GlowPadView extends View {
         }
     }
 
-    private boolean trySwitchToFirstTouchState(float x, float y) {
+    public boolean trySwitchToFirstTouchState(float x, float y) {
         final float tx = x - mWaveCenterX;
         final float ty = y - mWaveCenterY;
         if (mAlwaysTrackFinger || dist2(tx,ty) <= getScaledGlowRadiusSquared()) {
@@ -974,7 +976,7 @@ public class GlowPadView extends View {
         return false;
     }
 
-    private void assignDefaultsIfNeeded() {
+    public void assignDefaultsIfNeeded() {
         if (mOuterRadius == 0.0f) {
             mOuterRadius = Math.max(mOuterRing.getWidth(), mOuterRing.getHeight())/2.0f;
         }
@@ -987,7 +989,7 @@ public class GlowPadView extends View {
         }
     }
 
-    private void computeInsets(int dx, int dy) {
+    public void computeInsets(int dx, int dy) {
         final int layoutDirection = getLayoutDirection();
         final int absoluteGravity = Gravity.getAbsoluteGravity(mGravity, layoutDirection);
 
@@ -1054,7 +1056,7 @@ public class GlowPadView extends View {
         if (DEBUG) dump();
     }
 
-    private void updateTargetPositions(float centerX, float centerY) {
+    public void updateTargetPositions(float centerX, float centerY) {
         // Reposition the target drawables if the view changed.
         ArrayList<TargetDrawable> targets = mTargetDrawables;
         final int size = targets.size();
@@ -1069,7 +1071,7 @@ public class GlowPadView extends View {
         }
     }
 
-    private void updatePointCloudPosition(float centerX, float centerY) {
+    public void updatePointCloudPosition(float centerX, float centerY) {
         mPointCloud.setCenter(centerX, centerY);
     }
 
@@ -1091,15 +1093,15 @@ public class GlowPadView extends View {
         mOnTriggerListener = listener;
     }
 
-    private float square(float d) {
+    public float square(float d) {
         return d * d;
     }
 
-    private float dist2(float dx, float dy) {
+    public float dist2(float dx, float dy) {
         return dx*dx + dy*dy;
     }
 
-    private float getScaledGlowRadiusSquared() {
+    public float getScaledGlowRadiusSquared() {
         final float scaledTapRadius;
         final AccessibilityManager accessibilityManager =
                 (AccessibilityManager) getContext().getSystemService(
@@ -1112,7 +1114,7 @@ public class GlowPadView extends View {
         return square(scaledTapRadius);
     }
 
-    private void announceTargets() {
+    public void announceTargets() {
         StringBuilder utterance = new StringBuilder();
         final int targetCount = mTargetDrawables.size();
         for (int i = 0; i < targetCount; i++) {
@@ -1129,7 +1131,7 @@ public class GlowPadView extends View {
         }
     }
 
-    private String getTargetDescription(int index) {
+    public String getTargetDescription(int index) {
         if (mTargetDescriptions == null || mTargetDescriptions.isEmpty()) {
             mTargetDescriptions = loadDescriptions(mTargetDescriptionsResourceId);
             if (mTargetDrawables.size() != mTargetDescriptions.size()) {
@@ -1141,7 +1143,7 @@ public class GlowPadView extends View {
         return mTargetDescriptions.get(index);
     }
 
-    private String getDirectionDescription(int index) {
+    public String getDirectionDescription(int index) {
         if (mDirectionDescriptions == null || mDirectionDescriptions.isEmpty()) {
             mDirectionDescriptions = loadDescriptions(mDirectionDescriptionsResourceId);
             if (mTargetDrawables.size() != mDirectionDescriptions.size()) {
@@ -1153,7 +1155,7 @@ public class GlowPadView extends View {
         return mDirectionDescriptions.get(index);
     }
 
-    private ArrayList<String> loadDescriptions(int resourceId) {
+    public ArrayList<String> loadDescriptions(int resourceId) {
         TypedArray array = getContext().getResources().obtainTypedArray(resourceId);
         final int count = array.length();
         ArrayList<String> targetContentDescriptions = new ArrayList<String>(count);
@@ -1195,7 +1197,7 @@ public class GlowPadView extends View {
         return -1;
     }
 
-    private boolean replaceTargetDrawables(Resources res, int existingResourceId,
+    public boolean replaceTargetDrawables(Resources res, int existingResourceId,
             int newResourceId) {
         if (existingResourceId == 0 || newResourceId == 0) {
             return false;

@@ -30,10 +30,10 @@ import com.android.deskclock.obfuscated.R;
  */
 public class AlarmTimePickerDialogFragment extends DialogFragment {
 
-    private static final String KEY_ALARM = "alarm";
+    public static final String KEY_ALARM = "alarm";
 
-    private Button mSet, mCancel;
-    private TimePicker mPicker;
+    public Button mSet, mCancel;
+    public TimePicker mPicker;
 
     public static AlarmTimePickerDialogFragment newInstance(Alarm alarm) {
         final AlarmTimePickerDialogFragment frag = new AlarmTimePickerDialogFragment();

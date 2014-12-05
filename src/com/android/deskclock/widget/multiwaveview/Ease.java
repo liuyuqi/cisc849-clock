@@ -19,9 +19,9 @@ package com.android.deskclock.widget.multiwaveview;
 import android.animation.TimeInterpolator;
 
 class Ease {
-    private static final float DOMAIN = 1.0f;
-    private static final float DURATION = 1.0f;
-    private static final float START = 0.0f;
+    public static final float DOMAIN = 1.0f;
+    public static final float DURATION = 1.0f;
+    public static final float START = 0.0f;
 
     static class Linear {
         public static final TimeInterpolator easeNone = new TimeInterpolator() {

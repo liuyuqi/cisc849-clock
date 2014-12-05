@@ -42,10 +42,10 @@ import java.util.TimeZone;
 
 public class WorldClockAdapter extends BaseAdapter {
     protected Object [] mCitiesList;
-    private final LayoutInflater mInflater;
-    private final Context mContext;
-    private String mClockStyle;
-    private final Collator mCollator = Collator.getInstance();
+    public final LayoutInflater mInflater;
+    public final Context mContext;
+    public String mClockStyle;
+    public final Collator mCollator = Collator.getInstance();
     protected HashMap<String, CityObj> mCitiesDb = new HashMap<String, CityObj>();
 
     public WorldClockAdapter(Context context) {
@@ -88,7 +88,7 @@ public class WorldClockAdapter extends BaseAdapter {
      * zone is different from the home time zone that was set by the user.
      * return the list of cities.
      */
-    private Object[] addHomeCity() {
+    public Object[] addHomeCity() {
         if (needHomeCity()) {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
             String homeTZ = sharedPref.getString(SettingsActivity.KEY_HOME_TZ, "");
@@ -131,13 +131,13 @@ public class WorldClockAdapter extends BaseAdapter {
                 && ((CityObj) mCitiesList[0]).mCityId == null;
     }
 
-    private void sortList() {
+    public void sortList() {
         final Date now = new Date();
 
         // Sort by the Offset from GMT taking DST into account
         // and if the same sort by City Name
         Arrays.sort(mCitiesList, new Comparator<Object>() {
-            private int safeCityNameCompare(CityObj city1, CityObj city2) {
+            public int safeCityNameCompare(CityObj city1, CityObj city2) {
                 if (city1.mCityName == null && city2.mCityName == null) {
                     return 0;
                 } else if (city1.mCityName == null) {
@@ -228,7 +228,7 @@ public class WorldClockAdapter extends BaseAdapter {
         return view;
     }
 
-    private void updateView(View clock, CityObj cityObj) {
+    public void updateView(View clock, CityObj cityObj) {
         View nameLayout= clock.findViewById(R.id.city_name_layout);
         TextView name = (TextView)(nameLayout.findViewById(R.id.city_name));
         TextView dayOfWeek = (TextView)(nameLayout.findViewById(R.id.city_day));

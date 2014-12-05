@@ -105,7 +105,7 @@ public class HandleSetAlarm extends Activity {
         finish();
     }
 
-    private boolean handleCursorResult(Cursor c, long timeInMillis,
+    public boolean handleCursorResult(Cursor c, long timeInMillis,
             boolean enable, boolean skipUi) {
         if (c != null && c.moveToFirst()) {
         	final Alarm alarm = new Alarm(c);

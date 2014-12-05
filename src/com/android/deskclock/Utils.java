@@ -58,19 +58,19 @@ import java.util.Locale;
 
 
 public class Utils {
-    private final static String TAG = Utils.class.getName();
+    public final static String TAG = Utils.class.getName();
 
-    private final static String PARAM_LANGUAGE_CODE = "hl";
+    public final static String PARAM_LANGUAGE_CODE = "hl";
 
     /**
      * Help URL query parameter key for the app version.
      */
-    private final static String PARAM_VERSION = "version";
+    public final static String PARAM_VERSION = "version";
 
     /**
      * Cached version code to prevent repeated calls to the package manager.
      */
-    private static String sCachedVersionCode = null;
+    public static String sCachedVersionCode = null;
 
     /**
      * Intent to be used for checking if a clock's date has changed. Must be every fifteen
@@ -118,7 +118,7 @@ public class Utils {
      * of the app's package as gotten via the context.
      * @return the uri with added query parameters
      */
-    private static Uri uriWithAddedParameters(Context context, Uri baseUri) {
+    public static Uri uriWithAddedParameters(Context context, Uri baseUri) {
         Uri.Builder builder = baseUri.buildUpon();
 
         // Add in the preferred language
@@ -211,10 +211,10 @@ public class Utils {
 
         static final boolean SLIDE = false;
 
-        private View mContentView, mSaverView;
-        private final Handler mHandler;
+        public View mContentView, mSaverView;
+        public final Handler mHandler;
 
-        private static TimeInterpolator mSlowStartWithBrakes;
+        public static TimeInterpolator mSlowStartWithBrakes;
 
 
         public ScreensaverMoveSaverRunnable(Handler handler) {
@@ -316,7 +316,7 @@ public class Utils {
     }
 
     /** Setup to find out when the quarter-hour changes (e.g. Kathmandu is GMT+5:45) **/
-    private static long getAlarmOnQuarterHour() {
+    public static long getAlarmOnQuarterHour() {
         Calendar nextQuarter = Calendar.getInstance();
         //  Set 1 second to ensure quarter-hour threshold passed.
         nextQuarter.set(Calendar.SECOND, 1);

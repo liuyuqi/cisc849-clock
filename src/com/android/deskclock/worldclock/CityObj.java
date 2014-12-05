@@ -20,9 +20,9 @@ import android.content.SharedPreferences;
 
 public class CityObj {
 
-    private static final String CITY_NAME = "city_name_";
-    private static final String CITY_TIME_ZONE = "city_tz_";
-    private static final String CITY_ID = "city_id_";
+    public static final String CITY_NAME = "city_name_";
+    public static final String CITY_TIME_ZONE = "city_tz_";
+    public static final String CITY_ID = "city_id_";
 
     public String mCityName;
     public String mTimeZone;

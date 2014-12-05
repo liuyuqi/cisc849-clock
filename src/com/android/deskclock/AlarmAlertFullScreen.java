@@ -48,27 +48,27 @@ import java.util.Calendar;
  */
 public class AlarmAlertFullScreen extends Activity implements GlowPadView.OnTriggerListener {
 
-    private final boolean LOG = true;
+    public final boolean LOG = true;
     // These defaults must match the values in res/xml/settings.xml
-    private static final String DEFAULT_SNOOZE = "10";
+    public static final String DEFAULT_SNOOZE = "10";
     protected static final String SCREEN_OFF = "screen_off";
 
     protected Alarm mAlarm;
-    private int mVolumeBehavior;
+    public int mVolumeBehavior;
     boolean mFullscreenStyle;
-    private GlowPadView mGlowPadView;
-    private boolean mIsDocked = false;
+    public GlowPadView mGlowPadView;
+    public boolean mIsDocked = false;
 
     // Parameters for the GlowPadView "ping" animation; see triggerPing().
-    private static final int PING_MESSAGE_WHAT = 101;
-    private static final boolean ENABLE_PING_AUTO_REPEAT = true;
-    private static final long PING_AUTO_REPEAT_DELAY_MSEC = 1200;
+    public static final int PING_MESSAGE_WHAT = 101;
+    public static final boolean ENABLE_PING_AUTO_REPEAT = true;
+    public static final long PING_AUTO_REPEAT_DELAY_MSEC = 1200;
 
-    private boolean mPingEnabled = true;
+    public boolean mPingEnabled = true;
 
     // Receives the ALARM_KILLED action from the AlarmKlaxon,
     // and also ALARM_SNOOZE_ACTION / ALARM_DISMISS_ACTION from other applications
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+    public final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -89,7 +89,7 @@ public class AlarmAlertFullScreen extends Activity implements GlowPadView.OnTrig
         }
     };
 
-    private final Handler mPingHandler = new Handler() {
+    public final Handler mPingHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -148,7 +148,7 @@ public class AlarmAlertFullScreen extends Activity implements GlowPadView.OnTrig
         registerReceiver(mReceiver, filter);
     }
 
-    private void setTitle() {
+    public void setTitle() {
         final String titleText = mAlarm.getLabelOrDefault(this);
 
         TextView tv = (TextView) findViewById(R.id.alertTitle);
@@ -161,7 +161,7 @@ public class AlarmAlertFullScreen extends Activity implements GlowPadView.OnTrig
         return R.layout.alarm_alert;
     }
 
-    private void updateLayout() {
+    public void updateLayout() {
         if (LOG) {
             Log.v("AlarmAlertFullScreen - updateLayout");
         }
@@ -179,7 +179,7 @@ public class AlarmAlertFullScreen extends Activity implements GlowPadView.OnTrig
         triggerPing();
     }
 
-    private void triggerPing() {
+    public void triggerPing() {
         if (mPingEnabled) {
             mGlowPadView.ping();
 
@@ -190,7 +190,7 @@ public class AlarmAlertFullScreen extends Activity implements GlowPadView.OnTrig
     }
 
     // Attempt to snooze this alert.
-    private void snooze() {
+    public void snooze() {
         if (LOG) {
             Log.v("AlarmAlertFullScreen - snooze");
         }
@@ -249,12 +249,12 @@ public class AlarmAlertFullScreen extends Activity implements GlowPadView.OnTrig
         finish();
     }
 
-    private NotificationManager getNotificationManager() {
+    public NotificationManager getNotificationManager() {
         return (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
 
     // Dismiss the alarm.
-    private void dismiss(boolean killed, boolean replaced) {
+    public void dismiss(boolean killed, boolean replaced) {
         if (LOG) {
             Log.v("AlarmAlertFullScreen - dismiss");
         }

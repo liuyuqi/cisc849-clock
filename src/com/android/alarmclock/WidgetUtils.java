@@ -69,7 +69,7 @@ public class WidgetUtils {
     }
 
     // Calculate the scale factor of the fonts in the list of  the widget using the widget height
-    private static float getHeightScaleRatio(Context context, Bundle options, int id) {
+    public static float getHeightScaleRatio(Context context, Bundle options, int id) {
         if (options == null) {
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
             if (widgetManager == null) {

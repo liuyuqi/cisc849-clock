@@ -28,7 +28,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class Timers {
-    // Private actions processed by the receiver
+    // public actions processed by the receiver
     public static final String START_TIMER = "start_timer";
     public static final String DELETE_TIMER = "delete_timer";
     public static final String TIMES_UP = "times_up";

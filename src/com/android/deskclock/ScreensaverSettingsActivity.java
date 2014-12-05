@@ -65,8 +65,10 @@ public class ScreensaverSettingsActivity extends PreferenceActivity
         return true;
     }
 
-    private void refresh() {
+
+    public void refresh() {
     	final ListPreference listPref = (ListPreference) findPreference(KEY_CLOCK_STYLE);
+
         listPref.setSummary(listPref.getEntry());
         listPref.setOnPreferenceChangeListener(this);
 

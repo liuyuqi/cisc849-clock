@@ -43,22 +43,22 @@ import com.android.deskclock.worldclock.WorldClockAdapter;
 
 public class ClockFragment extends DeskClockFragment implements OnSharedPreferenceChangeListener {
 
-    private static final String BUTTONS_HIDDEN_KEY = "buttons_hidden";
-    private final static String TAG = "ClockFragment";
+    public static final String BUTTONS_HIDDEN_KEY = "buttons_hidden";
+    public final static String TAG = "ClockFragment";
 
-    private View mButtons;
-    private boolean mButtonsHidden = false;
-    private View mDigitalClock, mAnalogClock, mClockFrame;
-    private WorldClockAdapter mAdapter;
-    private ListView mList;
-    private SharedPreferences mPrefs;
-    private String mDateFormat;
-    private String mDateFormatForAccessibility;
-    private String mDefaultClockStyle;
-    private String mClockStyle;
+    public View mButtons;
+    public boolean mButtonsHidden = false;
+    public View mDigitalClock, mAnalogClock, mClockFrame;
+    public WorldClockAdapter mAdapter;
+    public ListView mList;
+    public SharedPreferences mPrefs;
+    public String mDateFormat;
+    public String mDateFormatForAccessibility;
+    public String mDefaultClockStyle;
+    public String mClockStyle;
 
-    private PendingIntent mQuarterlyIntent;
-    private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
+    public PendingIntent mQuarterlyIntent;
+    public final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
             @Override
         public void onReceive(Context context, Intent intent) {
             	final String action = intent.getAction();
@@ -91,7 +91,7 @@ public class ClockFragment extends DeskClockFragment implements OnSharedPreferen
         }
     };
 
-    private final Handler mHandler = new Handler();
+    public final Handler mHandler = new Handler();
 
     public ClockFragment() {
     }
@@ -119,8 +119,8 @@ public class ClockFragment extends DeskClockFragment implements OnSharedPreferen
         mAdapter = new WorldClockAdapter(getActivity());
         mList.setAdapter(mAdapter);
         mList.setOnTouchListener(new OnTouchListener() {
-            private final float MAX_MOVEMENT_ALLOWED = 20;
-            private float mLastTouchX, mLastTouchY;
+            public final float MAX_MOVEMENT_ALLOWED = 20;
+            public float mLastTouchX, mLastTouchY;
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {

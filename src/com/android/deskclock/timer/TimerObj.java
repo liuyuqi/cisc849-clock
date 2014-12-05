@@ -33,9 +33,9 @@ import java.util.Set;
 
 public class TimerObj implements Parcelable {
 
-    private static final String TAG = "TimerObj";
+    public static final String TAG = "TimerObj";
     // Max timer length is 9 hours + 99 minutes + 9 seconds
-    private static final long MAX_TIMER_LENGTH = (9 * 3600 + 99 * 60  + 60) * 1000;
+    public static final long MAX_TIMER_LENGTH = (9 * 3600 + 99 * 60  + 60) * 1000;
 
     public int mTimerId;             // Unique id
     public long mStartTime;          // With mTimeLeft , used to calculate the correct time
@@ -52,15 +52,15 @@ public class TimerObj implements Parcelable {
     public static final int STATE_DONE = 4;
     public static final int STATE_RESTART = 5;
 
-    private static final String PREF_TIMER_ID = "timer_id_";
-    private static final String PREF_START_TIME  = "timer_start_time_";
-    private static final String PREF_TIME_LEFT = "timer_time_left_";
-    private static final String PREF_ORIGINAL_TIME = "timer_original_timet_";
-    private static final String PREF_SETUP_TIME = "timer_setup_timet_";
-    private static final String PREF_STATE = "timer_state_";
-    private static final String PREF_LABEL = "timer_label_";
+    public static final String PREF_TIMER_ID = "timer_id_";
+    public static final String PREF_START_TIME  = "timer_start_time_";
+    public static final String PREF_TIME_LEFT = "timer_time_left_";
+    public static final String PREF_ORIGINAL_TIME = "timer_original_timet_";
+    public static final String PREF_SETUP_TIME = "timer_setup_timet_";
+    public static final String PREF_STATE = "timer_state_";
+    public static final String PREF_LABEL = "timer_label_";
 
-    private static final String PREF_TIMERS_LIST = "timers_list";
+    public static final String PREF_TIMERS_LIST = "timers_list";
 
     public static final Parcelable.Creator<TimerObj> CREATOR = new Parcelable.Creator<TimerObj>() {
         @Override
@@ -171,7 +171,9 @@ public class TimerObj implements Parcelable {
       init(timerLength);
     }
 
-    private void init (final long length) {
+
+    public void init (final long length) {
+
         mTimerId = (int) Utils.getTimeNow();
         mStartTime = Utils.getTimeNow();
         mTimeLeft = mOriginalLength = mSetupLength = length;

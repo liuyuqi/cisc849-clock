@@ -23,7 +23,7 @@ public class AlarmListeners {
 
     public static class DigitalClockClickListener implements View.OnClickListener {
 
-        private int alarmId;
+        public int alarmId;
 
         public DigitalClockClickListener(int alarmId) {
             this.alarmId = alarmId;

@@ -42,21 +42,23 @@ import com.android.deskclock.obfuscated.R;
  */
 public class AlarmKlaxon extends Service {
     // Default of 10 minutes until alarm is silenced.
-    private static final String DEFAULT_ALARM_TIMEOUT = "5";
 
-    private static final long[] sVibratePattern = new long[] { 500, 500 };
+    public static final String DEFAULT_ALARM_TIMEOUT = "5";
 
-    private boolean mPlaying = false;
-    private Vibrator mVibrator;
-    private MediaPlayer mMediaPlayer;
-    private Alarm mCurrentAlarm;
-    private long mStartTime;
-    private TelephonyManager mTelephonyManager;
-    private int mInitialCallState;
+
+    public static final long[] sVibratePattern = new long[] { 500, 500 };
+
+    public boolean mPlaying = false;
+    public Vibrator mVibrator;
+    public MediaPlayer mMediaPlayer;
+    public Alarm mCurrentAlarm;
+    public long mStartTime;
+    public TelephonyManager mTelephonyManager;
+    public int mInitialCallState;
 
     // Internal messages
-    private static final int KILLER = 1000;
-    private Handler mHandler = new Handler() {
+    public static final int KILLER = 1000;
+    public Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -71,7 +73,7 @@ public class AlarmKlaxon extends Service {
         }
     };
 
-    private PhoneStateListener mPhoneStateListener = new PhoneStateListener() {
+    public PhoneStateListener mPhoneStateListener = new PhoneStateListener() {
         @Override
         public void onCallStateChanged(int state, String ignored) {
             // The user might already be in a call when the alarm fires. When
@@ -143,7 +145,7 @@ public class AlarmKlaxon extends Service {
         return START_STICKY;
     }
 
-    private void sendKillBroadcast(Alarm alarm, boolean replaced) {
+    public void sendKillBroadcast(Alarm alarm, boolean replaced) {
         long millis = System.currentTimeMillis() - mStartTime;
         int minutes = (int) Math.round(millis / (double)DateUtils.MINUTE_IN_MILLIS);
         Intent alarmKilled = new Intent(Alarms.ALARM_KILLED);
@@ -154,9 +156,9 @@ public class AlarmKlaxon extends Service {
     }
 
     // Volume suggested by media team for in-call alarms.
-    private static final float IN_CALL_VOLUME = 0.125f;
+    public static final float IN_CALL_VOLUME = 0.125f;
 
-    private void play(Alarm alarm) {
+    public void play(Alarm alarm) {
         // stop() checks to see if we are already playing.
         stop();
 
@@ -233,7 +235,7 @@ public class AlarmKlaxon extends Service {
     }
 
     // Do the common stuff when starting the alarm.
-    private void startAlarm(MediaPlayer player)
+    public void startAlarm(MediaPlayer player)
             throws java.io.IOException, IllegalArgumentException,
                    IllegalStateException {
         final AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
@@ -247,7 +249,7 @@ public class AlarmKlaxon extends Service {
         }
     }
 
-    private void setDataSourceFromResource(Resources resources,
+    public void setDataSourceFromResource(Resources resources,
             MediaPlayer player, int res) throws java.io.IOException {
         AssetFileDescriptor afd = resources.openRawResourceFd(res);
         if (afd != null) {
@@ -286,7 +288,7 @@ public class AlarmKlaxon extends Service {
      * This just cancels the audio, but leaves the notification
      * popped, so the user will know that the alarm tripped.
      */
-    private void enableKiller(Alarm alarm) {
+    public void enableKiller(Alarm alarm) {
         final String autoSnooze =
                 PreferenceManager.getDefaultSharedPreferences(this)
                 .getString(SettingsActivity.KEY_AUTO_SILENCE,
@@ -298,7 +300,7 @@ public class AlarmKlaxon extends Service {
         }
     }
 
-    private void disableKiller() {
+    public void disableKiller() {
         mHandler.removeMessages(KILLER);
     }
 

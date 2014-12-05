@@ -34,8 +34,8 @@ import com.android.deskclock.timer.TimerFragment.OnEmptyListListener;
  */
 public class TimerAlertFullScreen extends Activity implements OnEmptyListListener {
 
-//    private static final String TAG = "TimerAlertFullScreen";
-    private static final String FRAGMENT = "timer";
+//    public static final String TAG = "TimerAlertFullScreen";
+    public static final String FRAGMENT = "timer";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -136,7 +136,7 @@ public class TimerAlertFullScreen extends Activity implements OnEmptyListListene
         Utils.showInUseNotifications(this);
     }
 
-    private TimerFragment getFragment() {
+    public TimerFragment getFragment() {
         return (TimerFragment) getFragmentManager().findFragmentByTag(FRAGMENT);
     }
 }

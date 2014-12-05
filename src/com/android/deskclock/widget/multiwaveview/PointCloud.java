@@ -26,27 +26,27 @@ import android.util.Log;
 import java.util.ArrayList;
 
 public class PointCloud {
-    private static final float MIN_POINT_SIZE = 2.0f;
-    private static final float MAX_POINT_SIZE = 4.0f;
-    private static final int INNER_POINTS = 8;
-    private static final String TAG = "PointCloud";
-    private ArrayList<Point> mPointCloud = new ArrayList<Point>();
-    private Drawable mDrawable;
-    private float mCenterX;
-    private float mCenterY;
-    private Paint mPaint;
-    private float mScale = 1.0f;
-    private static final float PI = (float) Math.PI;
+    public static final float MIN_POINT_SIZE = 2.0f;
+    public static final float MAX_POINT_SIZE = 4.0f;
+    public static final int INNER_POINTS = 8;
+    public static final String TAG = "PointCloud";
+    public ArrayList<Point> mPointCloud = new ArrayList<Point>();
+    public Drawable mDrawable;
+    public float mCenterX;
+    public float mCenterY;
+    public Paint mPaint;
+    public float mScale = 1.0f;
+    public static final float PI = (float) Math.PI;
 
     // These allow us to have multiple concurrent animations.
     WaveManager waveManager = new WaveManager();
     GlowManager glowManager = new GlowManager();
-    private float mOuterRadius;
+    public float mOuterRadius;
 
     public class WaveManager {
-        private float radius = 50;
-        private float width = 200.0f; // TODO: Make configurable
-        private float alpha = 0.0f;
+        public float radius = 50;
+        public float width = 200.0f; // TODO: Make configurable
+        public float alpha = 0.0f;
         public void setRadius(float r) {
             radius = r;
         }
@@ -65,10 +65,10 @@ public class PointCloud {
     };
 
     public class GlowManager {
-        private float x;
-        private float y;
-        private float radius = 0.0f;
-        private float alpha = 0.0f;
+        public float x;
+        public float y;
+        public float radius = 0.0f;
+        public float alpha = 0.0f;
 
         public void setX(float x1) {
             x = x1;
@@ -167,11 +167,11 @@ public class PointCloud {
         return mScale;
     }
 
-    private static float hypot(float x, float y) {
+    public static float hypot(float x, float y) {
         return FloatMath.sqrt(x*x + y*y);
     }
 
-    private static float max(float a, float b) {
+    public static float max(float a, float b) {
         return a > b ? a : b;
     }
 
@@ -197,7 +197,7 @@ public class PointCloud {
         return (int) (max(glowAlpha, waveAlpha) * 255);
     }
 
-    private float interp(float min, float max, float f) {
+    public float interp(float min, float max, float f) {
         return min + (max - min) * f;
     }
 

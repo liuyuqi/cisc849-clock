@@ -69,35 +69,35 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
         OnLongClickListener, Callback, DialogInterface.OnClickListener,
         DialogInterface.OnCancelListener {
 
-    private static final String KEY_EXPANDED_IDS = "expandedIds";
-    private static final String KEY_REPEAT_CHECKED_IDS = "repeatCheckedIds";
-    private static final String KEY_RINGTONE_TITLE_CACHE = "ringtoneTitleCache";
-    private static final String KEY_SELECTED_ALARMS = "selectedAlarms";
-    private static final String KEY_DELETED_ALARM = "deletedAlarm";
-    private static final String KEY_UNDO_SHOWING = "undoShowing";
-    private static final String KEY_PREVIOUS_DAY_MAP = "previousDayMap";
-    private static final String KEY_SELECTED_ALARM = "selectedAlarm";
-    private static final String KEY_DELETE_CONFIRMATION = "deleteConfirmation";
+    public static final String KEY_EXPANDED_IDS = "expandedIds";
+    public static final String KEY_REPEAT_CHECKED_IDS = "repeatCheckedIds";
+    public static final String KEY_RINGTONE_TITLE_CACHE = "ringtoneTitleCache";
+    public static final String KEY_SELECTED_ALARMS = "selectedAlarms";
+    public static final String KEY_DELETED_ALARM = "deletedAlarm";
+    public static final String KEY_UNDO_SHOWING = "undoShowing";
+    public static final String KEY_PREVIOUS_DAY_MAP = "previousDayMap";
+    public static final String KEY_SELECTED_ALARM = "selectedAlarm";
+    public static final String KEY_DELETE_CONFIRMATION = "deleteConfirmation";
 
-    private static final int REQUEST_CODE_RINGTONE = 1;
+    public static final int REQUEST_CODE_RINGTONE = 1;
 
-    private SwipeableListView mAlarmsList;
-    private AlarmItemAdapter mAdapter;
-    private Bundle mRingtoneTitleCache; // Key: ringtone uri, value: ringtone title
-    private ActionableToastBar mUndoBar;
-    private ActionMode mActionMode;
+    public SwipeableListView mAlarmsList;
+    public AlarmItemAdapter mAdapter;
+    public Bundle mRingtoneTitleCache; // Key: ringtone uri, value: ringtone title
+    public ActionableToastBar mUndoBar;
+    public ActionMode mActionMode;
 
-    private Alarm mSelectedAlarm;
-    private int mScrollToAlarmId = -1;
-    private boolean mInDeleteConfirmation = false;
+    public Alarm mSelectedAlarm;
+    public int mScrollToAlarmId = -1;
+    public boolean mInDeleteConfirmation = false;
 
     // This flag relies on the activity having a "standard" launchMode and a new instance of this
     // activity being created when launched.
-    private boolean mFirstLoad = true;
+    public boolean mFirstLoad = true;
 
     // Saved states for undo
-    private Alarm mDeletedAlarm;
-    private boolean mUndoShowing = false;
+    public Alarm mDeletedAlarm;
+    public boolean mUndoShowing = false;
 
     @Override
     protected void onCreate(Bundle savedState) {
@@ -107,7 +107,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
         getLoaderManager().initLoader(0, null, this);
     }
 
-    private void initialize(Bundle savedState) {
+    public void initialize(Bundle savedState) {
         setContentView(R.layout.alarm_clock);
         int[] expandedIds = null;
         int[] repeatCheckedIds = null;
@@ -186,7 +186,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
             showConfirmationDialog();
         }
     }
-    private void hideUndoBar(boolean animate, MotionEvent event) {
+    public void hideUndoBar(boolean animate, MotionEvent event) {
         if (mUndoBar != null) {
             if (event != null && mUndoBar.isEventInToastBar(event)) {
                 // Avoid touches inside the undo bar.
@@ -212,7 +212,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
         outState.putBoolean(KEY_DELETE_CONFIRMATION, mInDeleteConfirmation);
     }
 
-    private void updateLayout() {
+    public void updateLayout() {
         final ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setDisplayOptions(ActionBar.DISPLAY_HOME_AS_UP, ActionBar.DISPLAY_HOME_AS_UP);
@@ -284,7 +284,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
         asyncUpdateAlarm(alarm, true);
     }
 
-    private void showLabelDialog(final Alarm alarm) {
+    public void showLabelDialog(final Alarm alarm) {
         final FragmentTransaction ft = getFragmentManager().beginTransaction();
         final Fragment prev = getFragmentManager().findFragmentByTag("label_dialog");
         if (prev != null) {
@@ -316,7 +316,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
     }
 
     /** If an alarm was passed in via intent and goes to that particular alarm in the list. */
-    private void gotoAlarmIfSpecified() {
+    public void gotoAlarmIfSpecified() {
         final Intent intent = getIntent();
         if (mFirstLoad && intent != null) {
             final Alarm alarm = (Alarm) intent.getParcelableExtra(Alarms.ALARM_INTENT_EXTRA);
@@ -335,7 +335,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
      *
      * @param alarmId The alarm id to scroll to.
      */
-    private void scrollToAlarm(int alarmId) {
+    public void scrollToAlarm(int alarmId) {
         int mAdapterCount = mAdapter.getCount(); /*Yuqi's Change!*/
         for (int i = 0; i < mAdapterCount; i++) { /*Yuqi's Change!*/
             long id = mAdapter.getItemId(i);
@@ -358,7 +358,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
         mAdapter.swapCursor(null);
     }
 
-    private void launchRingTonePicker(Alarm alarm) {
+    public void launchRingTonePicker(Alarm alarm) {
         mSelectedAlarm = alarm;
         final Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, alarm.alert);
@@ -367,7 +367,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
         startActivityForResult(intent, REQUEST_CODE_RINGTONE);
     }
 
-    private void saveRingtoneUri(Intent intent) {
+    public void saveRingtoneUri(Intent intent) {
         final Uri uri = intent.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
         mSelectedAlarm.alert = uri;
         // Save the last selected ringtone as the default for new alarms
@@ -404,7 +404,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
     /***
      * Activate/update/close action mode according to the number of selected views.
      */
-    private void updateActionMode() {
+    public void updateActionMode() {
         int selectedNum = mAdapter.getSelectedItemsNum();
         if (mActionMode == null && selectedNum > 0) {
             // Start the action mode
@@ -426,34 +426,34 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
      * Display the number of selected items on the action bar in action mode
      * @param items - number of selected items
      */
-    private void setActionModeTitle(int items) {
+    public void setActionModeTitle(int items) {
         mActionMode.setTitle(String.format(getString(R.string.alarms_selected), items));
     }
 
     public class AlarmItemAdapter extends CursorAdapter {
 
-        private final Context mContext;
-        private final LayoutInflater mFactory;
-        private final String[] mShortWeekDayStrings;
-        private final String[] mLongWeekDayStrings;
-        private final int mColorLit;
-        private final int mColorDim;
-        private final int mBackgroundColorSelected;
-        private final int mBackgroundColor;
-        private final Typeface mRobotoNormal;
-        private final Typeface mRobotoBold;
-        private OnLongClickListener mLongClickListener;
-        private final ListView mList;
+        public final Context mContext;
+        public final LayoutInflater mFactory;
+        public final String[] mShortWeekDayStrings;
+        public final String[] mLongWeekDayStrings;
+        public final int mColorLit;
+        public final int mColorDim;
+        public final int mBackgroundColorSelected;
+        public final int mBackgroundColor;
+        public final Typeface mRobotoNormal;
+        public final Typeface mRobotoBold;
+        public OnLongClickListener mLongClickListener;
+        public final ListView mList;
 
-        private final HashSet<Integer> mExpanded = new HashSet<Integer>();
-        private final HashSet<Integer> mRepeatChecked = new HashSet<Integer>();
-        private final HashSet<Integer> mSelectedAlarms = new HashSet<Integer>();
-        private Bundle mPreviousDaysOfWeekMap = new Bundle();
+        public final HashSet<Integer> mExpanded = new HashSet<Integer>();
+        public final HashSet<Integer> mRepeatChecked = new HashSet<Integer>();
+        public final HashSet<Integer> mSelectedAlarms = new HashSet<Integer>();
+        public Bundle mPreviousDaysOfWeekMap = new Bundle();
 
-        private final boolean mHasVibrator;
+        public final boolean mHasVibrator;
 
         // This determines the order in which it is shown and processed in the UI.
-        private final int[] DAY_ORDER = new int[] {
+        public final int[] DAY_ORDER = new int[] {
                 Calendar.SUNDAY,
                 Calendar.MONDAY,
                 Calendar.TUESDAY,
@@ -488,8 +488,8 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
         }
 
         // Used for scrolling an expanded item in the list to make sure it is fully visible.
-        private int mScrollAlarmId = -1;
-        private final Runnable mScrollRunnable = new Runnable() {
+        public int mScrollAlarmId = -1;
+        public final Runnable mScrollRunnable = new Runnable() {
             @Override
             public void run() {
                 if (mScrollAlarmId != -1) {
@@ -748,7 +748,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
             });
         }
 
-        private void bindExpandArea(final ItemHolder itemHolder, final Alarm alarm) {
+        public void bindExpandArea(final ItemHolder itemHolder, final Alarm alarm) {
             // Views in here are not bound until the item is expanded.
 
             if (alarm.label != null && alarm.label.length() > 0) {
@@ -926,7 +926,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
 
         // Sets the alpha of the item except the on/off switch. This gives a visual effect
         // for enabled/disabled alarm while leaving the on/off switch more visible
-        private void setItemAlpha(ItemHolder holder, boolean enabled) {
+        public void setItemAlpha(ItemHolder holder, boolean enabled) {
             float alpha = enabled ? 1f : 0.5f;
             holder.clock.setAlpha(alpha);
             holder.infoArea.setAlpha(alpha);
@@ -934,7 +934,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
             holder.hairLine.setAlpha(alpha);
         }
 
-        private void updateDaysOfWeekButtons(ItemHolder holder, Alarm.DaysOfWeek daysOfWeek) {
+        public void updateDaysOfWeekButtons(ItemHolder holder, Alarm.DaysOfWeek daysOfWeek) {
             HashSet<Integer> setDays = daysOfWeek.getSetDays();
             for (int i = 0; i < 7; i++) {
                 if (setDays.contains(DAY_ORDER[i])) {
@@ -949,7 +949,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
          * Simulate a long click to override clicks on view when ActionMode is on
          * Returns true if handled a long click, false if not
          */
-        private boolean doLongClick(View v) {
+        public boolean doLongClick(View v) {
             if (mActionMode == null) {
                 return false;
             }
@@ -975,7 +975,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
             }
         }
 
-        private View getTopParent(View v) {
+        public View getTopParent(View v) {
             while (v != null && v.getId() != R.id.alarm_item) {
                 v = (View) v.getParent();
             }
@@ -986,13 +986,13 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
             return mSelectedAlarms.size();
         }
 
-        private void turnOffDayOfWeek(ItemHolder holder, int dayIndex) {
+        public void turnOffDayOfWeek(ItemHolder holder, int dayIndex) {
             holder.dayButtons[dayIndex].setChecked(false);
             holder.dayButtons[dayIndex].setTextColor(mColorDim);
             holder.dayButtons[dayIndex].setTypeface(mRobotoNormal);
         }
 
-        private void turnOnDayOfWeek(ItemHolder holder, int dayIndex) {
+        public void turnOnDayOfWeek(ItemHolder holder, int dayIndex) {
             holder.dayButtons[dayIndex].setChecked(true);
             holder.dayButtons[dayIndex].setTextColor(mColorLit);
             holder.dayButtons[dayIndex].setTypeface(mRobotoBold);
@@ -1005,7 +1005,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
          * @param uri The uri of the ringtone.
          * @return The ringtone title. {@literal null} if no matching ringtone found.
          */
-        private String getRingToneTitle(Uri uri) {
+        public String getRingToneTitle(Uri uri) {
             // Try the cache first
             String title = mRingtoneTitleCache.getString(uri.toString());
             if (title == null) {
@@ -1028,7 +1028,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
          *
          * @param itemHolder The item holder instance.
          */
-        private void expandAlarm(ItemHolder itemHolder) {
+        public void expandAlarm(ItemHolder itemHolder) {
             itemHolder.expandArea.setVisibility(View.VISIBLE);
             itemHolder.expandArea.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -1045,11 +1045,11 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
             mScrollAlarmId = itemHolder.alarm.id;
         }
 
-        private boolean isAlarmExpanded(Alarm alarm) {
+        public boolean isAlarmExpanded(Alarm alarm) {
             return mExpanded.contains(alarm.id);
         }
 
-        private void collapseAlarm(Alarm alarm) {
+        public void collapseAlarm(Alarm alarm) {
             mExpanded.remove(alarm.id);
         }
 
@@ -1058,7 +1058,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
             return 1;
         }
 
-        private View getViewById(int id) {
+        public View getViewById(int id) {
             int mListCount = mList.getCount(); /*Yuqi's Change*/
             for (int i = 0; i < mListCount; i++) { /*Yuqi's Change*/
                 View v = mList.getChildAt(i);
@@ -1106,7 +1106,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
             return mPreviousDaysOfWeekMap;
         }
 
-        private void buildHashSetFromArray(int[] ids, HashSet<Integer> set) {
+        public void buildHashSetFromArray(int[] ids, HashSet<Integer> set) {
             for (int id : ids) {
                 set.add(id);
             }
@@ -1129,7 +1129,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
         }
     }
 
-    private void asyncAddAlarm() {
+    public void asyncAddAlarm() {
         Alarm a = new Alarm();
         a.alert = RingtoneManager.getActualDefaultRingtoneUri(this, RingtoneManager.TYPE_ALARM);
         if (a.alert == null) {
@@ -1138,7 +1138,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
         asyncAddAlarm(a, true);
     }
 
-    private void asyncDeleteAlarm(final Integer [] alarmIds) {
+    public void asyncDeleteAlarm(final Integer [] alarmIds) {
         final AsyncTask<Integer, Void, Void> deleteTask = new AsyncTask<Integer, Void, Void>() {
             @Override
             protected Void doInBackground(Integer... ids) {
@@ -1151,7 +1151,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
         deleteTask.execute(alarmIds);
     }
 
-    private void asyncDeleteAlarm(final Alarm alarm) {
+    public void asyncDeleteAlarm(final Alarm alarm) {
         final AsyncTask<Alarm, Void, Void> deleteTask = new AsyncTask<Alarm, Void, Void>() {
 
             @Override
@@ -1175,7 +1175,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
         }, 0, getResources().getString(R.string.alarm_deleted), true, R.string.alarm_undo, true);
     }
 
-    private void asyncAddAlarm(final Alarm alarm, final boolean showTimePicker) {
+    public void asyncAddAlarm(final Alarm alarm, final boolean showTimePicker) {
         final AsyncTask<Void, Void, Void> updateTask = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... aVoid) {
@@ -1204,7 +1204,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
         updateTask.execute();
     }
 
-    private void asyncUpdateAlarm(final Alarm alarm, final boolean popToast) {
+    public void asyncUpdateAlarm(final Alarm alarm, final boolean popToast) {
         final AsyncTask<Alarm, Void, Void> updateTask = new AsyncTask<Alarm, Void, Void>() {
             @Override
             protected Void doInBackground(Alarm... alarms) {
@@ -1224,7 +1224,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
         updateTask.execute(alarm);
     }
 
-    private void popToast(Alarm alarm) {
+    public void popToast(Alarm alarm) {
         AlarmUtils.popAlarmSetToast(this, alarm.hour, alarm.minutes, alarm.daysOfWeek);
     }
 
@@ -1268,7 +1268,7 @@ public class AlarmClock extends Activity implements LoaderManager.LoaderCallback
      * Handle the delete alarms confirmation dialog
      */
 
-    private void showConfirmationDialog() {
+    public void showConfirmationDialog() {
         AlertDialog.Builder b = new AlertDialog.Builder(this);
         Resources res = getResources();
         String msg = String.format(res.getQuantityText(R.plurals.alarm_delete_confirmation,

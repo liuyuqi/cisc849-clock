@@ -20,9 +20,9 @@ import android.widget.Toast;
 
 public class ToastMaster {
 
-    private static Toast sToast = null;
+    public static Toast sToast = null;
 
-    private ToastMaster() {
+    public ToastMaster() {
 
     }
 

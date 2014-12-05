@@ -39,12 +39,12 @@ import com.android.deskclock.timer.TimerObj;
  */
 public class LabelDialogFragment extends DialogFragment {
 
-    private static final String KEY_LABEL = "label";
-    private static final String KEY_ALARM = "alarm";
-    private static final String KEY_TIMER = "timer";
-    private static final String KEY_TAG = "tag";
+    public static final String KEY_LABEL = "label";
+    public static final String KEY_ALARM = "alarm";
+    public static final String KEY_TIMER = "timer";
+    public static final String KEY_TAG = "tag";
 
-    private EditText mLabelBox;
+    public EditText mLabelBox;
 
     public static LabelDialogFragment newInstance(Alarm alarm, String label) {
         final LabelDialogFragment frag = new LabelDialogFragment();
@@ -117,7 +117,7 @@ public class LabelDialogFragment extends DialogFragment {
         return view;
     }
 
-    private void set(Alarm alarm, TimerObj timer, String tag) {
+    public void set(Alarm alarm, TimerObj timer, String tag) {
         String label = mLabelBox.getText().toString();
         if (label.trim().length() == 0) {
             // Don't allow user to input label with only whitespace.

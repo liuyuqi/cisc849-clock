@@ -36,11 +36,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class TimerReceiver extends BroadcastReceiver {
-    private static final String TAG = "TimerReceiver";
+    public static final String TAG = "TimerReceiver";
 
     // Make this a large number to avoid the alarm ID's which seem to be 1, 2, ...
     // Must also be different than StopwatchService.NOTIFICATION_ID
-    private static final int IN_USE_NOTIFICATION_ID = Integer.MAX_VALUE - 2;
+    public static final int IN_USE_NOTIFICATION_ID = Integer.MAX_VALUE - 2;
 
     ArrayList<TimerObj> mTimers;
 
@@ -139,7 +139,7 @@ public class TimerReceiver extends BroadcastReceiver {
         updateNextTimesup(context);
     }
 
-    private void stopRingtoneIfNoTimesup(final Context context) {
+    public void stopRingtoneIfNoTimesup(final Context context) {
         if (Timers.findExpiredTimer(mTimers) == null) {
             // Stop ringtone
             Log.d(TAG, "stopping ringtone");
@@ -152,10 +152,12 @@ public class TimerReceiver extends BroadcastReceiver {
     // Scan all timers and find the one that will expire next.
     // Tell AlarmManager to send a "Time's up" message to this receiver when this timer expires.
     // If no timer exists, clear "time's up" message.
-    private void updateNextTimesup(Context context) {
+
+    public void updateNextTimesup(Context context) {
         final TimerObj t = getNextRunningTimer(mTimers, false, Utils.getTimeNow());
         final long nextTimesup = (t == null) ? -1 : t.getTimesupTime();
         final int timerId = (t == null) ? -1 : t.mTimerId;
+
 
         final Intent intent = new Intent();
         intent.setAction(Timers.TIMES_UP);
@@ -175,11 +177,13 @@ public class TimerReceiver extends BroadcastReceiver {
         }
     }
 
-    private void showInUseNotification(final Context context) {
+
+    public void showInUseNotification(final Context context) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         final boolean appOpen = prefs.getBoolean(Timers.NOTIF_APP_OPEN, false);
         final ArrayList<TimerObj> timersInUse = Timers.timersInUse(mTimers);
         final int numTimersInUse = timersInUse.size();
+
 
         if (appOpen || numTimersInUse == 0) {
             return;
@@ -229,7 +233,7 @@ public class TimerReceiver extends BroadcastReceiver {
         showCollapsedNotificationWithNext(context, title, contentText, nextBroadcastTime);
     }
 
-    private long getBroadcastTime(long now, long timeUntilBroadcast) {
+    public long getBroadcastTime(long now, long timeUntilBroadcast) {
         long seconds = timeUntilBroadcast / 1000;
         seconds = seconds - ( (seconds / 60) * 60 );
         return now + (seconds * 1000);
@@ -250,7 +254,7 @@ public class TimerReceiver extends BroadcastReceiver {
                 pendingBroadcastIntent, t.mTimerId, true);
     }
 
-    private void showCollapsedNotificationWithNext(
+    public void showCollapsedNotificationWithNext(
             final Context context, String title, String text, Long nextBroadcastTime) {
         final Intent activityIntent = new Intent(context, DeskClock.class);
         activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -272,7 +276,7 @@ public class TimerReceiver extends BroadcastReceiver {
         alarmManager.set(AlarmManager.ELAPSED_REALTIME, nextBroadcastTime, pendingNextBroadcast);
     }
 
-    private static void showCollapsedNotification(final Context context, String title, String text,
+    public static void showCollapsedNotification(final Context context, String title, String text,
             int priority, PendingIntent pendingIntent, int notificationId, boolean showTicker) {
         final Notification.Builder builder = new Notification.Builder(context)
         .setAutoCancel(false)
@@ -294,7 +298,7 @@ public class TimerReceiver extends BroadcastReceiver {
         notificationManager.notify(notificationId, notification);
     }
 
-    private String buildTimeRemaining(Context context, long timeLeft) {
+    public String buildTimeRemaining(Context context, long timeLeft) {
         if (timeLeft < 0) {
             // We should never be here...
             Log.v(TAG, "Will not show notification for timer already expired.");
@@ -325,7 +329,7 @@ public class TimerReceiver extends BroadcastReceiver {
         return String.format(formats[index], hourSeq, minSeq);
     }
 
-    private TimerObj getNextRunningTimer(
+    public TimerObj getNextRunningTimer(
             ArrayList<TimerObj> timers, boolean requireNextUpdate, long now) {
         long nextTimesup = Long.MAX_VALUE;
         boolean nextTimerFound = false;
@@ -350,8 +354,10 @@ public class TimerReceiver extends BroadcastReceiver {
         }
     }
 
-    private void cancelInUseNotification(final Context context) {
+
+    public void cancelInUseNotification(final Context context) {
         final NotificationManager notificationManager =
+
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(IN_USE_NOTIFICATION_ID);
     }

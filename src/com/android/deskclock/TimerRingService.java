@@ -36,13 +36,13 @@ import com.android.deskclock.obfuscated.R;
  */
 public class TimerRingService extends Service {
 
-    private boolean mPlaying = false;
-    private MediaPlayer mMediaPlayer;
-    private TelephonyManager mTelephonyManager;
-    private int mInitialCallState;
+    public boolean mPlaying = false;
+    public MediaPlayer mMediaPlayer;
+    public TelephonyManager mTelephonyManager;
+    public int mInitialCallState;
 
 
-    private final PhoneStateListener mPhoneStateListener = new PhoneStateListener() {
+    public final PhoneStateListener mPhoneStateListener = new PhoneStateListener() {
         @Override
         public void onCallStateChanged(int state, String ignored) {
             // The user might already be in a call when the alarm fires. When
@@ -96,9 +96,9 @@ public class TimerRingService extends Service {
     }
 
     // Volume suggested by media team for in-call alarms.
-    private static final float IN_CALL_VOLUME = 0.125f;
+    public static final float IN_CALL_VOLUME = 0.125f;
 
-    private void play() {
+    public void play() {
 
         if (mPlaying) {
             return;
@@ -157,7 +157,7 @@ public class TimerRingService extends Service {
     }
 
     // Do the common stuff when starting the alarm.
-    private void startAlarm(MediaPlayer player)
+    public void startAlarm(MediaPlayer player)
             throws java.io.IOException, IllegalArgumentException,
                    IllegalStateException {
         final AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
@@ -171,7 +171,7 @@ public class TimerRingService extends Service {
         }
     }
 
-    private void setDataSourceFromResource(Resources resources,
+    public void setDataSourceFromResource(Resources resources,
             MediaPlayer player, int res) throws java.io.IOException {
     	final AssetFileDescriptor afd = resources.openRawResourceFd(res);
         if (afd != null) {

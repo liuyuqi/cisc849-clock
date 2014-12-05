@@ -269,7 +269,7 @@ public final class Alarm implements Parcelable {
      */
     static final class DaysOfWeek {
 
-        private static int[] DAY_MAP = new int[] {
+        public static int[] DAY_MAP = new int[] {
             Calendar.MONDAY,
             Calendar.TUESDAY,
             Calendar.WEDNESDAY,
@@ -280,7 +280,7 @@ public final class Alarm implements Parcelable {
         };
 
 
-        private static HashMap<Integer, Integer> DAY_TO_BIT_MASK = new HashMap<Integer, Integer>();
+        public static HashMap<Integer, Integer> DAY_TO_BIT_MASK = new HashMap<Integer, Integer>();
         static {
             for (int i = 0; i < DAY_MAP.length; i++) {
                 DAY_TO_BIT_MASK.put(DAY_MAP[i], i);
@@ -288,7 +288,7 @@ public final class Alarm implements Parcelable {
         }
 
         // Bitmask of all repeating days
-        private int mDays;
+        public int mDays;
 
         DaysOfWeek(int days) {
             mDays = days;
@@ -302,7 +302,7 @@ public final class Alarm implements Parcelable {
             return toString(context, false, true);
         }
 
-        private String toString(Context context, boolean showNever, boolean forAccessibility) {
+        public String toString(Context context, boolean showNever, boolean forAccessibility) {
             StringBuilder ret = new StringBuilder();
 
             // no days
@@ -341,7 +341,7 @@ public final class Alarm implements Parcelable {
             return ret.toString();
         }
 
-        private boolean isSet(int day) {
+        public boolean isSet(int day) {
             return ((mDays & (1 << day)) > 0);
         }
 
