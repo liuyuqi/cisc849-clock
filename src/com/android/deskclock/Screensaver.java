@@ -40,12 +40,12 @@ public class Screensaver extends DreamService {
     static final boolean DEBUG = false;
     static final String TAG = "DeskClock/Screensaver";
 
-    private View mContentView, mSaverView;
-    private View mAnalogClock, mDigitalClock;
+    public View mContentView, mSaverView;
+    public View mAnalogClock, mDigitalClock;
 
-    private final Handler mHandler = new Handler();
+    public final Handler mHandler = new Handler();
 
-    private final ScreensaverMoveSaverRunnable mMoveSaverRunnable;
+    public final ScreensaverMoveSaverRunnable mMoveSaverRunnable;
 
     public Screensaver() {
         if (DEBUG) Log.d(TAG, "Screensaver allocated");
@@ -90,7 +90,7 @@ public class Screensaver extends DreamService {
         mHandler.removeCallbacks(mMoveSaverRunnable);
     }
 
-    private void setClockStyle() {
+    public void setClockStyle() {
         Utils.setClockStyle(this, mDigitalClock, mAnalogClock,
                 ScreensaverSettingsActivity.KEY_CLOCK_STYLE);
         mSaverView = findViewById(R.id.main_clock);
@@ -100,7 +100,7 @@ public class Screensaver extends DreamService {
         setScreenBright(!dimNightMode);
     }
 
-    private void layoutClockSaver() {
+    public void layoutClockSaver() {
         setContentView(R.layout.desk_clock_saver);
         mDigitalClock = findViewById(R.id.digital_clock);
         mAnalogClock =findViewById(R.id.analog_clock);

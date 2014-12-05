@@ -31,9 +31,9 @@ import com.android.deskclock.obfuscated.R;
  * we override onSaveRingtone and onRestoreRingtone to get the same behavior.
  */
 public class AlarmPreference extends RingtonePreference {
-    private Uri mAlert;
-    private boolean mChangeDefault;
-    private AsyncTask mRingtoneTask;
+    public Uri mAlert;
+    public boolean mChangeDefault;
+    public AsyncTask mRingtoneTask;
 
     public AlarmPreference(Context context, AttributeSet attrs) {
         super(context, attrs);

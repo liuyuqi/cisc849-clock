@@ -35,17 +35,17 @@ public class AlarmAlert extends AlarmAlertFullScreen {
 
     // If we try to check the keyguard more than 5 times, just launch the full
     // screen activity.
-    private int mKeyguardRetryCount;
-    private final int MAX_KEYGUARD_CHECKS = 5;
+    public int mKeyguardRetryCount;
+    public final int MAX_KEYGUARD_CHECKS = 5;
 
-    private final Handler mHandler = new Handler() {
+    public final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             handleScreenOff((KeyguardManager) msg.obj);
         }
     };
 
-    private final BroadcastReceiver mScreenOffReceiver =
+    public final BroadcastReceiver mScreenOffReceiver =
             new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
@@ -87,7 +87,7 @@ public class AlarmAlert extends AlarmAlertFullScreen {
         return R.layout.alarm_alert;
     }
 
-    private boolean checkRetryCount() {
+    public boolean checkRetryCount() {
         if (mKeyguardRetryCount++ >= MAX_KEYGUARD_CHECKS) {
             Log.e("Tried to read keyguard status too many times, bailing...");
             return false;
@@ -95,7 +95,7 @@ public class AlarmAlert extends AlarmAlertFullScreen {
         return true;
     }
 
-    private void handleScreenOff(final KeyguardManager km) {
+    public void handleScreenOff(final KeyguardManager km) {
         if (!km.inKeyguardRestrictedInputMode() && checkRetryCount()) {
             if (checkRetryCount()) {
                 mHandler.sendMessageDelayed(mHandler.obtainMessage(0, km), 500);

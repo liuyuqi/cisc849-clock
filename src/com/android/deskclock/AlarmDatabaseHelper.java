@@ -31,8 +31,8 @@ import android.net.Uri;
  */
 class AlarmDatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "alarms.db";
-    private static final int DATABASE_VERSION = 5;
+    public static final String DATABASE_NAME = "alarms.db";
+    public static final int DATABASE_VERSION = 5;
 
     public AlarmDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

@@ -24,8 +24,8 @@ import android.graphics.drawable.StateListDrawable;
 import android.util.Log;
 
 public class TargetDrawable {
-    private static final String TAG = "TargetDrawable";
-    private static final boolean DEBUG = false;
+    public static final String TAG = "TargetDrawable";
+    public static final boolean DEBUG = false;
 
     public static final int[] STATE_ACTIVE =
             { android.R.attr.state_enabled, android.R.attr.state_active };
@@ -35,21 +35,21 @@ public class TargetDrawable {
             { android.R.attr.state_enabled, -android.R.attr.state_active,
                 android.R.attr.state_focused };
 
-    private float mTranslationX = 0.0f;
-    private float mTranslationY = 0.0f;
-    private float mPositionX = 0.0f;
-    private float mPositionY = 0.0f;
-    private float mScaleX = 1.0f;
-    private float mScaleY = 1.0f;
-    private float mAlpha = 1.0f;
-    private Drawable mDrawable;
-    private boolean mEnabled = true;
-    private final int mResourceId;
-    private int mNumDrawables = 1;
+    public float mTranslationX = 0.0f;
+    public float mTranslationY = 0.0f;
+    public float mPositionX = 0.0f;
+    public float mPositionY = 0.0f;
+    public float mScaleX = 1.0f;
+    public float mScaleY = 1.0f;
+    public float mAlpha = 1.0f;
+    public Drawable mDrawable;
+    public boolean mEnabled = true;
+    public final int mResourceId;
+    public int mNumDrawables = 1;
 
     /* package */ static class DrawableWithAlpha extends Drawable {
-        private float mAlpha = 1.0f;
-        private Drawable mRealDrawable;
+        public float mAlpha = 1.0f;
+        public Drawable mRealDrawable;
         public DrawableWithAlpha(Drawable realDrawable) {
             mRealDrawable = realDrawable;
         }
@@ -79,7 +79,7 @@ public class TargetDrawable {
 
     /**
      * This is changed from the framework version to pass in the number of drawables in the
-     * container. The framework version relies on private api's to get the count from
+     * container. The framework version relies on public api's to get the count from
      * StateListDrawable.
      *
      * @param res
@@ -150,7 +150,7 @@ public class TargetDrawable {
      * If not a StateListDrawable, then justs sets the bounds to the intrinsic size of the
      * drawable.
      */
-    private void resizeDrawables() {
+    public void resizeDrawables() {
         if (mDrawable instanceof StateListDrawable) {
             StateListDrawable d = (StateListDrawable) mDrawable;
             int maxWidth = 0;

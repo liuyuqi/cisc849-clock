@@ -43,7 +43,7 @@ import java.util.TimeZone;
 public class SettingsActivity extends PreferenceActivity
         implements Preference.OnPreferenceChangeListener {
 
-    private static final int ALARM_STREAM_TYPE_BIT =
+    public static final int ALARM_STREAM_TYPE_BIT =
             1 << AudioManager.STREAM_ALARM;
 
     static final String KEY_ALARM_IN_SILENT_MODE =
@@ -65,8 +65,8 @@ public class SettingsActivity extends PreferenceActivity
 
     public static final String DEFAULT_VOLUME_BEHAVIOR = "0";
 
-    private static CharSequence[][] mTimezones;
-    private long mTime;
+    public static CharSequence[][] mTimezones;
+    public long mTime;
 
 
     @Override
@@ -176,7 +176,7 @@ public class SettingsActivity extends PreferenceActivity
         return true;
     }
 
-    private void updateAutoSnoozeSummary(ListPreference listPref,
+    public void updateAutoSnoozeSummary(ListPreference listPref,
             String delay) {
         int i = Integer.parseInt(delay);
         if (i == -1) {
@@ -186,13 +186,13 @@ public class SettingsActivity extends PreferenceActivity
         }
     }
 
-    private void notifyHomeTimeZoneChanged() {
+    public void notifyHomeTimeZoneChanged() {
         Intent i = new Intent(Cities.WORLDCLOCK_UPDATE_INTENT);
         sendBroadcast(i);
     }
 
 
-    private void refresh() {
+    public void refresh() {
         ListPreference listPref = (ListPreference) findPreference(KEY_AUTO_SILENCE);
         String delay = listPref.getValue();
         updateAutoSnoozeSummary(listPref, delay);
@@ -218,8 +218,8 @@ public class SettingsActivity extends PreferenceActivity
         snoozePref.setSummary();
     }
 
-    private class TimeZoneRow implements Comparable<TimeZoneRow> {
-        private static final boolean SHOW_DAYLIGHT_SAVINGS_INDICATOR = false;
+    public class TimeZoneRow implements Comparable<TimeZoneRow> {
+        public static final boolean SHOW_DAYLIGHT_SAVINGS_INDICATOR = false;
 
         public final String mId;
         public final String mDisplayName;

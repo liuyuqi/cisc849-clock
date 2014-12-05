@@ -44,21 +44,21 @@ import com.android.deskclock.obfuscated.R;
 public class SetAlarm extends PreferenceActivity implements Preference.OnPreferenceChangeListener,
         AlarmTimePickerDialogFragment.AlarmTimePickerDialogHandler {
 
-    private static final String KEY_CURRENT_ALARM = "currentAlarm";
-    private static final String KEY_ORIGINAL_ALARM = "originalAlarm";
-    private static final String KEY_TIME_PICKER_BUNDLE = "timePickerBundle";
+    public static final String KEY_CURRENT_ALARM = "currentAlarm";
+    public static final String KEY_ORIGINAL_ALARM = "originalAlarm";
+    public static final String KEY_TIME_PICKER_BUNDLE = "timePickerBundle";
 
-    private EditText mLabel;
-    private CheckBoxPreference mEnabledPref;
-    private Preference mTimePref;
-    private AlarmPreference mAlarmPref;
-    private CheckBoxPreference mVibratePref;
-    private RepeatPreference mRepeatPref;
+    public EditText mLabel;
+    public CheckBoxPreference mEnabledPref;
+    public Preference mTimePref;
+    public AlarmPreference mAlarmPref;
+    public CheckBoxPreference mVibratePref;
+    public RepeatPreference mRepeatPref;
 
-    private int     mId;
-    private int     mHour;
-    private int     mMinute;
-    private Alarm   mOriginalAlarm;
+    public int     mId;
+    public int     mHour;
+    public int     mMinute;
+    public Alarm   mOriginalAlarm;
 
     @Override
     protected void onCreate(Bundle icicle) {
@@ -209,7 +209,7 @@ public class SetAlarm extends PreferenceActivity implements Preference.OnPrefere
     }
 
     // Used to post runnables asynchronously.
-    private static final Handler sHandler = new Handler();
+    public static final Handler sHandler = new Handler();
 
     public boolean onPreferenceChange(final Preference p, Object newValue) {
         // Asynchronously save the alarm since this method is called _before_
@@ -226,7 +226,7 @@ public class SetAlarm extends PreferenceActivity implements Preference.OnPrefere
         return true;
     }
 
-    private void updatePrefs(Alarm alarm) {
+    public void updatePrefs(Alarm alarm) {
         mId = alarm.id;
         mEnabledPref.setChecked(alarm.enabled);
         mLabel.setText(alarm.label);
@@ -254,7 +254,7 @@ public class SetAlarm extends PreferenceActivity implements Preference.OnPrefere
         saveAndExit();
     }
 
-    private void showTimePicker() {
+    public void showTimePicker() {
         AlarmUtils.showTimeEditDialog(getFragmentManager(), null);
     }
 
@@ -269,12 +269,12 @@ public class SetAlarm extends PreferenceActivity implements Preference.OnPrefere
         saveAlarm(null);
     }
 
-    private void updateTime() {
+    public void updateTime() {
         mTimePref.setSummary(Alarms.formatTime(this, mHour, mMinute,
                 mRepeatPref.getDaysOfWeek()));
     }
 
-    private long saveAlarm(Alarm alarm) {
+    public long saveAlarm(Alarm alarm) {
         if (alarm == null) {
             alarm = buildAlarmFromUi();
         }
@@ -291,7 +291,7 @@ public class SetAlarm extends PreferenceActivity implements Preference.OnPrefere
         return time;
     }
 
-    private Alarm buildAlarmFromUi() {
+    public Alarm buildAlarmFromUi() {
         Alarm alarm = new Alarm();
         alarm.id = mId;
         alarm.enabled = mEnabledPref.isChecked();
@@ -304,7 +304,7 @@ public class SetAlarm extends PreferenceActivity implements Preference.OnPrefere
         return alarm;
     }
 
-    private void deleteAlarm() {
+    public void deleteAlarm() {
         if (mId == -1) {
             // Unedited, newly created alarms don't require confirmation
             finish();
@@ -324,7 +324,7 @@ public class SetAlarm extends PreferenceActivity implements Preference.OnPrefere
         }
     }
 
-    private void revert() {
+    public void revert() {
         int newId = mId;
         // "Revert" on a newly created alarm should delete it.
         if (mOriginalAlarm.id == -1) {
@@ -338,7 +338,7 @@ public class SetAlarm extends PreferenceActivity implements Preference.OnPrefere
      * Store any changes to the alarm and exit the activity.
      * Show a toast if the alarm is enabled with the time remaining until alarm
      */
-    private void saveAndExit() {
+    public void saveAndExit() {
         long time = saveAlarm(null);
         if(mEnabledPref.isChecked()) {
             AlarmUtils.popAlarmSetToast(SetAlarm.this, time);

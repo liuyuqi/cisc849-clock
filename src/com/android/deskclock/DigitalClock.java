@@ -39,24 +39,24 @@ import java.util.TimeZone;
  */
 public class DigitalClock extends LinearLayout {
 
-    private final static String HOURS_24 = "kk";
-    private final static String HOURS = "h";
-    private final static String MINUTES = ":mm";
+    public final static String HOURS_24 = "kk";
+    public final static String HOURS = "h";
+    public final static String MINUTES = ":mm";
 
-    private Calendar mCalendar;
-    private String mHoursFormat;
-    private TextView mTimeDisplayHours, mTimeDisplayMinutes;
-    private AmPm mAmPm;
-    private ContentObserver mFormatChangeObserver;
-    private boolean mLive = true;
-    private boolean mAttached;
-    private final Typeface mRobotoThin;
-    private String mTimeZoneId;
+    public Calendar mCalendar;
+    public String mHoursFormat;
+    public TextView mTimeDisplayHours, mTimeDisplayMinutes;
+    public AmPm mAmPm;
+    public ContentObserver mFormatChangeObserver;
+    public boolean mLive = true;
+    public boolean mAttached;
+    public final Typeface mRobotoThin;
+    public String mTimeZoneId;
 
 
     /* called by system on minute ticks */
-    private final Handler mHandler = new Handler();
-    private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
+    public final Handler mHandler = new Handler();
+    public final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (mLive && intent.getAction().equals(
@@ -73,8 +73,8 @@ public class DigitalClock extends LinearLayout {
         };
 
     static class AmPm {
-        private final TextView mAmPm;
-        private final String mAmString, mPmString;
+        public final TextView mAmPm;
+        public final String mAmString, mPmString;
 
         AmPm(View parent) {
             mAmPm = (TextView) parent.findViewById(R.id.am_pm);
@@ -97,7 +97,7 @@ public class DigitalClock extends LinearLayout {
         }
     }
 
-    private class FormatChangeObserver extends ContentObserver {
+    public class FormatChangeObserver extends ContentObserver {
         public FormatChangeObserver() {
             super(new Handler());
         }
@@ -185,7 +185,7 @@ public class DigitalClock extends LinearLayout {
         updateTime();
     }
 
-    private void updateTime() {
+    public void updateTime() {
         if (mLive) {
             mCalendar.setTimeInMillis(System.currentTimeMillis());
         }
@@ -211,7 +211,7 @@ public class DigitalClock extends LinearLayout {
         setContentDescription(fullTimeStr);
     }
 
-    private void setDateFormat() {
+    public void setDateFormat() {
         mHoursFormat = Alarms.get24HourMode(getContext()) ? HOURS_24 : HOURS;
         mAmPm.setShowAmPm(!Alarms.get24HourMode(getContext()));
     }

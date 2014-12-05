@@ -23,7 +23,7 @@ import com.android.deskclock.obfuscated.R;
 import java.text.DecimalFormatSymbols;
 
 public class Stopwatches {
-    // Private actions processed by the receiver
+    // public actions processed by the receiver
     public static final String START_STOPWATCH = "start_stopwatch";
     public static final String LAP_STOPWATCH = "lap_stopwatch";
     public static final String STOP_STOPWATCH = "stop_stopwatch";
@@ -51,7 +51,7 @@ public class Stopwatches {
     public static final int MAX_LAPS = 99;
     public static final int NO_LAP_NUMBER = -1;
 
-    private static String[] mFormats = null;
+    public static String[] mFormats = null;
 
     public static String getShareTitle(Context context) {
         String [] mLabels = context.getResources().getStringArray(R.array.sw_share_strings);

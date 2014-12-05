@@ -29,12 +29,12 @@ import com.android.deskclock.ZeroTopPaddingTextView;
 
 public class TimerView extends LinearLayout {
 
-    private ZeroTopPaddingTextView mHoursOnes, mMinutesOnes;
-    private ZeroTopPaddingTextView mHoursTens, mMinutesTens;
-    private TextView mSeconds;
-    private final Typeface mAndroidClockMonoThin;
-    private Typeface mOriginalHoursTypeface;
-    private final int mWhiteColor, mGrayColor;
+    public ZeroTopPaddingTextView mHoursOnes, mMinutesOnes;
+    public ZeroTopPaddingTextView mHoursTens, mMinutesTens;
+    public TextView mSeconds;
+    public final Typeface mAndroidClockMonoThin;
+    public Typeface mOriginalHoursTypeface;
+    public final int mWhiteColor, mGrayColor;
 
     public TimerView(Context context) {
         this(context, null);

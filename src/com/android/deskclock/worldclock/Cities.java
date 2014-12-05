@@ -26,7 +26,7 @@ import java.util.Iterator;
 public class Cities {
 
     public static final String WORLDCLOCK_UPDATE_INTENT = "com.android.deskclock.worldclock.update";
-    private static final String NUMBER_OF_CITIES = "number_of_cities";
+    public static final String NUMBER_OF_CITIES = "number_of_cities";
 
     public static void saveCitiesToSharedPrefs(
             SharedPreferences prefs, HashMap<String, CityObj> cities) {
@@ -57,7 +57,7 @@ public class Cities {
         return c;
     }
 
-    private static void dumpCities(SharedPreferences prefs, String title) {
+    public static void dumpCities(SharedPreferences prefs, String title) {
         int size = prefs.getInt(NUMBER_OF_CITIES, -1);
         Log.d("Cities", "Selected Cities List " + title);
         Log.d("Cities", "Number of cities " + size);

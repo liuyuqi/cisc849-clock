@@ -25,9 +25,9 @@ import android.os.HandlerThread;
  */
 final class AsyncHandler {
 
-    private static final HandlerThread sHandlerThread =
+    public static final HandlerThread sHandlerThread =
             new HandlerThread("AsyncHandler");
-    private static final Handler sHandler;
+    public static final Handler sHandler;
 
     static {
         sHandlerThread.start();
@@ -38,5 +38,5 @@ final class AsyncHandler {
         sHandler.post(r);
     }
 
-    private AsyncHandler() {}
+    public AsyncHandler() {}
 }

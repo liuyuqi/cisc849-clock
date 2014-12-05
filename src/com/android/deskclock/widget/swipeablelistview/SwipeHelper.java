@@ -38,54 +38,54 @@ import com.android.deskclock.obfuscated.R;
  */
 public class SwipeHelper {
     static final String TAG = "com.android.systemui.SwipeHelper";
-    private static final boolean DEBUG_INVALIDATE = false;
-    private static final boolean CONSTRAIN_SWIPE = true;
-    private static final boolean FADE_OUT_DURING_SWIPE = true;
-    private static final boolean DISMISS_IF_SWIPED_FAR_ENOUGH = true;
-    private static final boolean LOG_SWIPE_DISMISS_VELOCITY = false; // STOPSHIP - DEBUG ONLY
+    public static final boolean DEBUG_INVALIDATE = false;
+    public static final boolean CONSTRAIN_SWIPE = true;
+    public static final boolean FADE_OUT_DURING_SWIPE = true;
+    public static final boolean DISMISS_IF_SWIPED_FAR_ENOUGH = true;
+    public static final boolean LOG_SWIPE_DISMISS_VELOCITY = false; // STOPSHIP - DEBUG ONLY
 
     public static final int X = 0;
     public static final int Y = 1;
 
-    private static LinearInterpolator sLinearInterpolator = new LinearInterpolator();
+    public static LinearInterpolator sLinearInterpolator = new LinearInterpolator();
 
-    private static int SWIPE_ESCAPE_VELOCITY = -1;
-    private static int DEFAULT_ESCAPE_ANIMATION_DURATION;
-    private static int MAX_ESCAPE_ANIMATION_DURATION;
-    private static int MAX_DISMISS_VELOCITY;
-    private static int SNAP_ANIM_LEN;
-    private static int DISMISS_ANIMATION_DURATION;
-    private static int SWIPE_SCROLL_SLOP;
-    private static float MIN_SWIPE;
-    private static float MIN_VERT;
-    private static float MIN_LOCK;
+    public static int SWIPE_ESCAPE_VELOCITY = -1;
+    public static int DEFAULT_ESCAPE_ANIMATION_DURATION;
+    public static int MAX_ESCAPE_ANIMATION_DURATION;
+    public static int MAX_DISMISS_VELOCITY;
+    public static int SNAP_ANIM_LEN;
+    public static int DISMISS_ANIMATION_DURATION;
+    public static int SWIPE_SCROLL_SLOP;
+    public static float MIN_SWIPE;
+    public static float MIN_VERT;
+    public static float MIN_LOCK;
 
     public static float ALPHA_FADE_START = 0f; // fraction of thumbnail width
                                                  // where fade starts
     static final float ALPHA_FADE_END = 0.7f; // fraction of thumbnail width
                                               // beyond which alpha->0
-    private static final float FACTOR = 1.2f;
+    public static final float FACTOR = 1.2f;
 
-    private static final int PROTECTION_PADDING = 50;
+    public static final int PROTECTION_PADDING = 50;
 
-    private float mMinAlpha = 0.3f;
+    public float mMinAlpha = 0.3f;
 
-    private float mPagingTouchSlop;
-    private final Callback mCallback;
-    private final int mSwipeDirection;
-    private final VelocityTracker mVelocityTracker;
+    public float mPagingTouchSlop;
+    public final Callback mCallback;
+    public final int mSwipeDirection;
+    public final VelocityTracker mVelocityTracker;
 
-    private float mInitialTouchPosX;
-    private boolean mDragging;
-    private View mCurrView;
-    private View mCurrAnimView;
-    private boolean mCanCurrViewBeDimissed;
-    private float mDensityScale;
-    private float mLastY;
-    private float mInitialTouchPosY;
+    public float mInitialTouchPosX;
+    public boolean mDragging;
+    public View mCurrView;
+    public View mCurrAnimView;
+    public boolean mCanCurrViewBeDimissed;
+    public float mDensityScale;
+    public float mLastY;
+    public float mInitialTouchPosY;
 
-    private float mStartAlpha;
-    private boolean mProtected = false;
+    public float mStartAlpha;
+    public boolean mProtected = false;
 
     public SwipeHelper(Context context, int swipeDirection, Callback callback, float densityScale,
             float pagingTouchSlop) {
@@ -117,30 +117,30 @@ public class SwipeHelper {
         mPagingTouchSlop = pagingTouchSlop;
     }
 
-    private float getVelocity(VelocityTracker vt) {
+    public float getVelocity(VelocityTracker vt) {
         return mSwipeDirection == X ? vt.getXVelocity() :
                 vt.getYVelocity();
     }
 
-    private ObjectAnimator createTranslationAnimation(View v, float newPos) {
+    public ObjectAnimator createTranslationAnimation(View v, float newPos) {
         ObjectAnimator anim = ObjectAnimator.ofFloat(v,
                 mSwipeDirection == X ? "translationX" : "translationY", newPos);
         return anim;
     }
 
-    private ObjectAnimator createDismissAnimation(View v, float newPos, int duration) {
+    public ObjectAnimator createDismissAnimation(View v, float newPos, int duration) {
         ObjectAnimator anim = createTranslationAnimation(v, newPos);
         anim.setInterpolator(sLinearInterpolator);
         anim.setDuration(duration);
         return anim;
     }
 
-    private float getPerpendicularVelocity(VelocityTracker vt) {
+    public float getPerpendicularVelocity(VelocityTracker vt) {
         return mSwipeDirection == X ? vt.getYVelocity() :
                 vt.getXVelocity();
     }
 
-    private void setTranslation(View v, float translate) {
+    public void setTranslation(View v, float translate) {
         if (mSwipeDirection == X) {
             v.setTranslationX(translate);
         } else {
@@ -148,7 +148,7 @@ public class SwipeHelper {
         }
     }
 
-    private float getSize(View v) {
+    public float getSize(View v) {
         return mSwipeDirection == X ? v.getMeasuredWidth() :
                 v.getMeasuredHeight();
     }
@@ -157,7 +157,7 @@ public class SwipeHelper {
         mMinAlpha = minAlpha;
     }
 
-    private float getAlphaForOffset(View view) {
+    public float getAlphaForOffset(View view) {
         float viewSize = getSize(view);
         final float fadeSize = ALPHA_FADE_END * viewSize;
         float result = mStartAlpha;
@@ -290,7 +290,7 @@ public class SwipeHelper {
      * @param velocity The desired pixels/second speed at which the view should
      *            move
      */
-    private void dismissChild(final View view, float velocity) {
+    public void dismissChild(final View view, float velocity) {
         final View animView = mCallback.getChildContentView(view);
         final boolean canAnimViewBeDismissed = mCallback.canChildBeDismissed(view);
         float newPos = determinePos(animView, velocity);
@@ -317,7 +317,7 @@ public class SwipeHelper {
         anim.start();
     }
 
-    private int determineDuration(View animView, float newPos, float velocity) {
+    public int determineDuration(View animView, float newPos, float velocity) {
         int duration = MAX_ESCAPE_ANIMATION_DURATION;
         if (velocity != 0) {
             duration = Math
@@ -330,7 +330,7 @@ public class SwipeHelper {
         return duration;
     }
 
-    private float determinePos(View animView, float velocity) {
+    public float determinePos(View animView, float velocity) {
         float newPos = 0;
         if (velocity < 0 || (velocity == 0 && animView.getTranslationX() < 0)
         // if we use the Menu to dismiss an item in landscape, animate up

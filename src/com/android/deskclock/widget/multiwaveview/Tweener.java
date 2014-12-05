@@ -31,17 +31,17 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 class Tweener {
-    private static final String TAG = "Tweener";
-    private static final boolean DEBUG = false;
+    public static final String TAG = "Tweener";
+    public static final boolean DEBUG = false;
 
     ObjectAnimator animator;
-    private static HashMap<Object, Tweener> sTweens = new HashMap<Object, Tweener>();
+    public static HashMap<Object, Tweener> sTweens = new HashMap<Object, Tweener>();
 
     public Tweener(ObjectAnimator anim) {
         animator = anim;
     }
 
-    private static void remove(Animator animator) {
+    public static void remove(Animator animator) {
         Iterator<Entry<Object, Tweener>> iter = sTweens.entrySet().iterator();
         while (iter.hasNext()) {
             Entry<Object, Tweener> entry = iter.next();
@@ -138,7 +138,7 @@ class Tweener {
     }
 
     // Listener to watch for completed animations and remove them.
-    private static AnimatorListener mCleanupListener = new AnimatorListenerAdapter() {
+    public static AnimatorListener mCleanupListener = new AnimatorListenerAdapter() {
 
         @Override
         public void onAnimationEnd(Animator animation) {
@@ -161,7 +161,7 @@ class Tweener {
         sTweens.clear();
     }
 
-    private static void replace(ArrayList<PropertyValuesHolder> props, Object... args) {
+    public static void replace(ArrayList<PropertyValuesHolder> props, Object... args) {
         for (final Object killobject : args) {
             Tweener tween = sTweens.get(killobject);
             if (tween != null) {

@@ -28,11 +28,11 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 public class AlarmProvider extends ContentProvider {
-    private AlarmDatabaseHelper mOpenHelper;
+    public AlarmDatabaseHelper mOpenHelper;
 
-    private static final int ALARMS = 1;
-    private static final int ALARMS_ID = 2;
-    private static final UriMatcher sURLMatcher = new UriMatcher(
+    public static final int ALARMS = 1;
+    public static final int ALARMS_ID = 2;
+    public static final UriMatcher sURLMatcher = new UriMatcher(
             UriMatcher.NO_MATCH);
 
     static {

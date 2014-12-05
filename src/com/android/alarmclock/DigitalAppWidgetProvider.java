@@ -43,7 +43,7 @@ import com.android.deskclock.worldclock.CitiesActivity;
 import java.util.Calendar;
 
 public class DigitalAppWidgetProvider extends AppWidgetProvider {
-    private static final String TAG = "DigitalAppWidgetProvider";
+    public static final String TAG = "DigitalAppWidgetProvider";
 
     public DigitalAppWidgetProvider() {
     }
@@ -71,7 +71,7 @@ public class DigitalAppWidgetProvider extends AppWidgetProvider {
         return new ComponentName(context, DigitalAppWidgetProvider.class);
     }
 
-    private void updateClock(
+    public void updateClock(
             Context c, AppWidgetManager appWidgetManager, int appWidgetId, float ratio) {
         RemoteViews widget = new RemoteViews(c.getPackageName(), R.layout.digital_appwidget);
         // launch clock when clicking on the time in the widget only if not a lock screen widget
@@ -95,7 +95,7 @@ public class DigitalAppWidgetProvider extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(appWidgetId, widget);
     }
 
-    private void refreshAlarm(Context c, RemoteViews clock) {
+    public void refreshAlarm(Context c, RemoteViews clock) {
         String nextAlarm = Settings.System.getString(
                 c.getContentResolver(), Settings.System.NEXT_ALARM_FORMATTED);
         if (!TextUtils.isEmpty(nextAlarm)) {

@@ -42,18 +42,18 @@ import java.util.List;
 public class StopwatchFragment extends DeskClockFragment
         implements OnSharedPreferenceChangeListener {
 
-    private static final String TAG = "StopwatchFragment";
+    public static final String TAG = "StopwatchFragment";
     int mState = Stopwatches.STOPWATCH_RESET;
 
     // Stopwatch views that are accessed by the activity
-    private ImageButton mLeftButton;
-    private TextView mCenterButton;
-    private CircleTimerView mTime;
-    private CountingTimerView mTimeText;
-    private ListView mLapsList;
-    private ImageButton mShareButton;
-    private ListPopupWindow mSharePopup;
-    private WakeLock mWakeLock;
+    public ImageButton mLeftButton;
+    public TextView mCenterButton;
+    public CircleTimerView mTime;
+    public CountingTimerView mTimeText;
+    public ListView mLapsList;
+    public ImageButton mShareButton;
+    public ListPopupWindow mSharePopup;
+    public WakeLock mWakeLock;
 
     // Used for calculating the time from the start taking into account the pause times
     long mStartTime = 0;
@@ -78,21 +78,21 @@ public class StopwatchFragment extends DeskClockFragment
     class LapsListAdapter extends BaseAdapter {
 
         ArrayList<Lap> mLaps = new ArrayList<Lap>();
-        private final LayoutInflater mInflater;
-        private final int mBackgroundColor;
-        private final String[] mFormats;
-        private final String[] mLapFormatSet;
+        public final LayoutInflater mInflater;
+        public final int mBackgroundColor;
+        public final String[] mFormats;
+        public final String[] mLapFormatSet;
         // Size of this array must match the size of formats
-        private final long[] mThresholds = {
+        public final long[] mThresholds = {
                 10 * DateUtils.MINUTE_IN_MILLIS, // < 10 minutes
                 DateUtils.HOUR_IN_MILLIS, // < 1 hour
                 10 * DateUtils.HOUR_IN_MILLIS, // < 10 hours
                 100 * DateUtils.HOUR_IN_MILLIS, // < 100 hours
                 1000 * DateUtils.HOUR_IN_MILLIS // < 1000 hours
         };
-        private int mLapIndex = 0;
-        private int mTotalIndex = 0;
-        private String mLapFormat;
+        public int mLapIndex = 0;
+        public int mTotalIndex = 0;
+        public String mLapFormat;
 
         public LapsListAdapter(Context context) {
             mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -144,12 +144,12 @@ public class StopwatchFragment extends DeskClockFragment
             return mLaps.get(position);
         }
 
-        private void updateLapFormat() {
+        public void updateLapFormat() {
             // Note Stopwatches.MAX_LAPS < 100
             mLapFormat = mLapFormatSet[mLaps.size() < 10 ? 0 : 1];
         }
 
-        private void resetTimeFormats() {
+        public void resetTimeFormats() {
             mLapIndex = mTotalIndex = 0;
         }
 
@@ -215,17 +215,17 @@ public class StopwatchFragment extends DeskClockFragment
     }
 
     // Keys for data stored in the activity's bundle
-    private static final String START_TIME_KEY = "start_time";
-    private static final String ACCUM_TIME_KEY = "accum_time";
-    private static final String STATE_KEY = "state";
-    private static final String LAPS_KEY = "laps";
+    public static final String START_TIME_KEY = "start_time";
+    public static final String ACCUM_TIME_KEY = "accum_time";
+    public static final String STATE_KEY = "state";
+    public static final String LAPS_KEY = "laps";
 
     LapsListAdapter mLapsAdapter;
 
     public StopwatchFragment() {
     }
 
-    private void rightButtonAction() {
+    public void rightButtonAction() {
         long time = Utils.getTimeNow();
         Context context = getActivity().getApplicationContext();
         Intent intent = new Intent(context, StopwatchService.class);
@@ -400,7 +400,7 @@ public class StopwatchFragment extends DeskClockFragment
         }
     }
 
-    private void doStop() {
+    public void doStop() {
         stopUpdateThread();
         mTime.pauseIntervalAnimation();
         mTimeText.setTime(mAccumulatedTime, true, true);
@@ -410,7 +410,7 @@ public class StopwatchFragment extends DeskClockFragment
         mState = Stopwatches.STOPWATCH_STOPPED;
     }
 
-    private void doStart(long time) {
+    public void doStart(long time) {
         mStartTime = time;
         startUpdateThread();
         mTimeText.blinkTimeStr(false);
@@ -421,12 +421,12 @@ public class StopwatchFragment extends DeskClockFragment
         mState = Stopwatches.STOPWATCH_RUNNING;
     }
 
-    private void doLap() {
+    public void doLap() {
         showLaps();
         setButtons(Stopwatches.STOPWATCH_RUNNING);
     }
 
-    private void doReset() {
+    public void doReset() {
         SharedPreferences prefs =
                 PreferenceManager.getDefaultSharedPreferences(getActivity());
         Utils.clearSwSharedPref(prefs);
@@ -442,14 +442,14 @@ public class StopwatchFragment extends DeskClockFragment
         mState = Stopwatches.STOPWATCH_RESET;
     }
 
-    private void showShareButton(boolean show) {
+    public void showShareButton(boolean show) {
         if (mShareButton != null) {
             mShareButton.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
             mShareButton.setEnabled(show);
         }
     }
 
-    private void showSharePopup() {
+    public void showSharePopup() {
         Intent intent = getShareIntent();
 
         Activity parent = getActivity();
@@ -535,7 +535,7 @@ public class StopwatchFragment extends DeskClockFragment
         mSharePopup.show();
     }
 
-    private Intent getShareIntent() {
+    public Intent getShareIntent() {
         Intent intent = new Intent(android.content.Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
@@ -548,7 +548,7 @@ public class StopwatchFragment extends DeskClockFragment
     }
 
     /** Turn laps as they would be saved in prefs into format for sharing. **/
-    private long[] getLapShareTimes(long[] input) {
+    public long[] getLapShareTimes(long[] input) {
         if (input == null) {
             return null;
         }
@@ -568,7 +568,7 @@ public class StopwatchFragment extends DeskClockFragment
     /***
      * Update the buttons on the stopwatch according to the watch's state
      */
-    private void setButtons(int state) {
+    public void setButtons(int state) {
         switch (state) {
             case Stopwatches.STOPWATCH_RESET:
                 setButton(mLeftButton, R.string.sw_lap_button, R.drawable.ic_lap, false,
@@ -592,7 +592,7 @@ public class StopwatchFragment extends DeskClockFragment
                 break;
         }
     }
-    private boolean reachedMaxLaps() {
+    public boolean reachedMaxLaps() {
         return mLapsAdapter.getCount() >= Stopwatches.MAX_LAPS;
     }
 
@@ -603,7 +603,7 @@ public class StopwatchFragment extends DeskClockFragment
      * @param enabled - enable/disables the button
      * @param visibility - Show/hide the button
      */
-    private void setButton(
+    public void setButton(
             ImageButton b, int text, int drawableId, boolean enabled, int visibility) {
         b.setContentDescription(getActivity().getResources().getString(text));
         b.setImageResource(drawableId);
@@ -611,7 +611,7 @@ public class StopwatchFragment extends DeskClockFragment
         b.setEnabled(enabled);
     }
 
-    private void setStartStopText(TextView v, int text) {
+    public void setStartStopText(TextView v, int text) {
         String textStr = getActivity().getResources().getString(text);
         v.setText(textStr);
         v.setContentDescription(textStr);
@@ -621,7 +621,7 @@ public class StopwatchFragment extends DeskClockFragment
      *
      * @param time - in hundredths of a second
      */
-    private void addLapTime(long time) {
+    public void addLapTime(long time) {
         int size = mLapsAdapter.getCount();
         long curTime = time - mStartTime + mAccumulatedTime;
         if (size == 0) {
@@ -648,7 +648,7 @@ public class StopwatchFragment extends DeskClockFragment
          }
     }
 
-    private void updateCurrentLap(long totalTime) {
+    public void updateCurrentLap(long totalTime) {
         if (mLapsAdapter.getCount() > 0) {
             Lap curLap = (Lap)mLapsAdapter.getItem(0);
             curLap.mLapTime = totalTime - ((Lap)mLapsAdapter.getItem(1)).mTotalTime;
@@ -657,7 +657,7 @@ public class StopwatchFragment extends DeskClockFragment
         }
     }
 
-    private void showLaps() {
+    public void showLaps() {
         if (mLapsAdapter.getCount() > 0) {
             mLapsList.setVisibility(View.VISIBLE);
         } else {
@@ -665,11 +665,11 @@ public class StopwatchFragment extends DeskClockFragment
         }
     }
 
-    private void startUpdateThread() {
+    public void startUpdateThread() {
         mTime.post(mTimeUpdateThread);
     }
 
-    private void stopUpdateThread() {
+    public void stopUpdateThread() {
         mTime.removeCallbacks(mTimeUpdateThread);
     }
 
@@ -688,7 +688,7 @@ public class StopwatchFragment extends DeskClockFragment
         }
     };
 
-    private void writeToSharedPref(SharedPreferences prefs) {
+    public void writeToSharedPref(SharedPreferences prefs) {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putLong (Stopwatches.PREF_START_TIME, mStartTime);
         editor.putLong (Stopwatches.PREF_ACCUM_TIME, mAccumulatedTime);
@@ -720,7 +720,7 @@ public class StopwatchFragment extends DeskClockFragment
         editor.apply();
     }
 
-    private void readFromSharedPref(SharedPreferences prefs) {
+    public void readFromSharedPref(SharedPreferences prefs) {
         mStartTime = prefs.getLong(Stopwatches.PREF_START_TIME, 0);
         mAccumulatedTime = prefs.getLong(Stopwatches.PREF_ACCUM_TIME, 0);
         mState = prefs.getInt(Stopwatches.PREF_STATE, Stopwatches.STOPWATCH_RESET);
@@ -751,11 +751,11 @@ public class StopwatchFragment extends DeskClockFragment
     }
 
     public class ImageLabelAdapter extends ArrayAdapter<CharSequence> {
-        private final ArrayList<CharSequence> mStrings;
-        private final ArrayList<Drawable> mDrawables;
-        private final ArrayList<String> mPackageNames;
-        private final ArrayList<String> mClassNames;
-        private ImageLabelAdapter mShowAllAdapter;
+        public final ArrayList<CharSequence> mStrings;
+        public final ArrayList<Drawable> mDrawables;
+        public final ArrayList<String> mPackageNames;
+        public final ArrayList<String> mClassNames;
+        public ImageLabelAdapter mShowAllAdapter;
 
         public ImageLabelAdapter(Context context, int textViewResourceId,
                 ArrayList<CharSequence> strings, ArrayList<Drawable> drawables,
@@ -820,7 +820,7 @@ public class StopwatchFragment extends DeskClockFragment
 
     // Used to keeps screen on when stopwatch is running.
 
-    private void acquireWakeLock() {
+    public void acquireWakeLock() {
         if (mWakeLock == null) {
             final PowerManager pm =
                     (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
@@ -831,7 +831,7 @@ public class StopwatchFragment extends DeskClockFragment
         mWakeLock.acquire();
     }
 
-    private void releaseWakeLock() {
+    public void releaseWakeLock() {
         if (mWakeLock != null && mWakeLock.isHeld()) {
             mWakeLock.release();
         }

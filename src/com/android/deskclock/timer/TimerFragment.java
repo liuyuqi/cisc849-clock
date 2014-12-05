@@ -62,24 +62,24 @@ import java.util.LinkedList;
 public class TimerFragment extends DeskClockFragment
         implements OnClickListener, OnSharedPreferenceChangeListener {
 
-    private static final String TAG = "TimerFragment";
-    private static final String KEY_SETUP_SELECTED = "_setup_selected";
-    private static final String KEY_ENTRY_STATE = "entry_state";
-    private Bundle mViewState = null;
-    private ListView mTimersList;
-    private View mNewTimerPage;
-    private View mTimersListPage;
-    private Button mCancel, mStart;
-    private View mSeperator;
-    private ImageButton mAddTimer;
-    private View mTimerFooter;
-    private TimerSetupView mTimerSetup;
-    private TimersListAdapter mAdapter;
-    private boolean mTicking = false;
-    private SharedPreferences mPrefs;
-    private NotificationManager mNotificationManager;
-    private OnEmptyListListener mOnEmptyListListener;
-    private View mLastVisibleView = null;  // used to decide if to set the view or animate to it.
+    public static final String TAG = "TimerFragment";
+    public static final String KEY_SETUP_SELECTED = "_setup_selected";
+    public static final String KEY_ENTRY_STATE = "entry_state";
+    public Bundle mViewState = null;
+    public ListView mTimersList;
+    public View mNewTimerPage;
+    public View mTimersListPage;
+    public Button mCancel, mStart;
+    public View mSeperator;
+    public ImageButton mAddTimer;
+    public View mTimerFooter;
+    public TimerSetupView mTimerSetup;
+    public TimersListAdapter mAdapter;
+    public boolean mTicking = false;
+    public SharedPreferences mPrefs;
+    public NotificationManager mNotificationManager;
+    public OnEmptyListListener mOnEmptyListListener;
+    public View mLastVisibleView = null;  // used to decide if to set the view or animate to it.
 
     public TimerFragment() {
     }
@@ -278,7 +278,7 @@ public class TimerFragment extends DeskClockFragment
             }
         }
 
-        private final Comparator<TimerObj> mTimersCompare = new Comparator<TimerObj>() {
+        public final Comparator<TimerObj> mTimersCompare = new Comparator<TimerObj>() {
             static final int BUZZING = 0;
             static final int IN_USE = 1;
             static final int NOT_USED = 2;
@@ -346,7 +346,7 @@ public class TimerFragment extends DeskClockFragment
         }
     }
 
-    private final Runnable mClockTick = new Runnable() {
+    public final Runnable mClockTick = new Runnable() {
         boolean mVisible = true;
         final static int TIME_PERIOD_MS = 1000;
         final static int SPLIT = TIME_PERIOD_MS / 2;
@@ -586,7 +586,7 @@ public class TimerFragment extends DeskClockFragment
         }
     }
 
-    private void saveViewState(Bundle outState) {
+    public void saveViewState(Bundle outState) {
         outState.putBoolean(KEY_SETUP_SELECTED, mNewTimerPage.getVisibility() == View.VISIBLE);
         mTimerSetup.saveEntryState(outState, KEY_ENTRY_STATE);
     }
@@ -632,7 +632,7 @@ public class TimerFragment extends DeskClockFragment
         }
     }
 
-    private void gotoSetupView() {
+    public void gotoSetupView() {
         if (mLastVisibleView == null || mLastVisibleView.getId() == R.id.new_timer_page) {
             mNewTimerPage.setVisibility(View.VISIBLE);
             mNewTimerPage.setScaleX(1f);
@@ -669,7 +669,7 @@ public class TimerFragment extends DeskClockFragment
         mTimerSetup.updateDeleteButton();
         mLastVisibleView = mNewTimerPage;
     }
-    private void gotoTimersView() {
+    public void gotoTimersView() {
         if (mLastVisibleView == null || mLastVisibleView.getId() == R.id.timers_list_page) {
             mNewTimerPage.setVisibility(View.GONE);
             mTimersListPage.setVisibility(View.VISIBLE);
@@ -704,7 +704,7 @@ public class TimerFragment extends DeskClockFragment
         onClickHelper(tag);
     }
 
-    private void onClickHelper(ClickAction clickAction) {
+    public void onClickHelper(ClickAction clickAction) {
         switch (clickAction.mAction) {
             case ClickAction.ACTION_DELETE:
                 final TimerObj t = clickAction.mTimer;
@@ -758,7 +758,7 @@ public class TimerFragment extends DeskClockFragment
         }
     }
 
-    private void onPlusOneButtonPressed(TimerObj t) {
+    public void onPlusOneButtonPressed(TimerObj t) {
         switch(t.mState) {
             case TimerObj.STATE_RUNNING:
                  t.addTime(60000); //60 seconds in millis
@@ -798,7 +798,7 @@ public class TimerFragment extends DeskClockFragment
 
 
 
-    private void onStopButtonPressed(TimerObj t) {
+    public void onStopButtonPressed(TimerObj t) {
         switch(t.mState) {
             case TimerObj.STATE_RUNNING:
                 // Stop timer and save the remaining time of the timer
@@ -837,7 +837,7 @@ public class TimerFragment extends DeskClockFragment
         }
     }
 
-    private void onLabelPressed(TimerObj t) {
+    public void onLabelPressed(TimerObj t) {
         final FragmentTransaction ft = getFragmentManager().beginTransaction();
         final Fragment prev = getFragmentManager().findFragmentByTag("label_dialog");
         if (prev != null) {
@@ -862,7 +862,7 @@ public class TimerFragment extends DeskClockFragment
         mTimersList.invalidateViews();
     }
 
-    private void setTimerButtons(TimerObj t) {
+    public void setTimerButtons(TimerObj t) {
         Context a = getActivity();
         if (a == null || t == null || t.mView == null) {
             return;
@@ -918,18 +918,18 @@ public class TimerFragment extends DeskClockFragment
         }
     }
 
-    private void startClockTicks() {
+    public void startClockTicks() {
         mTimersList.postDelayed(mClockTick, 20);
         mTicking = true;
     }
-    private void stopClockTicks() {
+    public void stopClockTicks() {
         if (mTicking) {
             mTimersList.removeCallbacks(mClockTick);
             mTicking = false;
         }
     }
 
-    private void updateTimersState(TimerObj t, String action) {
+    public void updateTimersState(TimerObj t, String action) {
         if (!Timers.DELETE_TIMER.equals(action)) {
             t.writeToSharedPref(mPrefs);
         }
@@ -939,11 +939,11 @@ public class TimerFragment extends DeskClockFragment
         getActivity().sendBroadcast(i);
     }
 
-    private void cancelTimerNotification(int timerId) {
+    public void cancelTimerNotification(int timerId) {
         mNotificationManager.cancel(timerId);
     }
 
-    private void updateTimesUpMode(TimerObj timerObj) {
+    public void updateTimesUpMode(TimerObj timerObj) {
         if (mOnEmptyListListener != null && timerObj.mState != TimerObj.STATE_TIMESUP) {
             mAdapter.removeTimer(timerObj);
             if (mAdapter.getCount() == 0) {

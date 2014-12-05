@@ -27,15 +27,15 @@ import android.widget.TextView;
  */
 public class AndroidClockTextView extends TextView {
 
-    private static final String SYSTEM = "/system/fonts/";
-    private static final String SYSTEM_FONT_TIME_BACKGROUND = SYSTEM + "AndroidClock.ttf";
+    public static final String SYSTEM = "/system/fonts/";
+    public static final String SYSTEM_FONT_TIME_BACKGROUND = SYSTEM + "AndroidClock.ttf";
 
-    private static final String ATTR_USE_CLOCK_TYPEFACE = "useClockTypeface";
+    public static final String ATTR_USE_CLOCK_TYPEFACE = "useClockTypeface";
 
-    private static Typeface sClockTypeface;
-    private static Typeface sStandardTypeface;
+    public static Typeface sClockTypeface;
+    public static Typeface sStandardTypeface;
 
-    private boolean mUseClockTypeface;
+    public boolean mUseClockTypeface;
 
     public AndroidClockTextView(Context context) {
         super(context);

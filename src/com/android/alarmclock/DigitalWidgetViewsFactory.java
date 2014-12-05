@@ -42,22 +42,22 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class DigitalWidgetViewsFactory extends BroadcastReceiver implements RemoteViewsFactory {
-    private static final String TAG = "DigitalWidgetViewsFactory";
+    public static final String TAG = "DigitalWidgetViewsFactory";
 
-    private Context mContext;
-    private int mId = AppWidgetManager.INVALID_APPWIDGET_ID;
-    private RemoteWorldClockAdapter mAdapter;
-    private boolean mReloadCitiesList = true;
-    private boolean mReloadCitiesDb = true;
-    private float mFontScale = 1;
-    private PendingIntent mQuarterlyIntent;
-    private String mLastTimeZone;
+    public Context mContext;
+    public int mId = AppWidgetManager.INVALID_APPWIDGET_ID;
+    public RemoteWorldClockAdapter mAdapter;
+    public boolean mReloadCitiesList = true;
+    public boolean mReloadCitiesDb = true;
+    public float mFontScale = 1;
+    public PendingIntent mQuarterlyIntent;
+    public String mLastTimeZone;
 
 
     // An adapter to provide the view for the list of cities in the world clock.
-    private class RemoteWorldClockAdapter extends WorldClockAdapter {
-        private final float mFontSize;
-        private final float mFont24Size;
+    public class RemoteWorldClockAdapter extends WorldClockAdapter {
+        public final float mFontSize;
+        public final float mFont24Size;
 
         public RemoteWorldClockAdapter(Context context) {
             super(context);
@@ -91,7 +91,7 @@ public class DigitalWidgetViewsFactory extends BroadcastReceiver implements Remo
             return views;
         }
 
-        private void updateView(RemoteViews clock, CityObj cityObj, int clockId1, int clockId2,
+        public void updateView(RemoteViews clock, CityObj cityObj, int clockId1, int clockId2,
                 int labelId, int dayId) {
             final Calendar now = Calendar.getInstance();
             now.setTimeInMillis(System.currentTimeMillis());
@@ -125,7 +125,7 @@ public class DigitalWidgetViewsFactory extends BroadcastReceiver implements Remo
             clock.setViewVisibility(labelId, View.VISIBLE);
         }
 
-        private void hideView(
+        public void hideView(
                 RemoteViews clock, int clockId1, int clockId2, int labelId, int dayId) {
             clock.setViewVisibility(clockId1, View.INVISIBLE);
             clock.setViewVisibility(clockId2, View.INVISIBLE);
@@ -279,7 +279,7 @@ public class DigitalWidgetViewsFactory extends BroadcastReceiver implements Remo
         }
     }
 
-    private void refreshAlarm(Context c, RemoteViews widget) {
+    public void refreshAlarm(Context c, RemoteViews widget) {
         String nextAlarm = Settings.System.getString(c.getContentResolver(),
                 Settings.System.NEXT_ALARM_FORMATTED);
         if (!TextUtils.isEmpty(nextAlarm)) {

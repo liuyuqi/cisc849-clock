@@ -15,12 +15,12 @@ import com.android.deskclock.obfuscated.R;
  * A dialog preference that shows a number picker for selecting snooze length
  */
 public class SnoozeLengthDialog extends DialogPreference {
-    private NumberPicker mNumberPickerView;
-    private TextView mNumberPickerMinutesView;
-    private final Context mContext;
-    private int mSnoozeMinutes;
+    public NumberPicker mNumberPickerView;
+    public TextView mNumberPickerMinutesView;
+    public final Context mContext;
+    public int mSnoozeMinutes;
 
-    private static final String DEFAULT_SNOOZE_TIME = "10";
+    public static final String DEFAULT_SNOOZE_TIME = "10";
 
 
     public SnoozeLengthDialog(Context context, AttributeSet attrs) {
@@ -76,7 +76,7 @@ public class SnoozeLengthDialog extends DialogPreference {
         return a.getString(index);
     }
 
-    private void updateDays() {
+    public void updateDays() {
         mNumberPickerMinutesView.setText(String.format(mContext.getResources()
                 .getQuantityText(R.plurals.snooze_picker_label, mNumberPickerView.getValue())
                 .toString()));

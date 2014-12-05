@@ -32,12 +32,12 @@ import com.android.deskclock.widget.swipeablelistview.SwipeHelper.Callback;
  * Copy of packages/apps/UnifiedEmail - com.android.mail.ui.Swipeable with changes.
  */
 public class SwipeableListView extends ListView implements Callback {
-    private SwipeHelper mSwipeHelper;
-    private boolean mEnableSwipe = false;
+    public SwipeHelper mSwipeHelper;
+    public boolean mEnableSwipe = false;
 
     public static final String LOG_TAG = LogTag.getLogTag();
 
-    private OnItemSwipeListener mOnItemSwipeListener;
+    public OnItemSwipeListener mOnItemSwipeListener;
 
     public SwipeableListView(Context context) {
         this(context, null);
@@ -161,7 +161,7 @@ public class SwipeableListView extends ListView implements Callback {
     public void onDragCancelled(View v) {
     }
 
-    private void redraw(View v) {
+    public void redraw(View v) {
         int start = getFirstVisiblePosition();
         for (int i=start, j = getLastVisiblePosition(); i <= j; i++) {
             if (v == getItemAtPosition(i)) {

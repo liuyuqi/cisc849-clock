@@ -25,7 +25,7 @@ public class LogUtils {
     public static final String TAG = "AlarmClock";
 
     // "GMT" + "+" or "-" + 4 digits
-    private static final Pattern DATE_CLEANUP_PATTERN_WRONG_TIMEZONE =
+    public static final Pattern DATE_CLEANUP_PATTERN_WRONG_TIMEZONE =
             Pattern.compile("GMT([-+]\\d{4})$");
 
     /**
@@ -57,9 +57,9 @@ public class LogUtils {
      * Used to enable/disable logging that we don't want included in
      * production releases.
      */
-    private static final int MAX_ENABLED_LOG_LEVEL = ERROR;
+    public static final int MAX_ENABLED_LOG_LEVEL = ERROR;
 
-    private static Boolean sDebugLoggingEnabledForTests = null;
+    public static Boolean sDebugLoggingEnabledForTests = null;
 
     /**
      * Enable debug logging for unit tests.

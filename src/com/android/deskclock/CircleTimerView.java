@@ -18,32 +18,32 @@ import com.android.deskclock.stopwatch.Stopwatches;
 public class CircleTimerView extends View {
 
 
-    private int mRedColor;
-    private int mWhiteColor;
-    private long mIntervalTime = 0;
-    private long mIntervalStartTime = -1;
-    private long mMarkerTime = -1;
-    private long mCurrentIntervalTime = 0;
-    private long mAccumulatedTime = 0;
-    private boolean mPaused = false;
-    private boolean mAnimate = false;
-    private static float mCircleXCenterLeftPadding = 0;
-    private static float mStrokeSize = 4;
-    private static float mDiamondStrokeSize = 12;
-    private static float mMarkerStrokeSize = 2;
-    private final Paint mPaint = new Paint();
-    private final Paint mFill = new Paint();
-    private final RectF mArcRect = new RectF();
-    private float mRectHalfWidth = 6f;
-    private Resources mResources;
-    private float mRadiusOffset;   // amount to remove from radius to account for markers on circle
-    private float mScreenDensity;
+    public int mRedColor;
+    public int mWhiteColor;
+    public long mIntervalTime = 0;
+    public long mIntervalStartTime = -1;
+    public long mMarkerTime = -1;
+    public long mCurrentIntervalTime = 0;
+    public long mAccumulatedTime = 0;
+    public boolean mPaused = false;
+    public boolean mAnimate = false;
+    public static float mCircleXCenterLeftPadding = 0;
+    public static float mStrokeSize = 4;
+    public static float mDiamondStrokeSize = 12;
+    public static float mMarkerStrokeSize = 2;
+    public final Paint mPaint = new Paint();
+    public final Paint mFill = new Paint();
+    public final RectF mArcRect = new RectF();
+    public float mRectHalfWidth = 6f;
+    public Resources mResources;
+    public float mRadiusOffset;   // amount to remove from radius to account for markers on circle
+    public float mScreenDensity;
 
     // Class has 2 modes:
     // Timer mode - counting down. in this mode the animation is counter-clockwise and stops at 0
     // Stop watch mode - counting up - in this mode the animation is clockwise and will keep the
     //                   animation until stopped.
-    private boolean mTimerMode = false; // default is stop watch view
+    public boolean mTimerMode = false; // default is stop watch view
 
     public CircleTimerView(Context context) {
         this(context, null);
@@ -113,7 +113,7 @@ public class CircleTimerView extends View {
 
 
 
-    private void init(Context c) {
+    public void init(Context c) {
 
         mResources = c.getResources();
         mCircleXCenterLeftPadding = (mResources.getDimension(R.dimen.timer_circle_width)

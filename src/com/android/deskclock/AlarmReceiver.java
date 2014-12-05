@@ -35,7 +35,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     /** If the alarm is older than STALE_WINDOW, ignore.  It
         is probably the result of a time or timezone change */
-    private final static int STALE_WINDOW = 30 * 60 * 1000;
+    public final static int STALE_WINDOW = 30 * 60 * 1000;
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
@@ -51,7 +51,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         });
     }
 
-    private void handleIntent(Context context, Intent intent) {
+    public void handleIntent(Context context, Intent intent) {
         if (Alarms.ALARM_KILLED.equals(intent.getAction())) {
             // The alarm has been killed, update the notification
             updateNotification(context, (Alarm)
@@ -205,12 +205,12 @@ public class AlarmReceiver extends BroadcastReceiver {
         nm.notify(alarm.id, n);
     }
 
-    private NotificationManager getNotificationManager(Context context) {
+    public NotificationManager getNotificationManager(Context context) {
         return (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
-    private void updateNotification(Context context, Alarm alarm, int timeout) {
+    public void updateNotification(Context context, Alarm alarm, int timeout) {
         NotificationManager nm = getNotificationManager(context);
 
         // If the alarm is null, just cancel the notification.

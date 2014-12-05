@@ -56,23 +56,23 @@ import java.util.TimeZone;
  * DeskClock clock view for desk docks.
  */
 public class DeskClock extends Activity implements LabelDialogFragment.TimerLabelDialogHandler {
-    private static final boolean DEBUG = false;
+    public static final boolean DEBUG = false;
 
-    private static final String LOG_TAG = "DeskClock";
+    public static final String LOG_TAG = "DeskClock";
 
     // Alarm action for midnight (so we can update the date display).
-    private static final String KEY_SELECTED_TAB = "selected_tab";
-    private static final String KEY_CLOCK_STATE = "clock_state";
+    public static final String KEY_SELECTED_TAB = "selected_tab";
+    public static final String KEY_CLOCK_STATE = "clock_state";
 
     public static final String SELECT_TAB_INTENT_EXTRA = "deskclock.select.tab";
 
-    private ActionBar mActionBar;
-    private Tab mTimerTab;
-    private Tab mClockTab;
-    private Tab mStopwatchTab;
+    public ActionBar mActionBar;
+    public Tab mTimerTab;
+    public Tab mClockTab;
+    public Tab mStopwatchTab;
 
-    private ViewPager mViewPager;
-    private TabsAdapter mTabsAdapter;
+    public ViewPager mViewPager;
+    public TabsAdapter mTabsAdapter;
 
     public static final int TIMER_TAB_INDEX = 0;
     public static final int CLOCK_TAB_INDEX = 1;
@@ -83,7 +83,7 @@ public class DeskClock extends Activity implements LabelDialogFragment.TimerLabe
     public static final int RTL_CLOCK_TAB_INDEX = 1;
     public static final int RTL_STOPWATCH_TAB_INDEX = 0;
 
-    private int mSelectedTab;
+    public int mSelectedTab;
 
     @Override
     public void onNewIntent(Intent newIntent) {
@@ -103,7 +103,7 @@ public class DeskClock extends Activity implements LabelDialogFragment.TimerLabe
         }
     }
 
-    private void initViews() {
+    public void initViews() {
 
         if (mTabsAdapter == null) {
             mViewPager = new ViewPager(this);
@@ -115,7 +115,7 @@ public class DeskClock extends Activity implements LabelDialogFragment.TimerLabe
         mActionBar.setSelectedNavigationItem(mSelectedTab);
     }
 
-    private void createTabs(int selectedIndex) {
+    public void createTabs(int selectedIndex) {
         mActionBar = getActionBar();
 
         mActionBar.setDisplayOptions(0);
@@ -217,7 +217,7 @@ public class DeskClock extends Activity implements LabelDialogFragment.TimerLabe
         }
     }
 
-    private void showMenu(View v) {
+    public void showMenu(View v) {
         PopupMenu popupMenu = new PopupMenu(this, v);
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener () {
             @Override
@@ -257,7 +257,7 @@ public class DeskClock extends Activity implements LabelDialogFragment.TimerLabe
     /***
      * Insert the local time zone as the Home Time Zone if one is not set
      */
-    private void setHomeTimeZone() {
+    public void setHomeTimeZone() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String homeTimeZone = prefs.getString(SettingsActivity.KEY_HOME_TZ, "");
         if (!homeTimeZone.isEmpty()) {
@@ -287,14 +287,14 @@ public class DeskClock extends Activity implements LabelDialogFragment.TimerLabe
      * Adapter for wrapping together the ActionBar's tab with the ViewPager
      */
 
-    private class TabsAdapter extends FragmentPagerAdapter
+    public class TabsAdapter extends FragmentPagerAdapter
             implements ActionBar.TabListener, ViewPager.OnPageChangeListener {
 
-        private static final String KEY_TAB_POSITION = "tab_position";
+        public static final String KEY_TAB_POSITION = "tab_position";
 
         final class TabInfo {
-            private final Class<?> clss;
-            private final Bundle args;
+            public final Class<?> clss;
+            public final Bundle args;
 
             TabInfo(Class<?> _class, int position) {
                 clss = _class;
@@ -307,7 +307,7 @@ public class DeskClock extends Activity implements LabelDialogFragment.TimerLabe
             }
         }
 
-        private final ArrayList<TabInfo> mTabs = new ArrayList <TabInfo>();
+        public final ArrayList<TabInfo> mTabs = new ArrayList <TabInfo>();
         ActionBar mMainActionBar;
         Context mContext;
         ViewPager mPager;
@@ -382,7 +382,7 @@ public class DeskClock extends Activity implements LabelDialogFragment.TimerLabe
             notifyPageChanged(page);
         }
 
-        private void notifyPageChanged(int newPage) {
+        public void notifyPageChanged(int newPage) {
             for (String tag : mFragmentTags) {
                 final FragmentManager fm = getFragmentManager();
                 DeskClockFragment f = (DeskClockFragment) fm.findFragmentByTag(tag);
@@ -408,12 +408,12 @@ public class DeskClock extends Activity implements LabelDialogFragment.TimerLabe
             mFragmentTags.remove(frag.getTag());
         }
 
-        private boolean isRtl() {
+        public boolean isRtl() {
             return TextUtils.getLayoutDirectionFromLocale(Locale.getDefault()) ==
                     View.LAYOUT_DIRECTION_RTL;
         }
 
-        private int getRtlPosition(int position) {
+        public int getRtlPosition(int position) {
              if (isRtl()) {
                  switch (position) {
                      case TIMER_TAB_INDEX:
@@ -431,13 +431,13 @@ public class DeskClock extends Activity implements LabelDialogFragment.TimerLabe
     }
 
     public static abstract class OnTapListener implements OnTouchListener {
-        private float mLastTouchX;
-        private float mLastTouchY;
-        private long mLastTouchTime;
-        private final TextView mMakePressedTextView;
-        private final int mPressedColor, mGrayColor;
-        private final float MAX_MOVEMENT_ALLOWED = 20;
-        private final long MAX_TIME_ALLOWED = 500;
+        public float mLastTouchX;
+        public float mLastTouchY;
+        public long mLastTouchTime;
+        public final TextView mMakePressedTextView;
+        public final int mPressedColor, mGrayColor;
+        public final float MAX_MOVEMENT_ALLOWED = 20;
+        public final long MAX_TIME_ALLOWED = 500;
 
         public OnTapListener(Activity activity, TextView makePressedView) {
             mMakePressedTextView = makePressedView;
@@ -484,7 +484,7 @@ public class DeskClock extends Activity implements LabelDialogFragment.TimerLabe
             return false;
         }
 
-        private void resetValues() {
+        public void resetValues() {
             mLastTouchX = -1*MAX_MOVEMENT_ALLOWED + 1;
             mLastTouchY = -1*MAX_MOVEMENT_ALLOWED + 1;
             mLastTouchTime = -1*MAX_TIME_ALLOWED + 1;

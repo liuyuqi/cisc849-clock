@@ -41,22 +41,22 @@ public class ScreensaverActivity extends Activity {
     // android:key="screensaver_clock_style" in dream_settings.xml
     static final String DEFAULT_CLOCK_STYLE = "digital";
 
-    private View mContentView, mSaverView;
-    private View mAnalogClock, mDigitalClock;
+    public View mContentView, mSaverView;
+    public View mAnalogClock, mDigitalClock;
 
-    private final Handler mHandler = new Handler();
-    private final ScreensaverMoveSaverRunnable mMoveSaverRunnable;
-    private String mDateFormat;
-    private String mDateFormatForAccessibility;
-    private PendingIntent mQuarterlyIntent;
-    private String mClockStyle;
-    private boolean mPluggedIn = true;
-    private final int mFlags = (WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+    public final Handler mHandler = new Handler();
+    public final ScreensaverMoveSaverRunnable mMoveSaverRunnable;
+    public String mDateFormat;
+    public String mDateFormatForAccessibility;
+    public PendingIntent mQuarterlyIntent;
+    public String mClockStyle;
+    public boolean mPluggedIn = true;
+    public final int mFlags = (WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
             | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
             | WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON
             | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-    private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
+    public final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             boolean changed = intent.getAction().equals(Intent.ACTION_TIME_CHANGED)
@@ -149,7 +149,7 @@ public class ScreensaverActivity extends Activity {
         finish();
     }
 
-    private void setWakeLock() {
+    public void setWakeLock() {
         Window win = getWindow();
         WindowManager.LayoutParams winParams = win.getAttributes();
         winParams.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
@@ -160,7 +160,7 @@ public class ScreensaverActivity extends Activity {
         win.setAttributes(winParams);
     }
 
-    private void setClockStyle() {
+    public void setClockStyle() {
         Utils.setClockStyle(this, mDigitalClock, mAnalogClock,
                 SettingsActivity.KEY_CLOCK_STYLE);
         mSaverView = findViewById(R.id.main_clock);
@@ -169,7 +169,7 @@ public class ScreensaverActivity extends Activity {
         Utils.dimClockView(true, mSaverView);
     }
 
-    private void layoutClockSaver() {
+    public void layoutClockSaver() {
         setContentView(R.layout.desk_clock_saver);
         mDigitalClock = findViewById(R.id.digital_clock);
         mAnalogClock = findViewById(R.id.analog_clock);

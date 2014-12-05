@@ -40,30 +40,30 @@ import java.util.TimeZone;
  * minutes.
  */
 public class AnalogClock extends View {
-    private Time mCalendar;
+    public Time mCalendar;
 
-    private final Drawable mHourHand;
-    private final Drawable mMinuteHand;
-    private final Drawable mSecondHand;
-    private final Drawable mDial;
+    public final Drawable mHourHand;
+    public final Drawable mMinuteHand;
+    public final Drawable mSecondHand;
+    public final Drawable mDial;
 
-    private final int mDialWidth;
-    private final int mDialHeight;
+    public final int mDialWidth;
+    public final int mDialHeight;
 
-    private boolean mAttached;
+    public boolean mAttached;
 
-    private final Handler mHandler = new Handler();
-    private float mSeconds;
-    private float mMinutes;
-    private float mHour;
-    private boolean mChanged;
-    private final Context mContext;
-    private String mTimeZoneId;
-    private boolean mNoSeconds = false;
+    public final Handler mHandler = new Handler();
+    public float mSeconds;
+    public float mMinutes;
+    public float mHour;
+    public boolean mChanged;
+    public final Context mContext;
+    public String mTimeZoneId;
+    public boolean mNoSeconds = false;
 
-    private final float mDotRadius;
-    private final float mDotOffset;
-    private Paint mDotPaint;
+    public final float mDotRadius;
+    public final float mDotOffset;
+    public Paint mDotPaint;
 
     public AnalogClock(Context context) {
         this(context, null);
@@ -218,7 +218,7 @@ public class AnalogClock extends View {
         }
     }
 
-    private void drawHand(Canvas canvas, Drawable hand, int x, int y, float angle,
+    public void drawHand(Canvas canvas, Drawable hand, int x, int y, float angle,
           boolean changed) {
       canvas.save();
       canvas.rotate(angle, x, y);
@@ -231,7 +231,7 @@ public class AnalogClock extends View {
       canvas.restore();
     }
 
-    private void onTimeChanged() {
+    public void onTimeChanged() {
         mCalendar.setToNow();
 
         if (mTimeZoneId != null) {
@@ -251,7 +251,7 @@ public class AnalogClock extends View {
         updateContentDescription(mCalendar);
     }
 
-    private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
+    public final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Intent.ACTION_TIMEZONE_CHANGED)) {
@@ -263,7 +263,7 @@ public class AnalogClock extends View {
         }
     };
 
-    private final Runnable mClockTick = new Runnable () {
+    public final Runnable mClockTick = new Runnable () {
 
         @Override
         public void run() {
@@ -273,7 +273,7 @@ public class AnalogClock extends View {
         }
     };
 
-    private void updateContentDescription(Time time) {
+    public void updateContentDescription(Time time) {
         final int flags = DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_24HOUR;
         String contentDescription = DateUtils.formatDateTime(mContext,
                 time.toMillis(false), flags);

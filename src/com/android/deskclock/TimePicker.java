@@ -30,22 +30,22 @@ import java.text.DateFormatSymbols;
 
 public class TimePicker extends TimerSetupView implements Button.OnClickListener{
 
-    private TextView mAmPmLabel;
-    private String[] mAmpm;
-    private final String mNoAmPmLabel;
-    private int mAmPmState;
-    private Button mSetButton;
-    private final boolean mIs24HoursMode = Alarms.get24HourMode(mContext);
+    public TextView mAmPmLabel;
+    public String[] mAmpm;
+    public final String mNoAmPmLabel;
+    public int mAmPmState;
+    public Button mSetButton;
+    public final boolean mIs24HoursMode = Alarms.get24HourMode(mContext);
 
-    private static final int AMPM_NOT_SELECTED = 0;
-    private static final int PM_SELECTED = 1;
-    private static final int AM_SELECTED = 2;
-    private static final int HOURS24_MODE = 3;
+    public static final int AMPM_NOT_SELECTED = 0;
+    public static final int PM_SELECTED = 1;
+    public static final int AM_SELECTED = 2;
+    public static final int HOURS24_MODE = 3;
 
-    private static final String TIME_PICKER_SAVED_BUFFER_POINTER =
+    public static final String TIME_PICKER_SAVED_BUFFER_POINTER =
             "timer_picker_saved_buffer_pointer";
-    private static final String TIME_PICKER_SAVED_INPUT = "timer_picker_saved_input";
-    private static final String TIME_PICKER_SAVED_AMPM = "timer_picker_saved_ampm";
+    public static final String TIME_PICKER_SAVED_INPUT = "timer_picker_saved_input";
+    public static final String TIME_PICKER_SAVED_AMPM = "timer_picker_saved_ampm";
 
     public TimePicker(Context context) {
         this(context, null);
@@ -125,7 +125,7 @@ public class TimePicker extends TimerSetupView implements Button.OnClickListener
         return false;
     }
 
-    private void updateKeypad() {
+    public void updateKeypad() {
         // Update state of keypad
         // Set the correct AM/PM state
         showAmPm();
@@ -185,7 +185,7 @@ public class TimePicker extends TimerSetupView implements Button.OnClickListener
         mEnteredTime.setTime(hours1, hours2, minutes1, minutes2, -1);
     }
 
-    private void showAmPm() {
+    public void showAmPm() {
         if (!mIs24HoursMode) {
             switch(mAmPmState) {
                 case AMPM_NOT_SELECTED:
@@ -206,7 +206,7 @@ public class TimePicker extends TimerSetupView implements Button.OnClickListener
         }
     }
 
-    private void addClickedNumber(int val) {
+    public void addClickedNumber(int val) {
         if (mInputPointer < mInputSize - 1) {
             for (int i = mInputPointer; i >= 0; i--) {
                 mInput[i + 1] = mInput[i];
@@ -218,7 +218,7 @@ public class TimePicker extends TimerSetupView implements Button.OnClickListener
 
     // Clicking on the bottom left button will add "00" to the time
     // In AM/PM mode is will also set the time to AM.
-    private void onLeftClicked() {
+    public void onLeftClicked() {
         int time = getEnteredTime();
         if (!mIs24HoursMode) {
             if (canAddDigits()) {
@@ -235,7 +235,7 @@ public class TimePicker extends TimerSetupView implements Button.OnClickListener
     // Clicking on the bottom right button will add "00" to the time in AM/PM
     // mode and "30" is 24 hours mode.
     // In AM/PM mode is will also set the time to PM.
-    private void onRightClicked() {
+    public void onRightClicked() {
         int time = getEnteredTime();
         if (!mIs24HoursMode) {
             if (canAddDigits()) {
@@ -252,7 +252,7 @@ public class TimePicker extends TimerSetupView implements Button.OnClickListener
     }
 
     // Checks if the user allowed to click on the left or right button that enters "00" or "30"
-    private boolean canAddDigits() {
+    public boolean canAddDigits() {
         int time = getEnteredTime();
         // For AM/PM mode , can add "00" if an hour between 1 and 12 was entered
         if (!mIs24HoursMode) {
@@ -264,7 +264,7 @@ public class TimePicker extends TimerSetupView implements Button.OnClickListener
 
 
     // Enable/disable keys in the numeric key pad according to the data entered
-    private void updateNumericKeys() {
+    public void updateNumericKeys() {
         int time = getEnteredTime();
         if (mIs24HoursMode) {
             if (mInputPointer >= 3) {
@@ -414,18 +414,18 @@ public class TimePicker extends TimerSetupView implements Button.OnClickListener
 
     // Returns the time already entered in decimal representation. if time is H1 H2 : M1 M2
     // the value retured is H1*1000+H2*100+M1*10+M2
-    private int getEnteredTime() {
+    public int getEnteredTime() {
         return  mInput[3] * 1000 + mInput[2] * 100 + mInput[1] * 10 + mInput[0];
     }
 
     // enables a range of numeric keys from zero to maxKey. The rest of the keys will be disabled
-    private void setKeyRange(int maxKey) {
+    public void setKeyRange(int maxKey) {
         for (int i = 0; i < mNumbers.length; i++) {
             mNumbers[i].setEnabled(i <= maxKey);
         }
     }
 
-    private void updateLeftRightButtons() {
+    public void updateLeftRightButtons() {
         int time = getEnteredTime();
         if (mIs24HoursMode) {
             boolean enable = canAddDigits();
@@ -444,7 +444,7 @@ public class TimePicker extends TimerSetupView implements Button.OnClickListener
     }
 
     // Enable/disable the set key
-    private void enableSetButton() {
+    public void enableSetButton() {
         if (mSetButton == null) {
             return;
         }
@@ -520,7 +520,7 @@ public class TimePicker extends TimerSetupView implements Button.OnClickListener
         updateKeypad();
     }
 
-    private static class SavedState extends BaseSavedState {
+    public static class SavedState extends BaseSavedState {
         int mInputPointer;
         int[] mInput;
         int mAmPmState;
@@ -529,7 +529,7 @@ public class TimePicker extends TimerSetupView implements Button.OnClickListener
             super(superState);
         }
 
-        private SavedState(Parcel in) {
+        public SavedState(Parcel in) {
             super(in);
             mInputPointer = in.readInt();
             in.readIntArray(mInput);

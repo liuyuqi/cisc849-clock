@@ -37,22 +37,22 @@ import com.android.deskclock.obfuscated.R;
  * with minor modifications.
  */
 public class ActionableToastBar extends LinearLayout {
-    private boolean mHidden = false;
-    private Animator mShowAnimation;
-    private Animator mHideAnimation;
-    private final int mBottomMarginSizeInConversation;
+    public boolean mHidden = false;
+    public Animator mShowAnimation;
+    public Animator mHideAnimation;
+    public final int mBottomMarginSizeInConversation;
 
     /** Icon for the description. */
-    private ImageView mActionDescriptionIcon;
+    public ImageView mActionDescriptionIcon;
     /** The clickable view */
-    private View mActionButton;
+    public View mActionButton;
     /** Icon for the action button. */
-    private View mActionIcon;
+    public View mActionIcon;
     /** The view that contains the description. */
-    private TextView mActionDescriptionView;
+    public TextView mActionDescriptionView;
     /** The view that contains the text for the action button. */
-    private TextView mActionText;
-    //private ToastBarOperation mOperation;
+    public TextView mActionText;
+    //public ToastBarOperation mOperation;
 
     public ActionableToastBar(Context context) {
         this(context, null);
@@ -159,7 +159,7 @@ public class ActionableToastBar extends LinearLayout {
         }
     }
 
-    private Animator getShowAnimation() {
+    public Animator getShowAnimation() {
         if (mShowAnimation == null) {
             mShowAnimation = AnimatorInflater.loadAnimator(getContext(),
                     R.anim.fade_in);
@@ -187,7 +187,7 @@ public class ActionableToastBar extends LinearLayout {
         return mShowAnimation;
     }
 
-    private Animator getHideAnimation() {
+    public Animator getHideAnimation() {
         if (mHideAnimation == null) {
             mHideAnimation = AnimatorInflater.loadAnimator(getContext(),
                     R.anim.fade_out);

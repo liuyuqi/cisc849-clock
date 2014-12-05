@@ -34,46 +34,46 @@ import com.android.deskclock.Utils;
 
 
 public class CountingTimerView extends View {
-    private static final String TWO_DIGITS = "%02d";
-    private static final String ONE_DIGIT = "%01d";
-    private static final String NEG_TWO_DIGITS = "-%02d";
-    private static final String NEG_ONE_DIGIT = "-%01d";
-    private static final float TEXT_SIZE_TO_WIDTH_RATIO = 0.75f;
+    public static final String TWO_DIGITS = "%02d";
+    public static final String ONE_DIGIT = "%01d";
+    public static final String NEG_TWO_DIGITS = "-%02d";
+    public static final String NEG_ONE_DIGIT = "-%01d";
+    public static final float TEXT_SIZE_TO_WIDTH_RATIO = 0.75f;
     // This is the ratio of the font typeface we need to offset the font by vertically to align it
     // vertically center.
-    private static final float FONT_VERTICAL_OFFSET = 0.14f;
+    public static final float FONT_VERTICAL_OFFSET = 0.14f;
 
-    private String mHours, mMinutes, mSeconds, mHundredths;
+    public String mHours, mMinutes, mSeconds, mHundredths;
 
-    private boolean mShowTimeStr = true;
-    private final Typeface mAndroidClockMonoThin, mAndroidClockMonoBold, mAndroidClockMonoLight;
-    private final Typeface mRobotoLabel;
-    private final Paint mPaintBig = new Paint();
-    private final Paint mPaintBigThin = new Paint();
-    private final Paint mPaintMed = new Paint();
-    private final Paint mPaintLabel = new Paint();
-    private final float mBigFontSize, mSmallFontSize;
-    private final SignedTime mBigHours, mBigMinutes;
-    private final UnsignedTime mBigThinSeconds;
-    private final Hundredths mMedHundredths;
-    private float mTextHeight = 0;
-    private float mTotalTextWidth;
-    private static final String HUNDREDTH_SEPERATOR = ".";
-    private boolean mRemeasureText = true;
+    public boolean mShowTimeStr = true;
+    public final Typeface mAndroidClockMonoThin, mAndroidClockMonoBold, mAndroidClockMonoLight;
+    public final Typeface mRobotoLabel;
+    public final Paint mPaintBig = new Paint();
+    public final Paint mPaintBigThin = new Paint();
+    public final Paint mPaintMed = new Paint();
+    public final Paint mPaintLabel = new Paint();
+    public final float mBigFontSize, mSmallFontSize;
+    public final SignedTime mBigHours, mBigMinutes;
+    public final UnsignedTime mBigThinSeconds;
+    public final Hundredths mMedHundredths;
+    public float mTextHeight = 0;
+    public float mTotalTextWidth;
+    public static final String HUNDREDTH_SEPERATOR = ".";
+    public boolean mRemeasureText = true;
 
-    private int mDefaultColor;
-    private final int mPressedColor;
-    private final int mWhiteColor;
-    private final int mRedColor;
-    private TextView mStopStartTextView;
-    private final AccessibilityManager mAccessibilityManager;
+    public int mDefaultColor;
+    public final int mPressedColor;
+    public final int mWhiteColor;
+    public final int mRedColor;
+    public TextView mStopStartTextView;
+    public final AccessibilityManager mAccessibilityManager;
 
     // Fields for the text serving as a virtual button.
-    private boolean mVirtualButtonEnabled = false;
-    private boolean mVirtualButtonPressedOn = false;
+    public boolean mVirtualButtonEnabled = false;
+    public boolean mVirtualButtonPressedOn = false;
 
     Runnable mBlinkThread = new Runnable() {
-        private boolean mVisible = true;
+        public boolean mVisible = true;
         @Override
         public void run() {
             mVisible = !mVisible;
@@ -87,9 +87,9 @@ public class CountingTimerView extends View {
         protected Paint mPaint;
         protected float mEm;
         protected float mWidth = 0;
-        private final String mWidest;
+        public final String mWidest;
         protected String mLabel;
-        private float mLabelWidth = 0;
+        public float mLabelWidth = 0;
 
         public UnsignedTime(Paint paint, final String label, String allDigits) {
             mPaint = paint;
@@ -184,7 +184,7 @@ public class CountingTimerView extends View {
     }
 
     class SignedTime extends UnsignedTime {
-        private float mMinusWidth = 0;
+        public float mMinusWidth = 0;
 
         public SignedTime(Paint paint, final String label, final String allDigits) {
             super(paint, label, allDigits);
@@ -383,20 +383,20 @@ public class CountingTimerView extends View {
         }
     }
 
-    private int getDigitsLength() {
+    public int getDigitsLength() {
         return ((mHours == null) ? 0 : mHours.length())
                 + ((mMinutes == null) ? 0 : mMinutes.length())
                 + ((mSeconds == null) ? 0 : mSeconds.length())
                 + ((mHundredths == null) ? 0 : mHundredths.length());
     }
 
-    private void calcTotalTextWidth() {
+    public void calcTotalTextWidth() {
         mTotalTextWidth = mBigHours.calcTotalWidth(mHours) + mBigMinutes.calcTotalWidth(mMinutes)
                 + mBigThinSeconds.calcTotalWidth(mSeconds)
                 + mMedHundredths.calcTotalWidth(mHundredths);
     }
 
-    private void setTotalTextWidth() {
+    public void setTotalTextWidth() {
         calcTotalTextWidth();
         // To determine the maximum width, we find the minimum of the height and width (since the
         // circle we are trying to fit the text into has its radius sized to the smaller of the
@@ -464,7 +464,7 @@ public class CountingTimerView extends View {
         return String.format("%s:%s:%s.%s", mHours, mMinutes, mSeconds, mHundredths);
     }
 
-    private static String getTimeStringForAccessibility(int hours, int minutes, int seconds,
+    public static String getTimeStringForAccessibility(int hours, int minutes, int seconds,
             boolean showNeg, Resources r) {
         StringBuilder s = new StringBuilder();
         if (showNeg) {
@@ -506,13 +506,13 @@ public class CountingTimerView extends View {
         mVirtualButtonEnabled = enabled;
     }
 
-    private void virtualButtonPressed(boolean pressedOn) {
+    public void virtualButtonPressed(boolean pressedOn) {
         mVirtualButtonPressedOn = pressedOn;
         mStopStartTextView.setTextColor(pressedOn ? mPressedColor : mWhiteColor);
         invalidate();
     }
 
-    private boolean withinVirtualButtonBounds(float x, float y) {
+    public boolean withinVirtualButtonBounds(float x, float y) {
         int width = getWidth();
         int height = getHeight();
         float centerX = width / 2;

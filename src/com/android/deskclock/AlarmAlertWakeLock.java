@@ -25,7 +25,7 @@ import android.os.PowerManager;
  */
 class AlarmAlertWakeLock {
 
-    private static PowerManager.WakeLock sCpuWakeLock;
+    public static PowerManager.WakeLock sCpuWakeLock;
 
     static PowerManager.WakeLock createPartialWakeLock(Context context) {
         PowerManager pm =
