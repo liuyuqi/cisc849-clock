@@ -141,10 +141,10 @@ public class CircleTimerView extends View {
     @Override
     public void onDraw(Canvas canvas) {
         int xCenter = getWidth() / 2 + 1;
-        int yCenter = getHeight() / 2;
+        final int yCenter = getHeight() / 2;
 
         mPaint.setStrokeWidth(mStrokeSize);
-        float radius = Math.min(xCenter, yCenter) - mRadiusOffset;
+        final float radius = Math.min(xCenter, yCenter) - mRadiusOffset;
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             xCenter = (int) (radius + mRadiusOffset);
@@ -173,7 +173,7 @@ public class CircleTimerView extends View {
             // prevent timer from doing more than one full circle
             redPercent = (redPercent > 1 && mTimerMode) ? 1 : redPercent;
 
-            float whitePercent = 1 - (redPercent > 1 ? 1 : redPercent);
+            final float whitePercent = 1 - (redPercent > 1 ? 1 : redPercent);
             // draw red arc here
             mPaint.setColor(mRedColor);
             if (mTimerMode){
@@ -194,7 +194,7 @@ public class CircleTimerView extends View {
 
             if (mMarkerTime != -1 && radius > 0 && mIntervalTime != 0) {
                 mPaint.setStrokeWidth(mMarkerStrokeSize);
-                float angle = (float)(mMarkerTime % mIntervalTime) / (float)mIntervalTime * 360;
+                final float angle = (float)(mMarkerTime % mIntervalTime) / (float)mIntervalTime * 360;
                 // draw 2dips thick marker
                 // the formula to draw the marker 1 unit thick is:
                 // 180 / (radius * Math.PI)
@@ -238,7 +238,7 @@ public class CircleTimerView extends View {
 
     // Since this view is used in multiple places, use the key to save different instances
     public void writeToSharedPref(SharedPreferences prefs, String key) {
-        SharedPreferences.Editor editor = prefs.edit();
+    	final SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean (key + PREF_CTV_PAUSED, mPaused);
         editor.putLong (key + PREF_CTV_INTERVAL, mIntervalTime);
         editor.putLong (key + PREF_CTV_INTERVAL_START, mIntervalStartTime);
@@ -261,7 +261,7 @@ public class CircleTimerView extends View {
     }
 
     public void clearSharedPref(SharedPreferences prefs, String key) {
-        SharedPreferences.Editor editor = prefs.edit();
+    	final SharedPreferences.Editor editor = prefs.edit();
         editor.remove (Stopwatches.PREF_START_TIME);
         editor.remove (Stopwatches.PREF_ACCUM_TIME);
         editor.remove (Stopwatches.PREF_STATE);

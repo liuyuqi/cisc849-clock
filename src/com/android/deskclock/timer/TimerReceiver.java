@@ -53,7 +53,7 @@ public class TimerReceiver extends BroadcastReceiver {
         if (mTimers == null) {
             mTimers = new ArrayList<TimerObj> ();
         }
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         TimerObj.getTimersFromSharedPrefs(prefs, mTimers);
 
 
@@ -75,7 +75,7 @@ public class TimerReceiver extends BroadcastReceiver {
             return;
         }
 
-        TimerObj t = Timers.findTimer(mTimers, timer);
+        final TimerObj t = Timers.findTimer(mTimers, timer);
 
         if (intent.getBooleanExtra(Timers.UPDATE_NOTIFICATION, false)) {
             if (Timers.TIMER_STOP.equals(actionType)) {
@@ -85,7 +85,7 @@ public class TimerReceiver extends BroadcastReceiver {
                 }
                 t.mState = TimerObj.STATE_DONE;
                 t.writeToSharedPref(prefs);
-                SharedPreferences.Editor editor = prefs.edit();
+                final SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean(Timers.FROM_NOTIFICATION, true);
                 editor.putLong(Timers.NOTIF_TIME, Utils.getTimeNow());
                 editor.putInt(Timers.NOTIF_ID, timer);
@@ -93,7 +93,7 @@ public class TimerReceiver extends BroadcastReceiver {
 
                 stopRingtoneIfNoTimesup(context);
 
-                Intent activityIntent = new Intent(context, DeskClock.class);
+                final Intent activityIntent = new Intent(context, DeskClock.class);
                 activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 activityIntent.putExtra(DeskClock.SELECT_TAB_INTENT_EXTRA, DeskClock.TIMER_TAB_INDEX);
                 context.startActivity(activityIntent);
@@ -112,7 +112,7 @@ public class TimerReceiver extends BroadcastReceiver {
             t.writeToSharedPref(prefs);
             // Play ringtone by using TimerRingService service with a default alarm.
             Log.d(TAG, "playing ringtone");
-            Intent si = new Intent();
+            final Intent si = new Intent();
             si.setClass(context, TimerRingService.class);
             context.startService(si);
 
@@ -125,7 +125,7 @@ public class TimerReceiver extends BroadcastReceiver {
             }
 
             // Start the TimerAlertFullScreen activity.
-            Intent timersAlert = new Intent(context, TimerAlertFullScreen.class);
+            final Intent timersAlert = new Intent(context, TimerAlertFullScreen.class);
             timersAlert.setFlags(
                     Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_USER_ACTION);
             context.startActivity(timersAlert);
@@ -143,7 +143,7 @@ public class TimerReceiver extends BroadcastReceiver {
         if (Timers.findExpiredTimer(mTimers) == null) {
             // Stop ringtone
             Log.d(TAG, "stopping ringtone");
-            Intent si = new Intent();
+            final Intent si = new Intent();
             si.setClass(context, TimerRingService.class);
             context.stopService(si);
         }
@@ -153,11 +153,11 @@ public class TimerReceiver extends BroadcastReceiver {
     // Tell AlarmManager to send a "Time's up" message to this receiver when this timer expires.
     // If no timer exists, clear "time's up" message.
     private void updateNextTimesup(Context context) {
-        TimerObj t = getNextRunningTimer(mTimers, false, Utils.getTimeNow());
-        long nextTimesup = (t == null) ? -1 : t.getTimesupTime();
-        int timerId = (t == null) ? -1 : t.mTimerId;
+        final TimerObj t = getNextRunningTimer(mTimers, false, Utils.getTimeNow());
+        final long nextTimesup = (t == null) ? -1 : t.getTimesupTime();
+        final int timerId = (t == null) ? -1 : t.mTimerId;
 
-        Intent intent = new Intent();
+        final Intent intent = new Intent();
         intent.setAction(Timers.TIMES_UP);
         intent.setClass(context, TimerReceiver.class);
         if (!mTimers.isEmpty()) {
@@ -176,10 +176,10 @@ public class TimerReceiver extends BroadcastReceiver {
     }
 
     private void showInUseNotification(final Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean appOpen = prefs.getBoolean(Timers.NOTIF_APP_OPEN, false);
-        ArrayList<TimerObj> timersInUse = Timers.timersInUse(mTimers);
-        int numTimersInUse = timersInUse.size();
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        final boolean appOpen = prefs.getBoolean(Timers.NOTIF_APP_OPEN, false);
+        final ArrayList<TimerObj> timersInUse = Timers.timersInUse(mTimers);
+        final int numTimersInUse = timersInUse.size();
 
         if (appOpen || numTimersInUse == 0) {
             return;
@@ -187,20 +187,20 @@ public class TimerReceiver extends BroadcastReceiver {
 
         String title, contentText;
         Long nextBroadcastTime = null;
-        long now = Utils.getTimeNow();
+        final long now = Utils.getTimeNow();
         if (timersInUse.size() == 1) {
-            TimerObj timer = timersInUse.get(0);
-            boolean timerIsTicking = timer.isTicking();
-            String label = timer.mLabel.equals("") ?
+            final TimerObj timer = timersInUse.get(0);
+            final boolean timerIsTicking = timer.isTicking();
+            final String label = timer.mLabel.equals("") ?
                     context.getString(R.string.timer_notification_label) : timer.mLabel;
             title = timerIsTicking ? label : context.getString(R.string.timer_stopped);
-            long timeLeft = timerIsTicking ? timer.getTimesupTime() - now : timer.mTimeLeft;
+            final long timeLeft = timerIsTicking ? timer.getTimesupTime() - now : timer.mTimeLeft;
             contentText = buildTimeRemaining(context, timeLeft);
             if (timerIsTicking && timeLeft > 60 * 1000) {
                 nextBroadcastTime = getBroadcastTime(now, timeLeft);
             }
         } else {
-            TimerObj timer = getNextRunningTimer(timersInUse, false, now);
+            final TimerObj timer = getNextRunningTimer(timersInUse, false, now);
             if (timer == null) {
                 // No running timers.
                 title = String.format(
@@ -215,7 +215,7 @@ public class TimerReceiver extends BroadcastReceiver {
                 contentText = String.format(context.getString(R.string.next_timer_notif),
                         buildTimeRemaining(context, timeLeft));
                 if (timeLeft <= 60 * 1000) {
-                    TimerObj timerWithUpdate = getNextRunningTimer(timersInUse, true, now);
+                    final TimerObj timerWithUpdate = getNextRunningTimer(timersInUse, true, now);
                     if (timerWithUpdate != null) {
                         completionTime = timerWithUpdate.getTimesupTime();
                         timeLeft = completionTime - now;
@@ -237,13 +237,13 @@ public class TimerReceiver extends BroadcastReceiver {
 
     /** Public and static to allow timer fragment to update notification with new label. **/
     public static void showExpiredAlarmNotification(Context context, TimerObj t) {
-        Intent broadcastIntent = new Intent();
+        final Intent broadcastIntent = new Intent();
         broadcastIntent.putExtra(Timers.TIMER_INTENT_EXTRA, t.mTimerId);
         broadcastIntent.setAction(Timers.TIMER_STOP);
         broadcastIntent.putExtra(Timers.UPDATE_NOTIFICATION, true);
-        PendingIntent pendingBroadcastIntent = PendingIntent.getBroadcast(
+        final PendingIntent pendingBroadcastIntent = PendingIntent.getBroadcast(
                 context, 0, broadcastIntent, 0);
-        String label = t.mLabel.equals("") ? context.getString(R.string.timer_notification_label) :
+        final String label = t.mLabel.equals("") ? context.getString(R.string.timer_notification_label) :
             t.mLabel;
         String contentText = context.getString(R.string.timer_times_up);
         showCollapsedNotification(context, label, contentText, Notification.PRIORITY_MAX,
@@ -252,10 +252,10 @@ public class TimerReceiver extends BroadcastReceiver {
 
     private void showCollapsedNotificationWithNext(
             final Context context, String title, String text, Long nextBroadcastTime) {
-        Intent activityIntent = new Intent(context, DeskClock.class);
+        final Intent activityIntent = new Intent(context, DeskClock.class);
         activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activityIntent.putExtra(DeskClock.SELECT_TAB_INTENT_EXTRA, DeskClock.TIMER_TAB_INDEX);
-        PendingIntent pendingActivityIntent = PendingIntent.getActivity(context, 0, activityIntent,
+        final PendingIntent pendingActivityIntent = PendingIntent.getActivity(context, 0, activityIntent,
                 PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_UPDATE_CURRENT);
         showCollapsedNotification(context, title, text, Notification.PRIORITY_HIGH,
                 pendingActivityIntent, IN_USE_NOTIFICATION_ID, false);
@@ -263,18 +263,18 @@ public class TimerReceiver extends BroadcastReceiver {
         if (nextBroadcastTime == null) {
             return;
         }
-        Intent nextBroadcast = new Intent();
+        final Intent nextBroadcast = new Intent();
         nextBroadcast.setAction(Timers.NOTIF_IN_USE_SHOW);
-        PendingIntent pendingNextBroadcast =
+        final PendingIntent pendingNextBroadcast =
                 PendingIntent.getBroadcast(context, 0, nextBroadcast, 0);
-        AlarmManager alarmManager =
+        final AlarmManager alarmManager =
                 (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.ELAPSED_REALTIME, nextBroadcastTime, pendingNextBroadcast);
     }
 
     private static void showCollapsedNotification(final Context context, String title, String text,
             int priority, PendingIntent pendingIntent, int notificationId, boolean showTicker) {
-        Notification.Builder builder = new Notification.Builder(context)
+        final Notification.Builder builder = new Notification.Builder(context)
         .setAutoCancel(false)
         .setContentTitle(title)
         .setContentText(text)
@@ -311,17 +311,17 @@ public class TimerReceiver extends BroadcastReceiver {
             hours = 0;
         }
 
-        String hourSeq = (hours == 0) ? "" :
+        final String hourSeq = (hours == 0) ? "" :
             ( (hours == 1) ? context.getString(R.string.hour) :
                 context.getString(R.string.hours, Long.toString(hours)) );
-        String minSeq = (minutes == 0) ? "" :
+        final String minSeq = (minutes == 0) ? "" :
             ( (minutes == 1) ? context.getString(R.string.minute) :
                 context.getString(R.string.minutes, Long.toString(minutes)) );
 
-        boolean dispHour = hours > 0;
-        boolean dispMinute = minutes > 0;
-        int index = (dispHour ? 1 : 0) | (dispMinute ? 2 : 0);
-        String[] formats = context.getResources().getStringArray(R.array.timer_notifications);
+        final boolean dispHour = hours > 0;
+        final boolean dispMinute = minutes > 0;
+        final int index = (dispHour ? 1 : 0) | (dispMinute ? 2 : 0);
+        final String[] formats = context.getResources().getStringArray(R.array.timer_notifications);
         return String.format(formats[index], hourSeq, minSeq);
     }
 
@@ -329,13 +329,13 @@ public class TimerReceiver extends BroadcastReceiver {
             ArrayList<TimerObj> timers, boolean requireNextUpdate, long now) {
         long nextTimesup = Long.MAX_VALUE;
         boolean nextTimerFound = false;
-        Iterator<TimerObj> i = timers.iterator();
+        final Iterator<TimerObj> i = timers.iterator();
         TimerObj t = null;
         while(i.hasNext()) {
-            TimerObj tmp = i.next();
+            final TimerObj tmp = i.next();
             if (tmp.mState == TimerObj.STATE_RUNNING) {
-                long timesupTime = tmp.getTimesupTime();
-                long timeLeft = timesupTime - now;
+                final long timesupTime = tmp.getTimesupTime();
+                final long timeLeft = timesupTime - now;
                 if (timesupTime < nextTimesup && (!requireNextUpdate || timeLeft > 60) ) {
                     nextTimesup = timesupTime;
                     nextTimerFound = true;
@@ -351,7 +351,7 @@ public class TimerReceiver extends BroadcastReceiver {
     }
 
     private void cancelInUseNotification(final Context context) {
-        NotificationManager notificationManager =
+        final NotificationManager notificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(IN_USE_NOTIFICATION_ID);
     }

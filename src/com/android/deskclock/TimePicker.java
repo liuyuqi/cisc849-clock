@@ -65,7 +65,7 @@ public class TimePicker extends TimerSetupView implements Button.OnClickListener
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        Resources res = mContext.getResources();
+        final Resources res = mContext.getResources();
         mAmpm = new DateFormatSymbols().getAmPmStrings();
 
         if (mIs24HoursMode) {
@@ -90,7 +90,7 @@ public class TimePicker extends TimerSetupView implements Button.OnClickListener
 
     @Override
     protected void doOnClick(View v) {
-        Integer val = (Integer) v.getTag(R.id.numbers_key);
+    	final Integer val = (Integer) v.getTag(R.id.numbers_key);
         // A number was pressed
         if (val != null) {
             addClickedNumber(val);
@@ -151,13 +151,13 @@ public class TimePicker extends TimerSetupView implements Button.OnClickListener
         // Hide digit by passing -2 (for highest hours digit only);
 
         int  hours1 = -1;
-        int time = getEnteredTime();
+        final int time = getEnteredTime();
         // If the user entered 2 to 9 or 13 to 15 , there is no need for a 4th digit (AM/PM mode)
         // If the user entered 3 to 9 or 24 to 25 , there is no need for a 4th digit (24 hours mode)
         if (mInputPointer > -1) {
             // Test to see if the highest digit is 2 to 9 for AM/PM or 3 to 9 for 24 hours mode
             if (mInputPointer >= 0) {
-                int digit = mInput[mInputPointer];
+            	final int digit = mInput[mInputPointer];
                 if ((mIs24HoursMode && digit >= 3 && digit <= 9) ||
                         (!mIs24HoursMode && digit >= 2 && digit <= 9)) {
                     hours1 = -2;
@@ -166,7 +166,7 @@ public class TimePicker extends TimerSetupView implements Button.OnClickListener
             // Test to see if the 2 highest digits are 13 to 15 for AM/PM or 24 to 25 for 24 hours
             // mode
             if (mInputPointer > 0 && mInputPointer < 3 && hours1 != -2) {
-                int digits = mInput[mInputPointer] * 10 + mInput[mInputPointer - 1];
+            	final int digits = mInput[mInputPointer] * 10 + mInput[mInputPointer - 1];
                 if ((mIs24HoursMode && digits >= 24 && digits <= 25) ||
                         (!mIs24HoursMode && digits >= 13 && digits <= 15)) {
                     hours1 = -2;
@@ -179,9 +179,9 @@ public class TimePicker extends TimerSetupView implements Button.OnClickListener
         } else {
             hours1 = -1;
         }
-        int hours2 = (mInputPointer < 2) ? -1 :  mInput[2];
-        int minutes1 = (mInputPointer < 1) ? -1 :  mInput[1];
-        int minutes2 = (mInputPointer < 0) ? -1 :  mInput[0];
+        final int hours2 = (mInputPointer < 2) ? -1 :  mInput[2];
+        final int minutes1 = (mInputPointer < 1) ? -1 :  mInput[1];
+        final int minutes2 = (mInputPointer < 0) ? -1 :  mInput[0];
         mEnteredTime.setTime(hours1, hours2, minutes1, minutes2, -1);
     }
 
@@ -219,7 +219,7 @@ public class TimePicker extends TimerSetupView implements Button.OnClickListener
     // Clicking on the bottom left button will add "00" to the time
     // In AM/PM mode is will also set the time to AM.
     private void onLeftClicked() {
-        int time = getEnteredTime();
+    	final int time = getEnteredTime();
         if (!mIs24HoursMode) {
             if (canAddDigits()) {
                 addClickedNumber(0);
@@ -236,7 +236,7 @@ public class TimePicker extends TimerSetupView implements Button.OnClickListener
     // mode and "30" is 24 hours mode.
     // In AM/PM mode is will also set the time to PM.
     private void onRightClicked() {
-        int time = getEnteredTime();
+    	final int time = getEnteredTime();
         if (!mIs24HoursMode) {
             if (canAddDigits()) {
                 addClickedNumber(0);
@@ -253,7 +253,7 @@ public class TimePicker extends TimerSetupView implements Button.OnClickListener
 
     // Checks if the user allowed to click on the left or right button that enters "00" or "30"
     private boolean canAddDigits() {
-        int time = getEnteredTime();
+    	final int time = getEnteredTime();
         // For AM/PM mode , can add "00" if an hour between 1 and 12 was entered
         if (!mIs24HoursMode) {
             return (time >= 1 && time <= 12);
@@ -265,7 +265,7 @@ public class TimePicker extends TimerSetupView implements Button.OnClickListener
 
     // Enable/disable keys in the numeric key pad according to the data entered
     private void updateNumericKeys() {
-        int time = getEnteredTime();
+    	final int time = getEnteredTime();
         if (mIs24HoursMode) {
             if (mInputPointer >= 3) {
                 setKeyRange(-1);
@@ -426,9 +426,9 @@ public class TimePicker extends TimerSetupView implements Button.OnClickListener
     }
 
     private void updateLeftRightButtons() {
-        int time = getEnteredTime();
+    	final int time = getEnteredTime();
         if (mIs24HoursMode) {
-            boolean enable = canAddDigits();
+        	final boolean enable = canAddDigits();
             mLeft.setEnabled(enable);
             mRight.setEnabled(enable);
         } else {
@@ -457,7 +457,7 @@ public class TimePicker extends TimerSetupView implements Button.OnClickListener
         // If the user entered 3 digits or more but not 060 to 095
         // it is a legal time and the set key should be enabled.
         if (mIs24HoursMode) {
-            int time = getEnteredTime();
+        	final int time = getEnteredTime();
             mSetButton.setEnabled(mInputPointer >= 2 && (time < 60 || time > 95));
         } else {
             // If AM/PM mode , enable the set button if AM/PM was selected
@@ -471,7 +471,7 @@ public class TimePicker extends TimerSetupView implements Button.OnClickListener
     }
 
     public int getHours() {
-        int hours = mInput[3] * 10 + mInput[2];
+    	final int hours = mInput[3] * 10 + mInput[2];
         if (hours == 12) {
             switch (mAmPmState) {
                 case PM_SELECTED:

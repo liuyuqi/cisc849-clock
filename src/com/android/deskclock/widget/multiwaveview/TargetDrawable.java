@@ -95,7 +95,7 @@ public class TargetDrawable {
     public void setDrawable(Resources res, int resId) {
         // Note we explicitly don't set mResourceId to resId since we allow the drawable to be
         // swapped at runtime and want to re-use the existing resource id for identification.
-        Drawable drawable = resId == 0 ? null : res.getDrawable(resId);
+    	final Drawable drawable = resId == 0 ? null : res.getDrawable(resId);
         // Mutate the drawable so we can animate shared drawable properties.
         mDrawable = drawable != null ? drawable.mutate() : null;
         resizeDrawables();
@@ -112,7 +112,7 @@ public class TargetDrawable {
 
     public void setState(int [] state) {
         if (mDrawable instanceof StateListDrawable) {
-            StateListDrawable d = (StateListDrawable) mDrawable;
+        	final StateListDrawable d = (StateListDrawable) mDrawable;
             d.setState(state);
         }
     }
@@ -124,8 +124,8 @@ public class TargetDrawable {
      */
     public boolean isActive() {
         if (mDrawable instanceof StateListDrawable) {
-            StateListDrawable d = (StateListDrawable) mDrawable;
-            int[] states = d.getState();
+        	final StateListDrawable d = (StateListDrawable) mDrawable;
+        	final int[] states = d.getState();
             for (int i = 0; i < states.length; i++) {
                 if (states[i] == android.R.attr.state_focused) {
                     return true;
@@ -152,13 +152,13 @@ public class TargetDrawable {
      */
     private void resizeDrawables() {
         if (mDrawable instanceof StateListDrawable) {
-            StateListDrawable d = (StateListDrawable) mDrawable;
+        	final StateListDrawable d = (StateListDrawable) mDrawable;
             int maxWidth = 0;
             int maxHeight = 0;
 
             for (int i = 0; i < mNumDrawables; i++) {
                 d.selectDrawable(i);
-                Drawable childDrawable = d.getCurrent();
+                final Drawable childDrawable = d.getCurrent();
                 maxWidth = Math.max(maxWidth, childDrawable.getIntrinsicWidth());
                 maxHeight = Math.max(maxHeight, childDrawable.getIntrinsicHeight());
             }
@@ -169,7 +169,7 @@ public class TargetDrawable {
 
             for (int i = 0; i < mNumDrawables; i++) {
                 d.selectDrawable(i);
-                Drawable childDrawable = d.getCurrent();
+                final Drawable childDrawable = d.getCurrent();
                 if (DEBUG) Log.v(TAG, "sizing drawable " + childDrawable + " to: "
                             + maxWidth + "x" + maxHeight);
                 childDrawable.setBounds(0, 0, maxWidth, maxHeight);

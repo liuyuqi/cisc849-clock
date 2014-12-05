@@ -37,7 +37,7 @@ public class AlarmTimePickerDialogFragment extends DialogFragment {
 
     public static AlarmTimePickerDialogFragment newInstance(Alarm alarm) {
         final AlarmTimePickerDialogFragment frag = new AlarmTimePickerDialogFragment();
-        Bundle args = new Bundle();
+        final Bundle args = new Bundle();
         args.putParcelable(KEY_ALARM, alarm);
         frag.setArguments(args);
         return frag;
@@ -59,7 +59,7 @@ public class AlarmTimePickerDialogFragment extends DialogFragment {
             Bundle savedInstanceState) {
         final Alarm alarm = getArguments().getParcelable(KEY_ALARM);
 
-        View v = inflater.inflate(R.layout.time_picker_dialog, null);
+        final View v = inflater.inflate(R.layout.time_picker_dialog, null);
         mSet = (Button) v.findViewById(R.id.set_button);
         mCancel = (Button) v.findViewById(R.id.cancel_button);
         mCancel.setOnClickListener(new View.OnClickListener() {

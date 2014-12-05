@@ -42,9 +42,9 @@ class Tweener {
     }
 
     private static void remove(Animator animator) {
-        Iterator<Entry<Object, Tweener>> iter = sTweens.entrySet().iterator();
+    	final Iterator<Entry<Object, Tweener>> iter = sTweens.entrySet().iterator();
         while (iter.hasNext()) {
-            Entry<Object, Tweener> entry = iter.next();
+        	final Entry<Object, Tweener> entry = iter.next();
             if (entry.getValue().animator == animator) {
                 if (DEBUG) Log.v(TAG, "Removing tweener " + sTweens.get(entry.getKey())
                         + " sTweens.size() = " + sTweens.size());
@@ -61,13 +61,13 @@ class Tweener {
         TimeInterpolator interpolator = null;
 
         // Iterate through arguments and discover properties to animate
-        ArrayList<PropertyValuesHolder> props = new ArrayList<PropertyValuesHolder>(vars.length/2);
+        final ArrayList<PropertyValuesHolder> props = new ArrayList<PropertyValuesHolder>(vars.length/2);
         for (int i = 0; i < vars.length; i+=2) {
             if (!(vars[i] instanceof String)) {
                 throw new IllegalArgumentException("Key must be a string: " + vars[i]);
             }
-            String key = (String) vars[i];
-            Object value = vars[i+1];
+            final String key = (String) vars[i];
+            final Object value = vars[i+1];
 
             if ("simultaneousTween".equals(key)) {
                 // TODO
@@ -88,7 +88,7 @@ class Tweener {
                 props.add(PropertyValuesHolder.ofInt(key,
                         ((int[])value)[0], ((int[])value)[1]));
             } else if (value instanceof Number) {
-                float floatValue = ((Number)value).floatValue();
+            	final float floatValue = ((Number)value).floatValue();
                 props.add(PropertyValuesHolder.ofFloat(key, floatValue));
             } else {
                 throw new IllegalArgumentException(
@@ -163,7 +163,7 @@ class Tweener {
 
     private static void replace(ArrayList<PropertyValuesHolder> props, Object... args) {
         for (final Object killobject : args) {
-            Tweener tween = sTweens.get(killobject);
+        	final Tweener tween = sTweens.get(killobject);
             if (tween != null) {
                 tween.animator.cancel();
                 if (props != null) {

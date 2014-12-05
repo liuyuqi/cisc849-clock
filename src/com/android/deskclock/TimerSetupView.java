@@ -49,7 +49,7 @@ public class TimerSetupView extends LinearLayout implements Button.OnClickListen
     public TimerSetupView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
-        LayoutInflater layoutInflater =
+        final LayoutInflater layoutInflater =
                 (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         layoutInflater.inflate(getLayoutId(), this);
     }
@@ -62,10 +62,10 @@ public class TimerSetupView extends LinearLayout implements Button.OnClickListen
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        View v1 = findViewById(R.id.first);
-        View v2 = findViewById(R.id.second);
-        View v3 = findViewById(R.id.third);
-        View v4 = findViewById(R.id.fourth);
+        final View v1 = findViewById(R.id.first);
+        final View v2 = findViewById(R.id.second);
+        final View v3 = findViewById(R.id.third);
+        final View v4 = findViewById(R.id.fourth);
         mEnteredTime = (TimerView)findViewById(R.id.timer_time_text);
         mDelete = (ImageButton)findViewById(R.id.delete);
         mDelete.setOnClickListener(this);
@@ -101,14 +101,14 @@ public class TimerSetupView extends LinearLayout implements Button.OnClickListen
     }
 
     public void updateStartButton() {
-        boolean enabled = mInputPointer != -1;
+    	final  boolean enabled = mInputPointer != -1;
         if (mStart != null) {
             mStart.setEnabled(enabled);
         }
     }
 
     public void updateDeleteButton() {
-        boolean enabled = mInputPointer != -1;
+    	final boolean enabled = mInputPointer != -1;
         if (mDelete != null) {
             mDelete.setEnabled(enabled);
         }
@@ -123,7 +123,7 @@ public class TimerSetupView extends LinearLayout implements Button.OnClickListen
 
     protected void doOnClick(View v) {
 
-        Integer val = (Integer) v.getTag(R.id.numbers_key);
+    	final Integer val = (Integer) v.getTag(R.id.numbers_key);
         // A number was pressed
         if (val != null) {
             // pressing "0" as the first digit does nothing
@@ -187,7 +187,7 @@ public class TimerSetupView extends LinearLayout implements Button.OnClickListen
     }
 
     public void restoreEntryState(Bundle inState, String key) {
-        int[] input = inState.getIntArray(key);
+    	final int[] input = inState.getIntArray(key);
         if (input != null && mInputSize == input.length) {
             for (int i = 0; i < mInputSize; i++) {
                 mInput[i] = input[i];

@@ -14,16 +14,16 @@ import android.widget.TextView;
  */
 public class EllipsizeLayout extends LinearLayout {
 
-    public EllipsizeLayout(Context context) {
+    public EllipsizeLayout(final Context context) {
         this(context, null);
     }
 
-    public EllipsizeLayout(Context context, AttributeSet attrs) {
+    public EllipsizeLayout(final Context context,final  AttributeSet attrs) {
         super(context, attrs);
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
         if (getOrientation() == HORIZONTAL
                 && (MeasureSpec.getMode(widthMeasureSpec) == MeasureSpec.EXACTLY)) {
             int totalLength = 0;
@@ -60,7 +60,7 @@ public class EllipsizeLayout extends LinearLayout {
             if (!outOfSpec && totalLength > parentWidth) {
                 int maxWidth = ellipView.getMeasuredWidth() - (totalLength - parentWidth);
                 // TODO: Respect android:minWidth (easy with @TargetApi(16))
-                int minWidth = 0;
+                final int minWidth = 0;
                 if (maxWidth < minWidth) {
                     maxWidth = minWidth;
                 }

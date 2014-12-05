@@ -54,15 +54,15 @@ public class ActionableToastBar extends LinearLayout {
     private TextView mActionText;
     //private ToastBarOperation mOperation;
 
-    public ActionableToastBar(Context context) {
+    public ActionableToastBar(final Context context) {
         this(context, null);
     }
 
-    public ActionableToastBar(Context context, AttributeSet attrs) {
+    public ActionableToastBar(final  Context context, final  AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public ActionableToastBar(Context context, AttributeSet attrs, int defStyle) {
+    public ActionableToastBar(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
         mBottomMarginSizeInConversation = context.getResources().getDimensionPixelSize(
                 R.dimen.toast_bar_bottom_margin_in_conversation);
@@ -85,7 +85,7 @@ public class ActionableToastBar extends LinearLayout {
      * and should adjust its layout parameters accordingly.
      * @param isInConversationMode true if the view will be shown in the conversation view
      */
-    public void setConversationMode(boolean isInConversationMode) {
+    public void setConversationMode(final boolean isInConversationMode) {
         final FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) getLayoutParams();
         params.bottomMargin = isInConversationMode ? mBottomMarginSizeInConversation : 0;
         setLayoutParams(params);
@@ -103,9 +103,9 @@ public class ActionableToastBar extends LinearLayout {
      * @param replaceVisibleToast if true, this toast should replace any currently visible toast.
      * Otherwise, skip showing this toast.
      */
-    public void show(final ActionClickedListener listener, int descriptionIconResourceId,
-            CharSequence descriptionText, boolean showActionIcon, int actionTextResource,
-            boolean replaceVisibleToast) {
+    public void show(final ActionClickedListener listener, final int descriptionIconResourceId,
+            CharSequence descriptionText, final boolean showActionIcon,final  int actionTextResource,
+            final boolean replaceVisibleToast) {
 
         if (!mHidden && !replaceVisibleToast) {
             return;
@@ -113,7 +113,7 @@ public class ActionableToastBar extends LinearLayout {
 
         mActionButton.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View widget) {
+            public void onClick(final View widget) {
                 if (listener != null) {
                     listener.onActionClicked();
                 }
@@ -140,7 +140,7 @@ public class ActionableToastBar extends LinearLayout {
     /**
      * Hides the view and resets the state.
      */
-    public void hide(boolean animate) {
+    public void hide(final boolean animate) {
         // Prevent multiple call to hide.
         // Also prevent hiding if show animation is going on.
         if (!mHidden && !getShowAnimation().isRunning()) {
@@ -165,21 +165,21 @@ public class ActionableToastBar extends LinearLayout {
                     R.anim.fade_in);
             mShowAnimation.addListener(new Animator.AnimatorListener() {
                 @Override
-                public void onAnimationStart(Animator animation) {
+                public void onAnimationStart(final Animator animation) {
                     setVisibility(View.VISIBLE);
                 }
                 @Override
-                public void onAnimationEnd(Animator animation) {
+                public void onAnimationEnd(final Animator animation) {
                     // There is a tiny change that and hide animation could have finished right
                     // before the show animation finished.  In that case, the hide will mark the
                     // view as GONE.  We need to make sure the last one wins.
                     setVisibility(View.VISIBLE);
                 }
                 @Override
-                public void onAnimationCancel(Animator animation) {
+                public void onAnimationCancel(final Animator animation) {
                 }
                 @Override
-                public void onAnimationRepeat(Animator animation) {
+                public void onAnimationRepeat(final Animator animation) {
                 }
             });
             mShowAnimation.setTarget(this);
@@ -193,17 +193,17 @@ public class ActionableToastBar extends LinearLayout {
                     R.anim.fade_out);
             mHideAnimation.addListener(new Animator.AnimatorListener() {
                 @Override
-                public void onAnimationStart(Animator animation) {
+                public void onAnimationStart(final Animator animation) {
                 }
                 @Override
-                public void onAnimationRepeat(Animator animation) {
+                public void onAnimationRepeat(final Animator animation) {
                 }
                 @Override
-                public void onAnimationEnd(Animator animation) {
+                public void onAnimationEnd(final Animator animation) {
                     setVisibility(View.GONE);
                 }
                 @Override
-                public void onAnimationCancel(Animator animation) {
+                public void onAnimationCancel(final Animator animation) {
                 }
             });
             mHideAnimation.setTarget(this);
@@ -211,13 +211,13 @@ public class ActionableToastBar extends LinearLayout {
         return mHideAnimation;
     }
 
-    public boolean isEventInToastBar(MotionEvent event) {
+    public boolean isEventInToastBar(final MotionEvent event) {
         if (!isShown()) {
             return false;
         }
-        int[] xy = new int[2];
-        float x = event.getX();
-        float y = event.getY();
+        final int[] xy = new int[2];
+        final float x = event.getX();
+        final float y = event.getY();
         getLocationOnScreen(xy);
         return (x > xy[0] && x < (xy[0] + getWidth()) && y > xy[1] && y < xy[1] + getHeight());
     }

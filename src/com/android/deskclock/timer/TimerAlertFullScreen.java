@@ -38,7 +38,7 @@ public class TimerAlertFullScreen extends Activity implements OnEmptyListListene
     private static final String FRAGMENT = "timer";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.timer_alert_full_screen);
@@ -56,11 +56,11 @@ public class TimerAlertFullScreen extends Activity implements OnEmptyListListene
 
         // Don't create overlapping fragments.
         if (getFragment() == null) {
-            TimerFragment timerFragment = new TimerFragment();
+            final TimerFragment timerFragment = new TimerFragment();
 
             // Create fragment and give it an argument to only show
             // timers in STATE_TIMESUP state
-            Bundle args = new Bundle();
+            final Bundle args = new Bundle();
             args.putBoolean(Timers.TIMESUP_MODE, true);
 
             timerFragment.setArguments(args);
@@ -72,9 +72,9 @@ public class TimerAlertFullScreen extends Activity implements OnEmptyListListene
     }
 
     @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
+    public boolean dispatchKeyEvent(final KeyEvent event) {
         // Handle key down and key up on a few of the system keys.
-        boolean up = event.getAction() == KeyEvent.ACTION_UP;
+        final boolean up = event.getAction() == KeyEvent.ACTION_UP;
         switch (event.getKeyCode()) {
         // Volume keys and camera keys stop all the timers
         case KeyEvent.KEYCODE_VOLUME_UP:
@@ -98,8 +98,8 @@ public class TimerAlertFullScreen extends Activity implements OnEmptyListListene
      * window is still active.
      */
     @Override
-    protected void onNewIntent(Intent intent) {
-        TimerFragment timerFragment = getFragment();
+    protected void onNewIntent(final Intent intent) {
+        final TimerFragment timerFragment = getFragment();
         if (timerFragment != null) {
             timerFragment.restartAdapter();
         }
@@ -107,8 +107,8 @@ public class TimerAlertFullScreen extends Activity implements OnEmptyListListene
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        ViewGroup viewContainer = (ViewGroup)findViewById(R.id.fragment_container);
+    public void onConfigurationChanged(final Configuration newConfig) {
+        final ViewGroup viewContainer = (ViewGroup)findViewById(R.id.fragment_container);
         viewContainer.requestLayout();
         super.onConfigurationChanged(newConfig);
     }
@@ -119,7 +119,7 @@ public class TimerAlertFullScreen extends Activity implements OnEmptyListListene
     }
 
     protected void stopAllTimesUpTimers() {
-        TimerFragment timerFragment = getFragment();
+        final TimerFragment timerFragment = getFragment();
         if (timerFragment != null) {
             timerFragment.stopAllTimesUpTimers();
         }

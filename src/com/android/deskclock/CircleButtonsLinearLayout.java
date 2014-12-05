@@ -51,9 +51,9 @@ public class CircleButtonsLinearLayout extends LinearLayout {
         mLeftButtonPadding = mContext.getResources().getDimension(leftButtonPaddingDimenId);
         mRightButtonPadding = mContext.getResources().getDimension(rightButtonPaddingDimenId);
 
-        float diamondStrokeSize =
+        final float diamondStrokeSize =
                 mContext.getResources().getDimension(R.dimen.circletimer_diamond_size);
-        float markerStrokeSize =
+        final float markerStrokeSize =
                 mContext.getResources().getDimension(R.dimen.circletimer_marker_size);
         mStrokeSize = mContext.getResources().getDimension(R.dimen.circletimer_circle_size);
         mDiamOffset =
@@ -83,10 +83,10 @@ public class CircleButtonsLinearLayout extends LinearLayout {
             mLabelText = (TextView) findViewById(mLabelTextId);
         }
 
-        int frameWidth = mCtv.getMeasuredWidth();
-        int frameHeight = mCtv.getMeasuredHeight();
-        int minBound = Math.min(frameWidth, frameHeight);
-        int circleDiam = (int) (minBound - mDiamOffset);
+        final int frameWidth = mCtv.getMeasuredWidth();
+        final int frameHeight = mCtv.getMeasuredHeight();
+        final int minBound = Math.min(frameWidth, frameHeight);
+        final int circleDiam = (int) (minBound - mDiamOffset);
 
         MarginLayoutParams stopParams = (MarginLayoutParams) mStop.getLayoutParams();
         stopParams.bottomMargin = circleDiam/6;
@@ -153,24 +153,24 @@ public class CircleButtonsLinearLayout extends LinearLayout {
              *     => w = 2 * sqrt((r + y)*(r - y))
              */
             // Radius of the circle.
-            int r = circleDiam / 2;
+            final int r = circleDiam / 2;
             // Y value of the top of the label, calculated from the center of the circle.
-            int y = frameHeight / 2 - labelParams.topMargin;
+            final int y = frameHeight / 2 - labelParams.topMargin;
             // New maximum width of the label.
-            double w = 2 * Math.sqrt((r + y) * (r - y));
+            final double w = 2 * Math.sqrt((r + y) * (r - y));
 
             mLabelText.setMaxWidth((int) w);
         }
 
-        int sideMarginOffset = (int) ((frameWidth - circleDiam - mStrokeSize) / 2)
+        final int sideMarginOffset = (int) ((frameWidth - circleDiam - mStrokeSize) / 2)
                 - (int) mContext.getResources().getDimension(R.dimen.timer_button_extra_offset);
-        int leftMarginOffset = Math.max(0, sideMarginOffset - (int) mLeftButtonPadding);
-        int rightMarginOffset = Math.max(0, sideMarginOffset - (int) mRightButtonPadding);
-        int bottomMarginOffset = (frameHeight - minBound) / 2;
-        MarginLayoutParams leftParams = (MarginLayoutParams) mLeft.getLayoutParams();
+        final int leftMarginOffset = Math.max(0, sideMarginOffset - (int) mLeftButtonPadding);
+        final int rightMarginOffset = Math.max(0, sideMarginOffset - (int) mRightButtonPadding);
+        final int bottomMarginOffset = (frameHeight - minBound) / 2;
+        final MarginLayoutParams leftParams = (MarginLayoutParams) mLeft.getLayoutParams();
         leftParams.leftMargin = leftMarginOffset;
         leftParams.bottomMargin = bottomMarginOffset;
-        MarginLayoutParams rightParams = (MarginLayoutParams) mRight.getLayoutParams();
+        final MarginLayoutParams rightParams = (MarginLayoutParams) mRight.getLayoutParams();
         rightParams.rightMargin = rightMarginOffset;
         rightParams.bottomMargin = bottomMarginOffset;
     }

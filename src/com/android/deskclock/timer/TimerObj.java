@@ -64,7 +64,7 @@ public class TimerObj implements Parcelable {
 
     public static final Parcelable.Creator<TimerObj> CREATOR = new Parcelable.Creator<TimerObj>() {
         @Override
-        public TimerObj createFromParcel(Parcel p) {
+        public TimerObj createFromParcel(final Parcel p) {
             return new TimerObj(p);
         }
 
@@ -75,9 +75,9 @@ public class TimerObj implements Parcelable {
     };
 
     public void writeToSharedPref(SharedPreferences prefs) {
-        SharedPreferences.Editor editor = prefs.edit();
+        final SharedPreferences.Editor editor = prefs.edit();
         String key = PREF_TIMER_ID + Integer.toString(mTimerId);
-        String id = Integer.toString(mTimerId);
+        final String id = Integer.toString(mTimerId);
         editor.putInt (key, mTimerId);
         key = PREF_START_TIME + id;
         editor.putLong (key, mStartTime);
@@ -89,7 +89,7 @@ public class TimerObj implements Parcelable {
         editor.putLong (key, mSetupLength);
         key = PREF_STATE + id;
         editor.putInt (key, mState);
-        Set <String> timersList = prefs.getStringSet(PREF_TIMERS_LIST, new HashSet<String>());
+        final Set <String> timersList = prefs.getStringSet(PREF_TIMERS_LIST, new HashSet<String>());
         timersList.add(id);
         editor.putStringSet(PREF_TIMERS_LIST, timersList);
         key = PREF_LABEL + id;
@@ -98,8 +98,8 @@ public class TimerObj implements Parcelable {
     }
 
 
-    public void readFromSharedPref(SharedPreferences prefs) {
-        String id = Integer.toString(mTimerId);
+    public void readFromSharedPref(final SharedPreferences prefs) {
+        final String id = Integer.toString(mTimerId);
         String key = PREF_START_TIME + id;
         mStartTime = prefs.getLong(key, 0);
         key = PREF_TIME_LEFT + id;
@@ -114,10 +114,10 @@ public class TimerObj implements Parcelable {
         mLabel = prefs.getString(key, "");
     }
 
-    public void deleteFromSharedPref(SharedPreferences prefs) {
-        SharedPreferences.Editor editor = prefs.edit();
+    public void deleteFromSharedPref(final SharedPreferences prefs) {
+        final SharedPreferences.Editor editor = prefs.edit();
         String key = PREF_TIMER_ID + Integer.toString(mTimerId);
-        String id = Integer.toString(mTimerId);
+        final String id = Integer.toString(mTimerId);
         editor.remove (key);
         key = PREF_START_TIME + id;
         editor.remove (key);
@@ -127,7 +127,7 @@ public class TimerObj implements Parcelable {
         editor.remove (key);
         key = PREF_STATE + id;
         editor.remove (key);
-        Set <String> timersList = prefs.getStringSet(PREF_TIMERS_LIST, new HashSet<String>());
+        final Set <String> timersList = prefs.getStringSet(PREF_TIMERS_LIST, new HashSet<String>());
         timersList.remove(id);
         editor.putStringSet(PREF_TIMERS_LIST, timersList);
         key = PREF_LABEL + id;
@@ -143,7 +143,7 @@ public class TimerObj implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(final Parcel dest, final  int flags) {
         dest.writeInt(mTimerId);
         dest.writeLong(mStartTime);
         dest.writeLong(mTimeLeft);
@@ -153,7 +153,7 @@ public class TimerObj implements Parcelable {
         dest.writeString(mLabel);
     }
 
-    public TimerObj(Parcel p) {
+    public TimerObj(final Parcel p) {
         mTimerId = p.readInt();
         mStartTime = p.readLong();
         mTimeLeft = p.readLong();
@@ -167,11 +167,11 @@ public class TimerObj implements Parcelable {
         init(0);
     }
 
-    public TimerObj(long timerLength) {
+    public TimerObj(final long timerLength) {
       init(timerLength);
     }
 
-    private void init (long length) {
+    private void init (final long length) {
         mTimerId = (int) Utils.getTimeNow();
         mStartTime = Utils.getTimeNow();
         mTimeLeft = mOriginalLength = mSetupLength = length;
@@ -180,7 +180,7 @@ public class TimerObj implements Parcelable {
 
     public long updateTimeLeft(boolean forceUpdate) {
         if (isTicking() || forceUpdate) {
-            long millis = Utils.getTimeNow();
+            final long millis = Utils.getTimeNow();
             mTimeLeft = mOriginalLength - (millis - mStartTime);
         }
         return mTimeLeft;
@@ -194,7 +194,7 @@ public class TimerObj implements Parcelable {
         return mState == STATE_RUNNING || mState == STATE_STOPPED;
     }
 
-    public void addTime(long time) {
+    public void addTime(final long time) {
         mTimeLeft = mOriginalLength - (Utils.getTimeNow() - mStartTime);
         if (mTimeLeft < MAX_TIMER_LENGTH - time) {
                 mOriginalLength += time;
@@ -207,19 +207,19 @@ public class TimerObj implements Parcelable {
 
 
     public static void getTimersFromSharedPrefs(
-            SharedPreferences prefs, ArrayList<TimerObj> timers) {
-        Object[] timerStrings =
+            final SharedPreferences prefs, ArrayList<TimerObj> timers) {
+        final Object[] timerStrings =
                 prefs.getStringSet(PREF_TIMERS_LIST, new HashSet<String>()).toArray();
         if (timerStrings.length > 0) {
             for (int i = 0; i < timerStrings.length; i++) {
-                TimerObj t = new TimerObj();
+                final TimerObj t = new TimerObj();
                 t.mTimerId = Integer.parseInt((String)timerStrings[i]);
                 t.readFromSharedPref(prefs);
                 timers.add(t);
             }
             Collections.sort(timers, new Comparator<TimerObj>() {
                 @Override
-                public int compare(TimerObj timerObj1, TimerObj timerObj2) {
+                public int compare(final TimerObj timerObj1, final TimerObj timerObj2) {
                    return timerObj2.mTimerId - timerObj1.mTimerId;
                 }
             });
@@ -227,12 +227,12 @@ public class TimerObj implements Parcelable {
     }
 
     public static void getTimersFromSharedPrefs(
-            SharedPreferences prefs, ArrayList<TimerObj> timers, int match) {
-        Object[] timerStrings = prefs.getStringSet(PREF_TIMERS_LIST, new HashSet<String>())
+            final SharedPreferences prefs,ArrayList<TimerObj> timers, int match) {
+        final Object[] timerStrings = prefs.getStringSet(PREF_TIMERS_LIST, new HashSet<String>())
                 .toArray();
         if (timerStrings.length > 0) {
             for (int i = 0; i < timerStrings.length; i++) {
-                TimerObj t = new TimerObj();
+                final TimerObj t = new TimerObj();
                 t.mTimerId = Integer.parseInt((String) timerStrings[i]);
                 t.readFromSharedPref(prefs);
                 if (t.mState == match) {
@@ -243,34 +243,34 @@ public class TimerObj implements Parcelable {
     }
 
     public static void putTimersInSharedPrefs(
-            SharedPreferences prefs, ArrayList<TimerObj> timers) {
+            final SharedPreferences prefs, final ArrayList<TimerObj> timers) {
         if (timers.size() > 0) {
             for (int i = 0; i < timers.size(); i++) {
-                TimerObj t = timers.get(i);
+                final TimerObj t = timers.get(i);
                 timers.get(i).writeToSharedPref(prefs);
             }
         }
     }
 
     public static void dumpTimersFromSharedPrefs(
-            SharedPreferences prefs) {
-        Object[] timerStrings =
+            final SharedPreferences prefs) {
+        final Object[] timerStrings =
                 prefs.getStringSet(PREF_TIMERS_LIST, new HashSet<String>()).toArray();
         Log.v(TAG,"--------------------- timers list in shared prefs");
         if (timerStrings.length > 0) {
             for (int i = 0; i < timerStrings.length; i++) {
-                int id = Integer.parseInt((String)timerStrings[i]);
+                final int id = Integer.parseInt((String)timerStrings[i]);
                 Log.v(TAG,"---------------------timer  " + (i + 1) + ": id - " + id);
             }
         }
     }
 
     public static void resetTimersInSharedPrefs(SharedPreferences prefs) {
-        ArrayList<TimerObj> timers = new  ArrayList<TimerObj>();
+        final ArrayList<TimerObj> timers = new  ArrayList<TimerObj>();
         getTimersFromSharedPrefs(prefs, timers);
-        Iterator<TimerObj> i = timers.iterator();
+        final Iterator<TimerObj> i = timers.iterator();
         while(i.hasNext()) {
-            TimerObj t = i.next();
+            final TimerObj t = i.next();
             t.mState = TimerObj.STATE_RESTART;
             t.mTimeLeft = t. mOriginalLength = t.mSetupLength;
             t.writeToSharedPref(prefs);

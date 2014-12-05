@@ -36,8 +36,8 @@ public class RepeatPreference extends ListPreference {
     public RepeatPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        String[] weekdays = new DateFormatSymbols().getWeekdays();
-        String[] values = new String[] {
+        final String[] weekdays = new DateFormatSymbols().getWeekdays();
+        final  String[] values = new String[] {
             weekdays[Calendar.MONDAY],
             weekdays[Calendar.TUESDAY],
             weekdays[Calendar.WEDNESDAY],
@@ -63,8 +63,8 @@ public class RepeatPreference extends ListPreference {
 
     @Override
     protected void onPrepareDialogBuilder(Builder builder) {
-        CharSequence[] entries = getEntries();
-        CharSequence[] entryValues = getEntryValues();
+    	final CharSequence[] entries = getEntries();
+        final CharSequence[] entryValues = getEntryValues();
 
         builder.setMultiChoiceItems(
                 entries, mDaysOfWeek.getBooleanArray(),

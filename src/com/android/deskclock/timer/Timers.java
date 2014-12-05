@@ -52,20 +52,20 @@ public class Timers {
 
     public static final String TIMESUP_MODE = "times_up";
 
-    public static TimerObj findTimer(ArrayList<TimerObj> timers, int timerId) {
-        Iterator<TimerObj> i = timers.iterator();
+    public static TimerObj findTimer(final ArrayList<TimerObj> timers,final  int timerId) {
+        final Iterator<TimerObj> i = timers.iterator();
         while(i.hasNext()) {
-            TimerObj t = i.next();
+            final TimerObj t = i.next();
             if (t.mTimerId == timerId) {
                 return t;
             }
         }
         return null;
     }
-    public static TimerObj findExpiredTimer(ArrayList<TimerObj> timers) {
-        Iterator<TimerObj> i = timers.iterator();
+    public static TimerObj findExpiredTimer(final ArrayList<TimerObj> timers) {
+        final Iterator<TimerObj> i = timers.iterator();
         while(i.hasNext()) {
-            TimerObj t = i.next();
+            final TimerObj t = i.next();
             if (t.mState == TimerObj.STATE_TIMESUP) {
                 return t;
             }
@@ -73,11 +73,11 @@ public class Timers {
         return null;
     }
 
-    public static ArrayList<TimerObj> timersInUse(ArrayList<TimerObj> timers) {
-        ArrayList<TimerObj> result = (ArrayList<TimerObj>) timers.clone();
-        Iterator<TimerObj> it = result.iterator();
+    public static ArrayList<TimerObj> timersInUse(final ArrayList<TimerObj> timers) {
+        final ArrayList<TimerObj> result = (ArrayList<TimerObj>) timers.clone();
+        final Iterator<TimerObj> it = result.iterator();
         while(it.hasNext()) {
-            TimerObj timer = it.next();
+            final TimerObj timer = it.next();
             if (!timer.isInUse()) {
                 it.remove();
             }

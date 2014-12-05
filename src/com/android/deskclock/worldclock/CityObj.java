@@ -28,7 +28,7 @@ public class CityObj {
     public String mTimeZone;
     public String mCityId;
 
-    public CityObj(String name, String timezone, String id) {
+    public CityObj(final String name, final String timezone, final String id) {
         mCityName = name;
         mTimeZone = timezone;
         mCityId = id;
@@ -50,7 +50,7 @@ public class CityObj {
         mCityId = prefs.getString(CITY_ID + index, null);
     }
 
-    public void saveCityToSharedPrefs(SharedPreferences.Editor editor, int index) {
+    public void saveCityToSharedPrefs(SharedPreferences.Editor editor, final int index) {
         editor.putString (CITY_NAME + index, mCityName);
         editor.putString (CITY_TIME_ZONE + index, mTimeZone);
         editor.putString (CITY_ID + index, mCityId);

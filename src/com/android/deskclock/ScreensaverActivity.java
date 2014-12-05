@@ -59,7 +59,7 @@ public class ScreensaverActivity extends Activity {
     private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            boolean changed = intent.getAction().equals(Intent.ACTION_TIME_CHANGED)
+        	final boolean changed = intent.getAction().equals(Intent.ACTION_TIME_CHANGED)
                     || intent.getAction().equals(Intent.ACTION_TIMEZONE_CHANGED);
             if (intent.getAction().equals(Intent.ACTION_POWER_CONNECTED)) {
                 mPluggedIn = true;
@@ -90,7 +90,7 @@ public class ScreensaverActivity extends Activity {
     @Override
     public void onStart() {
         super.onStart();
-        IntentFilter filter = new IntentFilter();
+        final IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_POWER_CONNECTED);
         filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
         filter.addAction(Intent.ACTION_USER_PRESENT);
@@ -103,9 +103,9 @@ public class ScreensaverActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        Intent chargingIntent =
+        final Intent chargingIntent =
                 registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-        int plugged = chargingIntent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
+        final int plugged = chargingIntent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
         mPluggedIn = plugged == BatteryManager.BATTERY_PLUGGED_AC
                 || plugged == BatteryManager.BATTERY_PLUGGED_USB
                 || plugged == BatteryManager.BATTERY_PLUGGED_WIRELESS;
@@ -150,7 +150,7 @@ public class ScreensaverActivity extends Activity {
     }
 
     private void setWakeLock() {
-        Window win = getWindow();
+    	final Window win = getWindow();
         WindowManager.LayoutParams winParams = win.getAttributes();
         winParams.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
         if (mPluggedIn)
