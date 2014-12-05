@@ -146,13 +146,13 @@ public class PointCloud {
         final float dr = pointAreaRadius / bands;
         float r = innerRadius;
         for (int b = 0; b <= bands; b++, r += dr) {
-            float circumference = 2.0f * PI * r;
+        	final float circumference = 2.0f * PI * r;
             final int pointsInBand = (int) (circumference / ds);
             float eta = PI/2.0f;
-            float dEta = 2.0f * PI / pointsInBand;
+            final float dEta = 2.0f * PI / pointsInBand;
             for (int i = 0; i < pointsInBand; i++) {
-                float x = r * FloatMath.cos(eta);
-                float y = r * FloatMath.sin(eta);
+            	final float x = r * FloatMath.cos(eta);
+                final float y = r * FloatMath.sin(eta);
                 eta += dEta;
                 mPointCloud.add(new Point(x, y, r));
             }
@@ -177,20 +177,20 @@ public class PointCloud {
 
     public int getAlphaForPoint(Point point) {
         // Contribution from positional glow
-        float glowDistance = hypot(glowManager.x - point.x, glowManager.y - point.y);
+    	final float glowDistance = hypot(glowManager.x - point.x, glowManager.y - point.y);
         float glowAlpha = 0.0f;
 
         if (glowDistance < glowManager.radius) {
-            float cosf = FloatMath.cos(PI * 0.25f * glowDistance / glowManager.radius);
+        	final float cosf = FloatMath.cos(PI * 0.25f * glowDistance / glowManager.radius);
             glowAlpha = glowManager.alpha * max(0.0f, (float) Math.pow(cosf, 10.0f));
         }
 
         // Compute contribution from Wave
-        float radius = hypot(point.x, point.y);
-        float distanceToWaveRing = (radius - waveManager.radius);
+        final float radius = hypot(point.x, point.y);
+        final float distanceToWaveRing = (radius - waveManager.radius);
         float waveAlpha = 0.0f;
         if (distanceToWaveRing < waveManager.width * 0.5f && distanceToWaveRing < 0.0f) {
-            float cosf = FloatMath.cos(PI * 0.25f * distanceToWaveRing / waveManager.width);
+        	final float cosf = FloatMath.cos(PI * 0.25f * distanceToWaveRing / waveManager.width);
             waveAlpha = waveManager.alpha * max(0.0f, (float) Math.pow(cosf, 20.0f));
         }
 
@@ -202,17 +202,18 @@ public class PointCloud {
     }
 
     public void draw(Canvas canvas) {
-        ArrayList<Point> points = mPointCloud;
+    	final ArrayList<Point> points = mPointCloud;
         canvas.save(Canvas.MATRIX_SAVE_FLAG);
         canvas.scale(mScale, mScale, mCenterX, mCenterY);
         int pointsSize = points.size(); /*Yuqi's Change*/
         for (int i = 0; i < pointsSize; i++) { /*Yuqi's Change*/
-            Point point = points.get(i);
+            final Point point = points.get(i);
+
             final float pointSize = interp(MAX_POINT_SIZE, MIN_POINT_SIZE,
                     point.radius / mOuterRadius);
             final float px = point.x + mCenterX;
             final float py = point.y + mCenterY;
-            int alpha = getAlphaForPoint(point);
+            final int alpha = getAlphaForPoint(point);
 
             if (alpha == 0) continue;
 

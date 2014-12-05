@@ -132,7 +132,7 @@ public class TimerRingService extends Service {
                 setDataSourceFromResource(getResources(), mMediaPlayer,
                         R.raw.in_call_alarm);
             } else {
-                AssetFileDescriptor afd = getAssets().openFd("sounds/Timer_Expire.ogg");
+            	final AssetFileDescriptor afd = getAssets().openFd("sounds/Timer_Expire.ogg");
                 mMediaPlayer.setDataSource(
                         afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
             }
@@ -173,7 +173,7 @@ public class TimerRingService extends Service {
 
     private void setDataSourceFromResource(Resources resources,
             MediaPlayer player, int res) throws java.io.IOException {
-        AssetFileDescriptor afd = resources.openRawResourceFd(res);
+    	final AssetFileDescriptor afd = resources.openRawResourceFd(res);
         if (afd != null) {
             player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(),
                     afd.getLength());

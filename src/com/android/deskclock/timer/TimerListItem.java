@@ -33,11 +33,11 @@ public class TimerListItem extends LinearLayout {
 
     long mTimerLength;
 
-    public TimerListItem(Context context) {
+    public TimerListItem(final Context context) {
         this(context, null);
     }
 
-    public TimerListItem(Context context, AttributeSet attrs) {
+    public TimerListItem(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater layoutInflater =
                 (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -52,7 +52,7 @@ public class TimerListItem extends LinearLayout {
         mCircleView.setTimerMode(true);
     }
 
-    public void set(long timerLength, long timeLeft, boolean drawRed) {
+    public void set(final long timerLength,final long timeLeft,final  boolean drawRed) {
         if (mCircleView == null) {
             mCircleView = (CircleTimerView)findViewById(R.id.timer_time);
             mCircleView.setTimerMode(true);
@@ -94,21 +94,21 @@ public class TimerListItem extends LinearLayout {
         mTimerText.redTimeStr(true, false);
     }
 
-    public void setLength(long timerLength) {
+    public void setLength(final long timerLength) {
         mTimerLength = timerLength;
         mCircleView.setIntervalTime(mTimerLength);
         mCircleView.invalidate();
     }
 
-    public void setTextBlink(boolean blink) {
+    public void setTextBlink(final boolean blink) {
         mTimerText.showTime(!blink);
     }
 
-    public void setCircleBlink(boolean blink) {
+    public void setCircleBlink(final boolean blink) {
         mCircleView.setVisibility(blink ? INVISIBLE : VISIBLE);
     }
 
-    public void setTime(long time, boolean forceUpdate) {
+    public void setTime(final long time,final  boolean forceUpdate) {
         if (mTimerText == null) {
             mTimerText = (CountingTimerView)findViewById(R.id.timer_time_text);
         }
@@ -117,7 +117,7 @@ public class TimerListItem extends LinearLayout {
 
     // Used by animator to animate the size of a timer
     @SuppressWarnings("unused")
-    public void setAnimatedHeight(int height) {
+    public void setAnimatedHeight(final int height) {
         getLayoutParams().height = height;
         requestLayout();
     }

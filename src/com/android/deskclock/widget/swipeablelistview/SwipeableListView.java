@@ -49,8 +49,8 @@ public class SwipeableListView extends ListView implements Callback {
 
     public SwipeableListView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        float densityScale = getResources().getDisplayMetrics().density;
-        float pagingTouchSlop = ViewConfiguration.get(context).getScaledPagingTouchSlop();
+        final float densityScale = getResources().getDisplayMetrics().density;
+        final float pagingTouchSlop = ViewConfiguration.get(context).getScaledPagingTouchSlop();
         mSwipeHelper = new SwipeHelper(context, SwipeHelper.X, this, densityScale,
                 pagingTouchSlop);
         setItemsCanFocus(true);
@@ -59,9 +59,9 @@ public class SwipeableListView extends ListView implements Callback {
     @Override
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        float densityScale = getResources().getDisplayMetrics().density;
+        final float densityScale = getResources().getDisplayMetrics().density;
         mSwipeHelper.setDensityScale(densityScale);
-        float pagingTouchSlop = ViewConfiguration.get(getContext()).getScaledPagingTouchSlop();
+        final float pagingTouchSlop = ViewConfiguration.get(getContext()).getScaledPagingTouchSlop();
         mSwipeHelper.setPagingTouchSlop(pagingTouchSlop);
     }
 
@@ -119,7 +119,7 @@ public class SwipeableListView extends ListView implements Callback {
     public View getChildAtPosition(MotionEvent ev) {
         // find the view under the pointer, accounting for GONE views
         final int count = getChildCount();
-        int touchY = (int) ev.getY();
+        final int touchY = (int) ev.getY();
         int childIdx = 0;
         View slidingChild;
         for (; childIdx < count; childIdx++) {
@@ -162,10 +162,10 @@ public class SwipeableListView extends ListView implements Callback {
     }
 
     private void redraw(View v) {
-        int start = getFirstVisiblePosition();
-        for (int i=start, j = getLastVisiblePosition(); i <= j; i++) {
+    	final int start = getFirstVisiblePosition();
+    	for (int i=start, j = getLastVisiblePosition(); i <= j; i++) {
             if (v == getItemAtPosition(i)) {
-                View view = getChildAt(i-start);
+            	final View view = getChildAt(i-start);
                 getAdapter().getView(i, view, this);
             }
         }

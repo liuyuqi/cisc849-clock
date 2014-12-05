@@ -37,7 +37,7 @@ public class HandleSetAlarm extends Activity {
     @Override
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         if (intent == null || !ACTION_SET_ALARM.equals(intent.getAction())) {
             finish();
             return;
@@ -60,7 +60,7 @@ public class HandleSetAlarm extends Activity {
         }
 
         Cursor c = null;
-        long timeInMillis = Alarms.calculateAlarm(hour, minutes,
+        final long timeInMillis = Alarms.calculateAlarm(hour, minutes,
                 new Alarm.DaysOfWeek(0)).getTimeInMillis();
         try {
             c = getContentResolver().query(
@@ -81,7 +81,7 @@ public class HandleSetAlarm extends Activity {
             c = null;
         }
 
-        ContentValues values = new ContentValues();
+        final ContentValues values = new ContentValues();
         values.put(Alarm.Columns.HOUR, hour);
         values.put(Alarm.Columns.MINUTES, minutes);
         values.put(Alarm.Columns.MESSAGE, message);
@@ -90,8 +90,8 @@ public class HandleSetAlarm extends Activity {
         values.put(Alarm.Columns.DAYS_OF_WEEK, 0);
         values.put(Alarm.Columns.ALARM_TIME, timeInMillis);
 
-        ContentResolver cr = getContentResolver();
-        Uri result = cr.insert(Alarm.Columns.CONTENT_URI, values);
+        final ContentResolver cr = getContentResolver();
+        final Uri result = cr.insert(Alarm.Columns.CONTENT_URI, values);
         if (result != null) {
             try {
                 c = cr.query(result, Alarm.Columns.ALARM_QUERY_COLUMNS, null,
@@ -108,7 +108,7 @@ public class HandleSetAlarm extends Activity {
     private boolean handleCursorResult(Cursor c, long timeInMillis,
             boolean enable, boolean skipUi) {
         if (c != null && c.moveToFirst()) {
-            Alarm alarm = new Alarm(c);
+        	final Alarm alarm = new Alarm(c);
             if (enable) {
                 Alarms.enableAlarm(this, alarm.id, true);
                 alarm.enabled = true;
@@ -117,7 +117,7 @@ public class HandleSetAlarm extends Activity {
             if (skipUi) {
                 Alarms.setAlarm(this, alarm);
             } else {
-                Intent i = new Intent(this, AlarmClock.class);
+            	final Intent i = new Intent(this, AlarmClock.class);
                 i.putExtra(Alarms.ALARM_INTENT_EXTRA, alarm);
                 startActivity(i);
             }

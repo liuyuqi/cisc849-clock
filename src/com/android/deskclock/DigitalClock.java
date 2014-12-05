@@ -58,7 +58,7 @@ public class DigitalClock extends LinearLayout {
     private final Handler mHandler = new Handler();
     private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
             @Override
-            public void onReceive(Context context, Intent intent) {
+            public void onReceive(final Context context, final Intent intent) {
                 if (mLive && intent.getAction().equals(
                             Intent.ACTION_TIMEZONE_CHANGED)) {
                     mCalendar = Calendar.getInstance();
@@ -76,19 +76,19 @@ public class DigitalClock extends LinearLayout {
         private final TextView mAmPm;
         private final String mAmString, mPmString;
 
-        AmPm(View parent) {
+        AmPm(final View parent) {
             mAmPm = (TextView) parent.findViewById(R.id.am_pm);
 
-            String[] ampm = new DateFormatSymbols().getAmPmStrings();
+            final String[] ampm = new DateFormatSymbols().getAmPmStrings();
             mAmString = ampm[0];
             mPmString = ampm[1];
         }
 
-        void setShowAmPm(boolean show) {
+        void setShowAmPm(final boolean show) {
             mAmPm.setVisibility(show ? View.VISIBLE : View.GONE);
         }
 
-        void setIsMorning(boolean isMorning) {
+        void setIsMorning(final boolean isMorning) {
             mAmPm.setText(isMorning ? mAmString : mPmString);
         }
 
@@ -102,17 +102,17 @@ public class DigitalClock extends LinearLayout {
             super(new Handler());
         }
         @Override
-        public void onChange(boolean selfChange) {
+        public void onChange(final boolean selfChange) {
             setDateFormat();
             updateTime();
         }
     }
 
-    public DigitalClock(Context context) {
+    public DigitalClock(final Context context) {
         this(context, null);
     }
 
-    public DigitalClock(Context context, AttributeSet attrs) {
+    public DigitalClock(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mRobotoThin = Typeface.createFromAsset(context.getAssets(),"fonts/Roboto-Thin.ttf");
     }
@@ -141,7 +141,7 @@ public class DigitalClock extends LinearLayout {
 
         if (mLive) {
             /* monitor time ticks, time changed, timezone */
-            IntentFilter filter = new IntentFilter();
+        	final IntentFilter filter = new IntentFilter();
             filter.addAction(Intent.ACTION_TIME_TICK);
             filter.addAction(Intent.ACTION_TIME_CHANGED);
             filter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
@@ -171,12 +171,12 @@ public class DigitalClock extends LinearLayout {
     }
 
 
-    void updateTime(Calendar c) {
+    void updateTime(final Calendar c) {
         mCalendar = c;
         updateTime();
     }
 
-    public void updateTime(int hour, int minute) {
+    public void updateTime(final int hour,final int minute) {
         // set the alarm text
         final Calendar c = Calendar.getInstance();
         c.set(Calendar.HOUR_OF_DAY, hour);
@@ -193,7 +193,7 @@ public class DigitalClock extends LinearLayout {
             mCalendar.setTimeZone(TimeZone.getTimeZone(mTimeZoneId));
         }
 
-        StringBuilder fullTimeStr = new StringBuilder();
+        final StringBuilder fullTimeStr = new StringBuilder();
         CharSequence newTime = DateFormat.format(mHoursFormat, mCalendar);
         mTimeDisplayHours.setText(newTime);
         fullTimeStr.append(newTime);
@@ -201,7 +201,7 @@ public class DigitalClock extends LinearLayout {
         fullTimeStr.append(newTime);
         mTimeDisplayMinutes.setText(newTime);
 
-        boolean isMorning = mCalendar.get(Calendar.AM_PM) == 0;
+        final boolean isMorning = mCalendar.get(Calendar.AM_PM) == 0;
         mAmPm.setIsMorning(isMorning);
         if (!Alarms.get24HourMode(getContext())) {
             fullTimeStr.append(mAmPm.getAmPmText());
@@ -216,11 +216,11 @@ public class DigitalClock extends LinearLayout {
         mAmPm.setShowAmPm(!Alarms.get24HourMode(getContext()));
     }
 
-    void setLive(boolean live) {
+    void setLive(final boolean live) {
         mLive = live;
     }
 
-    public void setTimeZone(String id) {
+    public void setTimeZone(final String id) {
         mTimeZoneId = id;
         updateTime();
     }

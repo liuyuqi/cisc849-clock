@@ -52,7 +52,7 @@ public class AndroidClockTextView extends TextView {
             sClockTypeface = Typeface.createFromFile(SYSTEM_FONT_TIME_BACKGROUND);
         }
 
-        Paint paint = getPaint();
+        final Paint paint = getPaint();
         paint.setTypeface(mUseClockTypeface ? sClockTypeface : sStandardTypeface);
     }
 }

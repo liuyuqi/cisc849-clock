@@ -50,7 +50,7 @@ public class AlarmInitReceiver extends BroadcastReceiver {
                     Alarms.disableExpiredAlarms(context);
 
                     // Clear stopwatch and timers data
-                    SharedPreferences prefs =
+                    final SharedPreferences prefs =
                             PreferenceManager.getDefaultSharedPreferences(context);
                     Log.v("AlarmInitReceiver - Reset timers and clear stopwatch data");
                     TimerObj.resetTimersInSharedPrefs(prefs);
@@ -71,7 +71,7 @@ public class AlarmInitReceiver extends BroadcastReceiver {
     }
 
     private void switchVolumeButtonDefault(SharedPreferences prefs) {
-        SharedPreferences.Editor editor = prefs.edit();
+    	final SharedPreferences.Editor editor = prefs.edit();
 
         editor.putString(SettingsActivity.KEY_VOLUME_BEHAVIOR,
             SettingsActivity.DEFAULT_VOLUME_BEHAVIOR);

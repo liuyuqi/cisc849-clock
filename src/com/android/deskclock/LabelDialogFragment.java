@@ -48,7 +48,7 @@ public class LabelDialogFragment extends DialogFragment {
 
     public static LabelDialogFragment newInstance(Alarm alarm, String label) {
         final LabelDialogFragment frag = new LabelDialogFragment();
-        Bundle args = new Bundle();
+        final Bundle args = new Bundle();
         args.putString(KEY_LABEL, label);
         args.putParcelable(KEY_ALARM, alarm);
         frag.setArguments(args);
@@ -57,7 +57,7 @@ public class LabelDialogFragment extends DialogFragment {
 
     public static LabelDialogFragment newInstance(TimerObj timer, String label, String tag) {
         final LabelDialogFragment frag = new LabelDialogFragment();
-        Bundle args = new Bundle();
+        final Bundle args = new Bundle();
         args.putString(KEY_LABEL, label);
         args.putParcelable(KEY_TIMER, timer);
         args.putString(KEY_TAG, tag);
@@ -74,7 +74,7 @@ public class LabelDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        Bundle bundle = getArguments();
+    	final Bundle bundle = getArguments();
         final String label = bundle.getString(KEY_LABEL);
         final Alarm alarm = bundle.getParcelable(KEY_ALARM);
         final TimerObj timer = bundle.getParcelable(KEY_TIMER);

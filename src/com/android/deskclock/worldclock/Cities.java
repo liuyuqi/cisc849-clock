@@ -30,13 +30,13 @@ public class Cities {
 
     public static void saveCitiesToSharedPrefs(
             SharedPreferences prefs, HashMap<String, CityObj> cities) {
-        SharedPreferences.Editor editor = prefs.edit();
+        final SharedPreferences.Editor editor = prefs.edit();
         editor.putInt(NUMBER_OF_CITIES, cities.size());
-        Collection<CityObj> col = cities.values();
-        Iterator<CityObj> i = col.iterator();
+        final Collection<CityObj> col = cities.values();
+        final Iterator<CityObj> i = col.iterator();
         int count = 0;
         while (i.hasNext()) {
-            CityObj c = i.next();
+            final CityObj c = i.next();
             c.saveCityToSharedPrefs(editor, count);
             count++;
         }
@@ -44,11 +44,11 @@ public class Cities {
     }
 
     public static  HashMap<String, CityObj> readCitiesFromSharedPrefs(SharedPreferences prefs) {
-        int size = prefs.getInt(NUMBER_OF_CITIES, -1);
-        HashMap<String, CityObj> c = new HashMap<String, CityObj>();
+        final int size = prefs.getInt(NUMBER_OF_CITIES, -1);
+        final HashMap<String, CityObj> c = new HashMap<String, CityObj>();
         if (size > 0) {
             for (int i = 0; i < size; i++) {
-                CityObj o = new CityObj(prefs, i);
+                final CityObj o = new CityObj(prefs, i);
                 if (o.mCityName != null && o.mTimeZone != null) {
                     c.put(o.mCityId, o);
                 } 
@@ -61,7 +61,7 @@ public class Cities {
     private static final String CITY_TIME_ZONE = "city_tz_";
 
     private static void dumpCities(SharedPreferences prefs, String title) {
-        int size = prefs.getInt(NUMBER_OF_CITIES, -1);
+        final int size = prefs.getInt(NUMBER_OF_CITIES, -1);
         Log.d("Cities", "Selected Cities List " + title);
         Log.d("Cities", "Number of cities " + size);
         //Old Code:
@@ -71,6 +71,7 @@ public class Cities {
             for (int i = 0; i < size; i++) {
                 /* old code 
                 CityObj o = new CityObj(prefs, i);
+
                 if (o.mCityName != null && o.mTimeZone != null) {
                     Log.d("Cities", "Name " + o.mCityName + " tz " + o.mTimeZone);
                 }

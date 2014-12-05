@@ -62,10 +62,10 @@ public class StopwatchService extends Service {
             readFromSharedPrefs();
         }
 
-        String actionType = intent.getAction();
-        long actionTime = intent.getLongExtra(Stopwatches.MESSAGE_TIME, Utils.getTimeNow());
-        boolean showNotif = intent.getBooleanExtra(Stopwatches.SHOW_NOTIF, true);
-        boolean updateCircle = showNotif; // Don't save updates to the cirle if we're in the app.
+        final String actionType = intent.getAction();
+        final long actionTime = intent.getLongExtra(Stopwatches.MESSAGE_TIME, Utils.getTimeNow());
+        final boolean showNotif = intent.getBooleanExtra(Stopwatches.SHOW_NOTIF, true);
+        final boolean updateCircle = showNotif; // Don't save updates to the cirle if we're in the app.
         if (actionType.equals(Stopwatches.START_STOPWATCH)) {
             mStartTime = actionTime;
             writeSharedPrefsStarted(mStartTime, updateCircle);
@@ -76,7 +76,7 @@ public class StopwatchService extends Service {
             }
         } else if (actionType.equals(Stopwatches.LAP_STOPWATCH)) {
             mNumLaps++;
-            long lapTimeElapsed = actionTime - mStartTime + mElapsedTime;
+            final long lapTimeElapsed = actionTime - mStartTime + mElapsedTime;
             writeSharedPrefsLap(lapTimeElapsed, updateCircle);
             if (showNotif) {
                 setNotification(mStartTime - mElapsedTime, true, mNumLaps);
@@ -104,13 +104,13 @@ public class StopwatchService extends Service {
             stopSelf();
         } else if (actionType.equals(Stopwatches.SHARE_STOPWATCH)) {
             closeNotificationShade();
-            Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+            final Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
             shareIntent.putExtra(
                     Intent.EXTRA_SUBJECT, Stopwatches.getShareTitle(getApplicationContext()));
             shareIntent.putExtra(Intent.EXTRA_TEXT, Stopwatches.buildShareResults(
                     getApplicationContext(), mElapsedTime, readLapsFromPrefs()));
-            Intent chooserIntent = Intent.createChooser(shareIntent, null);
+            final Intent chooserIntent = Intent.createChooser(shareIntent, null);
             chooserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             getApplication().startActivity(chooserIntent);
         } else if (actionType.equals(Stopwatches.SHOW_NOTIF)) {
@@ -136,7 +136,7 @@ public class StopwatchService extends Service {
         mElapsedTime = 0;
         mStartTime = 0;
         if (mLoadApp) {
-            Intent activityIntent = new Intent(getApplicationContext(), DeskClock.class);
+            final Intent activityIntent = new Intent(getApplicationContext(), DeskClock.class);
             activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             activityIntent.putExtra(
                     DeskClock.SELECT_TAB_INTENT_EXTRA, DeskClock.STOPWATCH_TAB_INDEX);
@@ -146,22 +146,22 @@ public class StopwatchService extends Service {
     }
 
     private void setNotification(long clockBaseTime, boolean clockRunning, int numLaps) {
-        Context context = getApplicationContext();
+        final Context context = getApplicationContext();
         // Intent to load the app for a non-button click.
-        Intent intent = new Intent(context, DeskClock.class);
+        final Intent intent = new Intent(context, DeskClock.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(DeskClock.SELECT_TAB_INTENT_EXTRA, DeskClock.STOPWATCH_TAB_INDEX);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
+        final PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Set up remoteviews for the notification.
-        RemoteViews remoteViewsCollapsed = new RemoteViews(getPackageName(),
+        final RemoteViews remoteViewsCollapsed = new RemoteViews(getPackageName(),
                 R.layout.stopwatch_notif_collapsed);
         remoteViewsCollapsed.setOnClickPendingIntent(R.id.swn_collapsed_hitspace, pendingIntent);
         remoteViewsCollapsed.setChronometer(
                 R.id.swn_collapsed_chronometer, clockBaseTime, null, clockRunning);
         remoteViewsCollapsed.setImageViewResource(R.id.notification_icon, R.drawable.stat_notify_stopwatch);
-        RemoteViews remoteViewsExpanded = new RemoteViews(getPackageName(),
+        final RemoteViews remoteViewsExpanded = new RemoteViews(getPackageName(),
                 R.layout.stopwatch_notif_expanded);
         remoteViewsExpanded.setOnClickPendingIntent(R.id.swn_expanded_hitspace, pendingIntent);
         remoteViewsExpanded.setChronometer(
@@ -172,7 +172,7 @@ public class StopwatchService extends Service {
             // Left button: lap
             remoteViewsExpanded.setTextViewText(
                     R.id.swn_left_button, getResources().getText(R.string.sw_lap_button));
-            Intent leftButtonIntent = new Intent(context, StopwatchService.class);
+            final Intent leftButtonIntent = new Intent(context, StopwatchService.class);
             leftButtonIntent.setAction(Stopwatches.LAP_STOPWATCH);
             remoteViewsExpanded.setOnClickPendingIntent(R.id.swn_left_button,
                     PendingIntent.getService(context, 0, leftButtonIntent, 0));
@@ -181,7 +181,7 @@ public class StopwatchService extends Service {
             // Right button: stop clock
             remoteViewsExpanded.setTextViewText(
                     R.id.swn_right_button, getResources().getText(R.string.sw_stop_button));
-            Intent rightButtonIntent = new Intent(context, StopwatchService.class);
+            final Intent rightButtonIntent = new Intent(context, StopwatchService.class);
             rightButtonIntent.setAction(Stopwatches.STOP_STOPWATCH);
             remoteViewsExpanded.setOnClickPendingIntent(R.id.swn_right_button,
                     PendingIntent.getService(context, 0, rightButtonIntent, 0));
@@ -189,7 +189,7 @@ public class StopwatchService extends Service {
 
             // Show the laps if applicable.
             if (numLaps > 0) {
-                String lapText = String.format(
+                final String lapText = String.format(
                         context.getString(R.string.sw_notification_lap_number), numLaps);
                 remoteViewsCollapsed.setTextViewText(R.id.swn_collapsed_laps, lapText);
                 remoteViewsCollapsed.setViewVisibility(R.id.swn_collapsed_laps, View.VISIBLE);
@@ -203,7 +203,7 @@ public class StopwatchService extends Service {
             // Left button: reset clock
             remoteViewsExpanded.setTextViewText(
                     R.id.swn_left_button, getResources().getText(R.string.sw_reset_button));
-            Intent leftButtonIntent = new Intent(context, StopwatchService.class);
+            final Intent leftButtonIntent = new Intent(context, StopwatchService.class);
             leftButtonIntent.setAction(Stopwatches.RESET_AND_LAUNCH_STOPWATCH);
             remoteViewsExpanded.setOnClickPendingIntent(R.id.swn_left_button,
                     PendingIntent.getService(context, 0, leftButtonIntent, 0));
@@ -212,7 +212,7 @@ public class StopwatchService extends Service {
             // Right button: start clock
             remoteViewsExpanded.setTextViewText(
                     R.id.swn_right_button, getResources().getText(R.string.sw_start_button));
-            Intent rightButtonIntent = new Intent(context, StopwatchService.class);
+            final Intent rightButtonIntent = new Intent(context, StopwatchService.class);
             rightButtonIntent.setAction(Stopwatches.START_STOPWATCH);
             remoteViewsExpanded.setOnClickPendingIntent(R.id.swn_right_button,
                     PendingIntent.getService(context, 0, rightButtonIntent, 0));
@@ -225,10 +225,10 @@ public class StopwatchService extends Service {
             remoteViewsExpanded.setViewVisibility(R.id.swn_expanded_laps, View.VISIBLE);
         }
 
-        Intent dismissIntent = new Intent(context, StopwatchService.class);
+        final Intent dismissIntent = new Intent(context, StopwatchService.class);
         dismissIntent.setAction(Stopwatches.RESET_STOPWATCH);
 
-        Notification notification = new Notification.Builder(context)
+        final Notification notification = new Notification.Builder(context)
                 .setAutoCancel(!clockRunning)
                 .setContent(remoteViewsCollapsed)
                 .setOngoing(clockRunning)
@@ -241,9 +241,9 @@ public class StopwatchService extends Service {
 
     /** Save the notification to be shown when the app is closed. **/
     private void saveNotification(long clockTime, boolean clockRunning, int numLaps) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
                 getApplicationContext());
-        SharedPreferences.Editor editor = prefs.edit();
+        final SharedPreferences.Editor editor = prefs.edit();
         if (clockRunning) {
             editor.putLong(Stopwatches.NOTIF_CLOCK_BASE, clockTime);
             editor.putLong(Stopwatches.NOTIF_CLOCK_ELAPSED, -1);
@@ -259,12 +259,12 @@ public class StopwatchService extends Service {
 
     /** Show the most recently saved notification. **/
     private boolean showSavedNotification() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
                 getApplicationContext());
         long clockBaseTime = prefs.getLong(Stopwatches.NOTIF_CLOCK_BASE, -1);
-        long clockElapsedTime = prefs.getLong(Stopwatches.NOTIF_CLOCK_ELAPSED, -1);
-        boolean clockRunning = prefs.getBoolean(Stopwatches.NOTIF_CLOCK_RUNNING, false);
-        int numLaps = prefs.getInt(Stopwatches.PREF_LAP_NUM, -1);
+        final long clockElapsedTime = prefs.getLong(Stopwatches.NOTIF_CLOCK_ELAPSED, -1);
+        final boolean clockRunning = prefs.getBoolean(Stopwatches.NOTIF_CLOCK_RUNNING, false);
+        final int numLaps = prefs.getInt(Stopwatches.PREF_LAP_NUM, -1);
         if (clockBaseTime == -1) {
             if (clockElapsedTime == -1) {
                 return false;
@@ -280,9 +280,9 @@ public class StopwatchService extends Service {
     }
 
     private void clearSavedNotification() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
                 getApplicationContext());
-        SharedPreferences.Editor editor = prefs.edit();
+        final SharedPreferences.Editor editor = prefs.edit();
         editor.remove(Stopwatches.NOTIF_CLOCK_BASE);
         editor.remove(Stopwatches.NOTIF_CLOCK_RUNNING);
         editor.remove(Stopwatches.NOTIF_CLOCK_ELAPSED);
@@ -290,13 +290,13 @@ public class StopwatchService extends Service {
     }
 
     private void closeNotificationShade() {
-        Intent intent = new Intent();
+        final Intent intent = new Intent();
         intent.setAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         sendBroadcast(intent);
     }
 
     private void readFromSharedPrefs() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
                 getApplicationContext());
         mStartTime = prefs.getLong(Stopwatches.PREF_START_TIME, 0);
         mElapsedTime = prefs.getLong(Stopwatches.PREF_ACCUM_TIME, 0);
@@ -304,13 +304,13 @@ public class StopwatchService extends Service {
     }
 
     private long[] readLapsFromPrefs() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
                 getApplicationContext());
-        int numLaps = prefs.getInt(Stopwatches.PREF_LAP_NUM, Stopwatches.STOPWATCH_RESET);
+        final int numLaps = prefs.getInt(Stopwatches.PREF_LAP_NUM, Stopwatches.STOPWATCH_RESET);
         long[] laps = new long[numLaps];
         long prevLapElapsedTime = 0;
         for (int lap_i = 0; lap_i < numLaps; lap_i++) {
-            String key = Stopwatches.PREF_LAP_TIME + Integer.toString(lap_i + 1);
+            final String key = Stopwatches.PREF_LAP_TIME + Integer.toString(lap_i + 1);
             long lap = prefs.getLong(key, 0);
             if (lap == prevLapElapsedTime && lap_i == numLaps - 1) {
                 lap = mElapsedTime;
@@ -323,9 +323,9 @@ public class StopwatchService extends Service {
 
     private void writeToSharedPrefs(Long startTime, Long lapTimeElapsed, Long elapsedTime,
             Integer state, boolean updateCircle) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
                 getApplicationContext());
-        SharedPreferences.Editor editor = prefs.edit();
+        final SharedPreferences.Editor editor = prefs.edit();
         if (startTime != null) {
             editor.putLong(Stopwatches.PREF_START_TIME, startTime);
             mStartTime = startTime;
@@ -361,14 +361,14 @@ public class StopwatchService extends Service {
     private void writeSharedPrefsStarted(long startTime, boolean updateCircle) {
         writeToSharedPrefs(startTime, null, null, Stopwatches.STOPWATCH_RUNNING, updateCircle);
         if (updateCircle) {
-            long time = Utils.getTimeNow();
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
+            final long time = Utils.getTimeNow();
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
                     getApplicationContext());
             long intervalStartTime = prefs.getLong(
                     Stopwatches.KEY + CircleTimerView.PREF_CTV_INTERVAL_START, -1);
             if (intervalStartTime != -1) {
                 intervalStartTime = time;
-                SharedPreferences.Editor editor = prefs.edit();
+                final SharedPreferences.Editor editor = prefs.edit();
                 editor.putLong(Stopwatches.KEY + CircleTimerView.PREF_CTV_INTERVAL_START,
                         intervalStartTime);
                 editor.putBoolean(Stopwatches.KEY + CircleTimerView.PREF_CTV_PAUSED, false);
@@ -380,13 +380,13 @@ public class StopwatchService extends Service {
     private void writeSharedPrefsLap(long lapTimeElapsed, boolean updateCircle) {
         writeToSharedPrefs(null, lapTimeElapsed, null, null, updateCircle);
         if (updateCircle) {
-            long time = Utils.getTimeNow();
+            final long time = Utils.getTimeNow();
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
                     getApplicationContext());
-            SharedPreferences.Editor editor = prefs.edit();
-            long laps[] = readLapsFromPrefs();
-            int numLaps = laps.length;
-            long lapTime = laps[1];
+            final SharedPreferences.Editor editor = prefs.edit();
+            final long laps[] = readLapsFromPrefs();
+            final int numLaps = laps.length;
+            final long lapTime = laps[1];
             if (numLaps == 2) { // Have only hit lap once.
                 editor.putLong(Stopwatches.KEY + CircleTimerView.PREF_CTV_INTERVAL, lapTime);
             } else {
@@ -406,15 +406,15 @@ public class StopwatchService extends Service {
     private void writeSharedPrefsStopped(long elapsedTime, boolean updateCircle) {
         writeToSharedPrefs(null, null, elapsedTime, Stopwatches.STOPWATCH_STOPPED, updateCircle);
         if (updateCircle) {
-            long time = Utils.getTimeNow();
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
+            final long time = Utils.getTimeNow();
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
                     getApplicationContext());
             long accumulatedTime = prefs.getLong(
                     Stopwatches.KEY + CircleTimerView.PREF_CTV_ACCUM_TIME, 0);
-            long intervalStartTime = prefs.getLong(
+            final long intervalStartTime = prefs.getLong(
                     Stopwatches.KEY + CircleTimerView.PREF_CTV_INTERVAL_START, -1);
             accumulatedTime += time - intervalStartTime;
-            SharedPreferences.Editor editor = prefs.edit();
+            final SharedPreferences.Editor editor = prefs.edit();
             editor.putLong(Stopwatches.KEY + CircleTimerView.PREF_CTV_ACCUM_TIME, accumulatedTime);
             editor.putBoolean(Stopwatches.KEY + CircleTimerView.PREF_CTV_PAUSED, true);
             editor.putLong(

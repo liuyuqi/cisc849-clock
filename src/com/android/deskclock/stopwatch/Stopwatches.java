@@ -54,15 +54,15 @@ public class Stopwatches {
     private static String[] mFormats = null;
 
     public static String getShareTitle(Context context) {
-        String [] mLabels = context.getResources().getStringArray(R.array.sw_share_strings);
+        final String [] mLabels = context.getResources().getStringArray(R.array.sw_share_strings);
         return mLabels[(int)(Math.random() * mLabels.length)];
     }
 
-    public static String buildShareResults(Context context, String time, long[] laps) {
-        StringBuilder b = new StringBuilder (context.getString(R.string.sw_share_main, time));
+    public static String buildShareResults(Context context, final String time, final long[] laps) {
+        final StringBuilder b = new StringBuilder (context.getString(R.string.sw_share_main, time));
         b.append("\n");
 
-        int lapsNum = laps == null? 0 : laps.length;
+        final int lapsNum = laps == null? 0 : laps.length;
         if (lapsNum == 0) {
             return b.toString();
         }
@@ -76,7 +76,7 @@ public class Stopwatches {
         return b.toString();
     }
 
-    public static String buildShareResults(Context context, long time, long[] laps) {
+    public static String buildShareResults(Context context, final long time, long[] laps) {
         return buildShareResults(context, getTimeText(context, time, NO_LAP_NUMBER), laps);
     }
 
@@ -84,7 +84,7 @@ public class Stopwatches {
      * Sets the string of the time running on the stopwatch up to hundred of a second accuracy
      * @param time - in hundreds of a second since the stopwatch started
      */
-    public static String getTimeText(Context context, long time, int lap) {
+    public static String getTimeText(Context context, long time, final int lap) {
         if (time < 0) {
             time = 0;
         }
@@ -93,7 +93,7 @@ public class Stopwatches {
         } else {
             mFormats = context.getResources().getStringArray(R.array.stopwatch_format_set);
         }
-        char decimalSeparator = DecimalFormatSymbols.getInstance().getDecimalSeparator();
+        final char decimalSeparator = DecimalFormatSymbols.getInstance().getDecimalSeparator();
         int formatIndex = 0;
 
         long hundreds, seconds, minutes, hours;
@@ -133,8 +133,8 @@ public class Stopwatches {
         seconds = seconds - minutes * 60;
         hours = minutes / 60;
         minutes = minutes - hours * 60;
-        char decimalSeparator = DecimalFormatSymbols.getInstance().getDecimalSeparator();
-        String timeStr = String.format(format, hours, minutes, seconds, hundreds, decimalSeparator);
+        final char decimalSeparator = DecimalFormatSymbols.getInstance().getDecimalSeparator();
+        final String timeStr = String.format(format, hours, minutes, seconds, hundreds, decimalSeparator);
         return timeStr;
     }
 }

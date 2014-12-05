@@ -61,7 +61,7 @@ public class ClockFragment extends DeskClockFragment implements OnSharedPreferen
     private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
             @Override
         public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
+            	final String action = intent.getAction();
             boolean changed = action.equals(Intent.ACTION_TIME_CHANGED)
                     || action.equals(Intent.ACTION_TIMEZONE_CHANGED)
                     || action.equals(Intent.ACTION_LOCALE_CHANGED);
@@ -107,7 +107,7 @@ public class ClockFragment extends DeskClockFragment implements OnSharedPreferen
         }
         mList = (ListView)v.findViewById(R.id.cities);
         mList.setDivider(null);
-        View headerView = inflater.inflate(R.layout.blank_header_view, mList, false);
+        final View headerView = inflater.inflate(R.layout.blank_header_view, mList, false);
         mList.addHeaderView(headerView);
         mClockFrame = inflater.inflate(R.layout.main_clock_frame, mList, false);
         mDigitalClock = mClockFrame.findViewById(R.id.digital_clock);
@@ -126,7 +126,7 @@ public class ClockFragment extends DeskClockFragment implements OnSharedPreferen
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case (MotionEvent.ACTION_DOWN):
-                        long time = Utils.getTimeNow();
+                    	final long time = Utils.getTimeNow();
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -137,8 +137,8 @@ public class ClockFragment extends DeskClockFragment implements OnSharedPreferen
                         mLastTouchY = event.getY();
                         break;
                     case (MotionEvent.ACTION_MOVE):
-                        float xDiff = Math.abs(event.getX()-mLastTouchX);
-                        float yDiff = Math.abs(event.getY()-mLastTouchY);
+                    	final float xDiff = Math.abs(event.getX()-mLastTouchX);
+                    final float yDiff = Math.abs(event.getY()-mLastTouchY);
                         if (xDiff >= MAX_MOVEMENT_ALLOWED || yDiff >= MAX_MOVEMENT_ALLOWED) {
                             mHandler.removeCallbacksAndMessages(null);
                         }
@@ -164,7 +164,7 @@ public class ClockFragment extends DeskClockFragment implements OnSharedPreferen
         mQuarterlyIntent = Utils.startAlarmOnQuarterHour(getActivity());
         // Besides monitoring when quarter-hour changes, monitor other actions that
         // effect clock time
-        IntentFilter filter = new IntentFilter(Utils.ACTION_ON_QUARTER_HOUR);
+        final IntentFilter filter = new IntentFilter(Utils.ACTION_ON_QUARTER_HOUR);
         filter.addAction(Alarms.ALARM_DONE_ACTION);
         filter.addAction(Alarms.ALARM_SNOOZE_CANCELLED);
         filter.addAction(Intent.ACTION_TIME_CHANGED);
@@ -180,7 +180,7 @@ public class ClockFragment extends DeskClockFragment implements OnSharedPreferen
             mAdapter.reloadData(getActivity());
         }
         // Resume can invoked after changing the clock style.
-        View clockView = Utils.setClockStyle(getActivity(), mDigitalClock, mAnalogClock,
+        final View clockView = Utils.setClockStyle(getActivity(), mDigitalClock, mAnalogClock,
                 SettingsActivity.KEY_CLOCK_STYLE);
         mClockStyle = (clockView == mDigitalClock ?
                 Utils.CLOCK_TYPE_DIGITAL : Utils.CLOCK_TYPE_ANALOG);

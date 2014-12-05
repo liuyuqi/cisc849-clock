@@ -77,14 +77,14 @@ public class AnalogClock extends View {
                        int defStyle) {
         super(context, attrs, defStyle);
         mContext = context;
-        Resources r = mContext.getResources();
+        final Resources r = mContext.getResources();
 
         mDial = r.getDrawable(R.drawable.clock_analog_dial_mipmap);
         mHourHand = r.getDrawable(R.drawable.clock_analog_hour_mipmap);
         mMinuteHand = r.getDrawable(R.drawable.clock_analog_minute_mipmap);
         mSecondHand = r.getDrawable(R.drawable.clock_analog_second_mipmap);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AnalogClock);
+        final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AnalogClock);
         mDotRadius = a.getDimension(R.styleable.AnalogClock_jewelRadius, 0);
         mDotOffset = a.getDimension(R.styleable.AnalogClock_jewelOffset, 0);
         final int dotColor = a.getColor(R.styleable.AnalogClock_jewelColor, Color.WHITE);
@@ -105,7 +105,7 @@ public class AnalogClock extends View {
 
         if (!mAttached) {
             mAttached = true;
-            IntentFilter filter = new IntentFilter();
+            final IntentFilter filter = new IntentFilter();
 
             filter.addAction(Intent.ACTION_TIME_TICK);
             filter.addAction(Intent.ACTION_TIME_CHANGED);
@@ -141,10 +141,10 @@ public class AnalogClock extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
-        int widthSize =  MeasureSpec.getSize(widthMeasureSpec);
-        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
-        int heightSize =  MeasureSpec.getSize(heightMeasureSpec);
+    	final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+    	final int widthSize =  MeasureSpec.getSize(widthMeasureSpec);
+    	final int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+    	final int heightSize =  MeasureSpec.getSize(heightMeasureSpec);
 
         float hScale = 1.0f;
         float vScale = 1.0f;
@@ -157,7 +157,7 @@ public class AnalogClock extends View {
             vScale = (float )heightSize / (float) mDialHeight;
         }
 
-        float scale = Math.min(hScale, vScale);
+        final float scale = Math.min(hScale, vScale);
 
         setMeasuredDimension(resolveSizeAndState((int) (mDialWidth * scale), widthMeasureSpec, 0),
                 resolveSizeAndState((int) (mDialHeight * scale), heightMeasureSpec, 0));
@@ -173,26 +173,26 @@ public class AnalogClock extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        boolean changed = mChanged;
+        final boolean changed = mChanged;
         if (changed) {
             mChanged = false;
         }
 
-        int availableWidth = getWidth();
-        int availableHeight = getHeight();
+        final int availableWidth = getWidth();
+        final int availableHeight = getHeight();
 
-        int x = availableWidth / 2;
-        int y = availableHeight / 2;
+        final int x = availableWidth / 2;
+        final int y = availableHeight / 2;
 
         final Drawable dial = mDial;
-        int w = dial.getIntrinsicWidth();
-        int h = dial.getIntrinsicHeight();
+        final int w = dial.getIntrinsicWidth();
+        final int h = dial.getIntrinsicHeight();
 
         boolean scaled = false;
 
         if (availableWidth < w || availableHeight < h) {
             scaled = true;
-            float scale = Math.min((float) availableWidth / (float) w,
+            final float scale = Math.min((float) availableWidth / (float) w,
                                    (float) availableHeight / (float) h);
             canvas.save();
             canvas.scale(scale, scale, x, y);
@@ -238,9 +238,9 @@ public class AnalogClock extends View {
             mCalendar.switchTimezone(mTimeZoneId);
         }
 
-        int hour = mCalendar.hour;
-        int minute = mCalendar.minute;
-        int second = mCalendar.second;
+        final int hour = mCalendar.hour;
+        final int minute = mCalendar.minute;
+        final int second = mCalendar.second;
   //      long millis = System.currentTimeMillis() % 1000;
 
         mSeconds = second;//(float) ((second * 1000 + millis) / 166.666);
@@ -255,7 +255,7 @@ public class AnalogClock extends View {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Intent.ACTION_TIMEZONE_CHANGED)) {
-                String tz = intent.getStringExtra("time-zone");
+            	final String tz = intent.getStringExtra("time-zone");
                 mCalendar = new Time(TimeZone.getTimeZone(tz).getID());
             }
             onTimeChanged();
@@ -275,7 +275,7 @@ public class AnalogClock extends View {
 
     private void updateContentDescription(Time time) {
         final int flags = DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_24HOUR;
-        String contentDescription = DateUtils.formatDateTime(mContext,
+        final String contentDescription = DateUtils.formatDateTime(mContext,
                 time.toMillis(false), flags);
         setContentDescription(contentDescription);
     }

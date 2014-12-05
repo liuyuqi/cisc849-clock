@@ -89,7 +89,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         // To avoid this, do the marshalling ourselves.
         final byte[] data = intent.getByteArrayExtra(Alarms.ALARM_RAW_DATA);
         if (data != null) {
-            Parcel in = Parcel.obtain();
+        	final Parcel in = Parcel.obtain();
             in.unmarshall(data, 0, data.length);
             in.setDataPosition(0);
             alarm = Alarm.CREATOR.createFromParcel(in);
@@ -115,7 +115,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         // Intentionally verbose: always log the alarm time to provide useful
         // information in bug reports.
-        long now = System.currentTimeMillis();
+        final long now = System.currentTimeMillis();
         Log.v("Received alarm set for id=" + alarm.id + " " + Log.formatTime(alarm.time));
 
         // Always verbose to track down time change problems.
@@ -129,11 +129,11 @@ public class AlarmReceiver extends BroadcastReceiver {
         AlarmAlertWakeLock.acquireCpuWakeLock(context);
 
         /* Close dialogs and window shade */
-        Intent closeDialogs = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+        final Intent closeDialogs = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         context.sendBroadcast(closeDialogs);
 
         // Decide which activity to start based on the state of the keyguard.
-        Class c = AlarmAlertFullScreen.class;
+        final Class c = AlarmAlertFullScreen.class;
         /*
         KeyguardManager km = (KeyguardManager) context.getSystemService(
                 Context.KEYGUARD_SERVICE);
@@ -144,36 +144,36 @@ public class AlarmReceiver extends BroadcastReceiver {
         */
 
         // Play the alarm alert and vibrate the device.
-        Intent playAlarm = new Intent(Alarms.ALARM_ALERT_ACTION);
+        final Intent playAlarm = new Intent(Alarms.ALARM_ALERT_ACTION);
         playAlarm.putExtra(Alarms.ALARM_INTENT_EXTRA, alarm);
         context.startService(playAlarm);
 
         // Trigger a notification that, when clicked, will show the alarm alert
         // dialog. No need to check for fullscreen since this will always be
         // launched from a user action.
-        Intent notify = new Intent(context, AlarmAlertFullScreen.class);
+        final Intent notify = new Intent(context, AlarmAlertFullScreen.class);
         notify.putExtra(Alarms.ALARM_INTENT_EXTRA, alarm);
-        PendingIntent pendingNotify = PendingIntent.getActivity(context,
+        final PendingIntent pendingNotify = PendingIntent.getActivity(context,
                 alarm.id, notify, 0);
 
         // These two notifications will be used for the action buttons on the notification.
-        Intent snoozeIntent = new Intent(Alarms.ALARM_SNOOZE_ACTION);
+        final Intent snoozeIntent = new Intent(Alarms.ALARM_SNOOZE_ACTION);
         snoozeIntent.putExtra(Alarms.ALARM_INTENT_EXTRA, alarm);
-        PendingIntent pendingSnooze = PendingIntent.getBroadcast(context,
+        final PendingIntent pendingSnooze = PendingIntent.getBroadcast(context,
                 alarm.id, snoozeIntent, 0);
-        Intent dismissIntent = new Intent(Alarms.ALARM_DISMISS_ACTION);
+        final Intent dismissIntent = new Intent(Alarms.ALARM_DISMISS_ACTION);
         dismissIntent.putExtra(Alarms.ALARM_INTENT_EXTRA, alarm);
-        PendingIntent pendingDismiss = PendingIntent.getBroadcast(context,
+        final PendingIntent pendingDismiss = PendingIntent.getBroadcast(context,
                 alarm.id, dismissIntent, 0);
 
         final Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(alarm.time);
-        String alarmTime = Alarms.formatTime(context, cal);
+        final String alarmTime = Alarms.formatTime(context, cal);
 
         // Use the alarm's label or the default label main text of the notification.
-        String label = alarm.getLabelOrDefault(context);
+        final String label = alarm.getLabelOrDefault(context);
 
-        Notification n = new Notification.Builder(context)
+        final Notification n = new Notification.Builder(context)
         .setContentTitle(label)
         .setContentText(alarmTime)
         .setSmallIcon(R.drawable.stat_notify_alarm)
@@ -193,7 +193,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         // NEW: Embed the full-screen UI here. The notification manager will
         // take care of displaying it if it's OK to do so.
-        Intent alarmAlert = new Intent(context, c);
+        final Intent alarmAlert = new Intent(context, c);
         alarmAlert.putExtra(Alarms.ALARM_INTENT_EXTRA, alarm);
         alarmAlert.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_NO_USER_ACTION);
@@ -201,7 +201,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         // Send the notification using the alarm id to easily identify the
         // correct notification.
-        NotificationManager nm = getNotificationManager(context);
+        final NotificationManager nm = getNotificationManager(context);
         nm.notify(alarm.id, n);
     }
 
@@ -211,7 +211,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     private void updateNotification(Context context, Alarm alarm, int timeout) {
-        NotificationManager nm = getNotificationManager(context);
+    	final NotificationManager nm = getNotificationManager(context);
 
         // If the alarm is null, just cancel the notification.
         if (alarm == null) {
@@ -222,14 +222,14 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
 
         // Launch AlarmClock when clicked.
-        Intent viewAlarm = new Intent(context, AlarmClock.class);
+        final Intent viewAlarm = new Intent(context, AlarmClock.class);
         viewAlarm.putExtra(Alarms.ALARM_INTENT_EXTRA, alarm);
-        PendingIntent intent =
+        final PendingIntent intent =
                 PendingIntent.getActivity(context, alarm.id, viewAlarm, 0);
 
         // Update the notification to indicate that the alert has been
         // silenced.
-        String label = alarm.getLabelOrDefault(context);
+        final String label = alarm.getLabelOrDefault(context);
         Notification n = new Notification(R.drawable.stat_notify_alarm,
                 label, alarm.time);
         n.setLatestEventInfo(context, label,

@@ -80,7 +80,7 @@ public class CitiesActivity extends Activity implements OnCheckedChangeListener,
         private Object [] mSectionPositions;
 
         public CityAdapter(
-                Context context,  HashMap<String, CityObj> selectedList, LayoutInflater factory) {
+                final Context context,  HashMap<String, CityObj> selectedList, LayoutInflater factory) {
             super();
             loadCitiesDataBase(context);
             mSelectedCitiesList = selectedList;
@@ -96,7 +96,7 @@ public class CitiesActivity extends Activity implements OnCheckedChangeListener,
         }
 
         @Override
-        public Object getItem(int p) {
+        public Object getItem(final int p) {
             if (mAllTheCitiesList != null && p >=0 && p < mAllTheCitiesList.length) {
                 return mAllTheCitiesList [p];
             }
@@ -118,13 +118,13 @@ public class CitiesActivity extends Activity implements OnCheckedChangeListener,
             if (mAllTheCitiesList == null || position < 0 || position >= mAllTheCitiesList.length) {
                 return null;
             }
-            CityObj c = (CityObj)mAllTheCitiesList [position];
+            final CityObj c = (CityObj)mAllTheCitiesList [position];
             // Header view (A CityObj with nothing but the first letter as the name
             if (c.mCityId == null) {
                 if (view == null || view.findViewById(R.id.header) == null) {
                     view =  mInflater.inflate(R.layout.city_list_header, parent, false);
                 }
-                TextView header = (TextView)view.findViewById(R.id.header);
+                final TextView header = (TextView)view.findViewById(R.id.header);
                 header.setText(c.mCityName);
             } else { // City view
                 // Make sure to recycle a City view only
@@ -132,9 +132,9 @@ public class CitiesActivity extends Activity implements OnCheckedChangeListener,
                     view = mInflater.inflate(R.layout.city_list_item, parent, false);
                 }
                 view.setOnClickListener(CitiesActivity.this);
-                TextView name = (TextView)view.findViewById(R.id.city_name);
-                TextView tz = (TextView)view.findViewById(R.id.city_time);
-                CheckBox cb = (CheckBox)view.findViewById(R.id.city_onoff);
+                final TextView name = (TextView)view.findViewById(R.id.city_name);
+                final TextView tz = (TextView)view.findViewById(R.id.city_time);
+                final CheckBox cb = (CheckBox)view.findViewById(R.id.city_onoff);
                 cb.setTag(c);
                 cb.setChecked(mSelectedCitiesList.containsKey(c.mCityId));
                 cb.setOnCheckedChangeListener(CitiesActivity.this);
@@ -145,24 +145,24 @@ public class CitiesActivity extends Activity implements OnCheckedChangeListener,
             return view;
         }
 
-        public void set24HoursMode(Context c) {
+        public void set24HoursMode(final Context c) {
             mIs24HoursMode = Alarms.get24HourMode(c);
             notifyDataSetChanged();
         }
 
-        private void loadCitiesDataBase(Context c) {
-            CityObj[] tempList = Utils.loadCitiesDataBase(c);
+        private void loadCitiesDataBase(final Context c) {
+            final CityObj[] tempList = Utils.loadCitiesDataBase(c);
             if (tempList == null) {
                 return;
             }
             //Create section indexer and add headers to the cities list
             String val = null;
-            ArrayList<String> sections = new ArrayList<String> ();
-            ArrayList<Integer> positions = new ArrayList<Integer> ();
-            ArrayList<CityObj> items = new ArrayList<CityObj>();
+            final ArrayList<String> sections = new ArrayList<String> ();
+            final ArrayList<Integer> positions = new ArrayList<Integer> ();
+            final ArrayList<CityObj> items = new ArrayList<CityObj>();
             int count = 0;
             for (int i = 0; i < tempList.length; i++) {
-                CityObj city = tempList[i];
+                final CityObj city = tempList[i];
                 if (city.mCityId.equals(DELETED_ENTRY)) {
                     continue;
                 }
@@ -183,12 +183,12 @@ public class CitiesActivity extends Activity implements OnCheckedChangeListener,
          }
 
         @Override
-        public int getPositionForSection(int section) {
+        public int getPositionForSection(final int section) {
             return (mSectionPositions != null) ? (Integer) mSectionPositions[section] : 0;
         }
 
         @Override
-        public int getSectionForPosition(int p) {
+        public int getSectionForPosition(final int p) {
             if (mSectionPositions != null) {
                 for (int i = 0; i < mSectionPositions.length - 1; i++) {
                     if (p >= (Integer) mSectionPositions[i]
@@ -211,7 +211,7 @@ public class CitiesActivity extends Activity implements OnCheckedChangeListener,
 
 
     @Override
-    protected void onCreate(Bundle icicle) {
+    protected void onCreate(final Bundle icicle) {
         super.onCreate(icicle);
         mFactory = LayoutInflater.from(this);
         updateLayout();
@@ -247,18 +247,18 @@ public class CitiesActivity extends Activity implements OnCheckedChangeListener,
         super.onPause();
         Cities.saveCitiesToSharedPrefs(PreferenceManager.getDefaultSharedPreferences(this),
                 mUserSelectedCities);
-        Intent i = new Intent(Cities.WORLDCLOCK_UPDATE_INTENT);
+        final Intent i = new Intent(Cities.WORLDCLOCK_UPDATE_INTENT);
         sendBroadcast(i);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             case R.id.menu_item_help:
-                Intent i = item.getIntent();
+                final Intent i = item.getIntent();
                 if (i != null) {
                     try {
                         startActivity(i);
@@ -268,7 +268,7 @@ public class CitiesActivity extends Activity implements OnCheckedChangeListener,
                 }
                 return true;
             case android.R.id.home:
-                Intent intent = new Intent(this, DeskClock.class);
+                final Intent intent = new Intent(this, DeskClock.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 return true;
@@ -279,9 +279,9 @@ public class CitiesActivity extends Activity implements OnCheckedChangeListener,
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.cities_menu, menu);
-        MenuItem help = menu.findItem(R.id.menu_item_help);
+        final MenuItem help = menu.findItem(R.id.menu_item_help);
         if (help != null) {
             Utils.prepareHelpMenuItem(this, help);
         }
@@ -289,8 +289,8 @@ public class CitiesActivity extends Activity implements OnCheckedChangeListener,
     }
 
     @Override
-    public void onCheckedChanged(CompoundButton b, boolean checked) {
-        CityObj c = (CityObj)b.getTag();
+    public void onCheckedChanged(final CompoundButton b, final boolean checked) {
+        final CityObj c = (CityObj)b.getTag();
         if (checked) {
             mUserSelectedCities.put(c.mCityId, c);
         } else {
@@ -299,9 +299,9 @@ public class CitiesActivity extends Activity implements OnCheckedChangeListener,
     }
 
     @Override
-    public void onClick(View v) {
-        CompoundButton b = (CompoundButton)v.findViewById(R.id.city_onoff);
-        boolean checked = b.isChecked();
+    public void onClick(final View v) {
+        final CompoundButton b = (CompoundButton)v.findViewById(R.id.city_onoff);
+        final boolean checked = b.isChecked();
         onCheckedChanged(b, checked);
         b.setChecked(!checked);
     }
